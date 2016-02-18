@@ -39,7 +39,7 @@ public class PasswordGenerator {
 		Random random = new Random();
 		List<Types> requiredTypes;
 		char[] strongPasswordArr = new char[passwordLength];
-		requiredTypes =  Arrays.asList(Characters.Types.values());;
+		requiredTypes =  Arrays.asList(Characters.Types.values());
 
 		int characterTypesLength = Characters.getTypesLength();
 		List<Integer> availablePositions = createAvailablePositions(passwordLength);
@@ -59,7 +59,7 @@ public class PasswordGenerator {
 	}
 
 	private static List<Integer> createAvailablePositions(int passwordLength) {
-		List<Integer> availablePositions = new ArrayList<Integer>();
+		List<Integer> availablePositions = new ArrayList<>();
 		for (int i = 0; i < passwordLength; i++) {
 			availablePositions.add(i);
 		}
