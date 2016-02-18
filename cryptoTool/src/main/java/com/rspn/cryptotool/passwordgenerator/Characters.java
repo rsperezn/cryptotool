@@ -3,7 +3,7 @@ package com.rspn.cryptotool.passwordgenerator;
 import java.util.Random;
 
 public class Characters {
-	public static enum Types{UPPER_CASE, LOWER_CASE, DIGITS, SYMBOLS,AMBIGUOUS_SYMBOLS}
+	public enum Types{UPPER_CASE, LOWER_CASE, DIGITS, SYMBOLS,AMBIGUOUS_SYMBOLS}
 	
 	public static Types getRandomType(){
 		Random random = new Random();
