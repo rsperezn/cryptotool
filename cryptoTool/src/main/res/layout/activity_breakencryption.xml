@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layoutInBreakActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="456dp"
+                    android:orientation="vertical"
+                    android:padding="10dp" >
+
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/simpleborder"
+                        android:padding="5dp" >
+
+                        <EditText
+                            android:id="@+id/edit_encryptedText_InBreakActivity"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:hint="@string/hint_encryptedtext"
+                            android:inputType="textMultiLine" />
+                    </ScrollView>
+
+                    <LinearLayout
+                        android:layout_width="285dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp" 
+                        android:layout_marginBottom="10dp">
+
+                        <CheckBox
+                            android:id="@+id/checkBox_spaces_InBreakActivity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/checkbox_spaces" />
+
+                        <Button
+                            android:id="@+id/run_breakEncryption"
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="0.35"
+                            android:background="@drawable/button_shape"
+                            android:onClick="runBreakEncryption"
+                            android:text="@string/action_break" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="5dp" 
+>
+
+                        <TextView
+                            android:id="@+id/textview_ResultTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"  />
+
+                        <Spinner
+                            android:id="@+id/spinner_PossibleKeys"
+                            android:layout_width="110dp"
+                            android:layout_height="35dp"
+                            android:background="@drawable/crypto_spinner"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <ScrollView
+                        android:id="@+id/scrollView_InBreakActivity"
+                        android:layout_width="fill_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/simpleborder" >
+
+                        <EditText
+                            android:id="@+id/edit_brokenText"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:hint="@string/hint_output"
+                            android:inputType="textMultiLine" />
+                    </ScrollView>
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" >
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView_InBreakActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-4246477151358404/4009304976" >
+            </com.google.android.gms.ads.AdView>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/navigation_listInBreakActivity"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="#FFFFFF" >
+    </ListView>
+
+</android.support.v4.widget.DrawerLayout>

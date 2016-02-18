@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/res/merged/debug/raw/textsamples.xml",
+        "source": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/raw/textsamples.xml"
+    },
+    {
+        "merged": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/res/merged/debug/raw/gtm_analytics",
+        "source": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/8.4.0/res/raw/gtm_analytics"
+    }
+]

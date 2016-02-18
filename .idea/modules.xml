@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CryptoTool.iml" filepath="$PROJECT_DIR$/CryptoTool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cryptoTool/cryptoTool.iml" filepath="$PROJECT_DIR$/cryptoTool/cryptoTool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fileChooserActivity/fileChooserActivity.iml" filepath="$PROJECT_DIR$/fileChooserActivity/fileChooserActivity.iml" />
+    </modules>
+  </component>
+</project>

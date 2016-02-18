@@ -1,0 +1,455 @@
+[
+    {
+        "outputFile": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/res/merged/debug/values-v11/values-v11.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endLine": 4,
+                    "endColumn": 12,
+                    "endOffset": 184
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/values-v11/styles.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 177,
+                        "endLine": 8,
+                        "endColumn": 12,
+                        "endOffset": 306
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 189,
+                    "endColumn": 54,
+                    "endOffset": 239
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/values-v11/themes_apptheme.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 2,
+                        "startOffset": 169,
+                        "endColumn": 52,
+                        "endOffset": 219
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 244,
+                    "endLine": 11,
+                    "endColumn": 12,
+                    "endOffset": 658
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 239,
+                        "endLine": 9,
+                        "endColumn": 12,
+                        "endOffset": 653
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 663,
+                    "endLine": 17,
+                    "endColumn": 12,
+                    "endOffset": 1083
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 658,
+                        "endLine": 15,
+                        "endColumn": 12,
+                        "endOffset": 1078
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 18,
+                    "startColumn": 4,
+                    "startOffset": 1088,
+                    "endLine": 23,
+                    "endColumn": 12,
+                    "endOffset": 1511
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 1083,
+                        "endLine": 21,
+                        "endColumn": 12,
+                        "endOffset": 1506
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 24,
+                    "startColumn": 4,
+                    "startOffset": 1516,
+                    "endLine": 29,
+                    "endColumn": 12,
+                    "endOffset": 1937
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 22,
+                        "startColumn": 4,
+                        "startOffset": 1511,
+                        "endLine": 27,
+                        "endColumn": 12,
+                        "endOffset": 1932
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 30,
+                    "startColumn": 4,
+                    "startOffset": 1942,
+                    "endLine": 35,
+                    "endColumn": 12,
+                    "endOffset": 2364
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 28,
+                        "startColumn": 4,
+                        "startOffset": 1937,
+                        "endLine": 33,
+                        "endColumn": 12,
+                        "endOffset": 2359
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 36,
+                    "startColumn": 4,
+                    "startOffset": 2369,
+                    "endLine": 41,
+                    "endColumn": 12,
+                    "endOffset": 2789
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 34,
+                        "startColumn": 4,
+                        "startOffset": 2364,
+                        "endLine": 39,
+                        "endColumn": 12,
+                        "endOffset": 2784
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 42,
+                    "startColumn": 4,
+                    "startOffset": 2794,
+                    "endColumn": 88,
+                    "endOffset": 2878
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 42,
+                        "startColumn": 4,
+                        "startOffset": 2968,
+                        "endColumn": 88,
+                        "endOffset": 3052
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 43,
+                    "startColumn": 4,
+                    "startOffset": 2883,
+                    "endColumn": 100,
+                    "endOffset": 2979
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 43,
+                        "startColumn": 4,
+                        "startOffset": 3057,
+                        "endColumn": 100,
+                        "endOffset": 3153
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 44,
+                    "startColumn": 4,
+                    "startOffset": 2984,
+                    "endLine": 48,
+                    "endColumn": 12,
+                    "endOffset": 3387
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 44,
+                        "startColumn": 4,
+                        "startOffset": 3158,
+                        "endLine": 48,
+                        "endColumn": 12,
+                        "endOffset": 3561
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 49,
+                    "startColumn": 4,
+                    "startOffset": 3392,
+                    "endLine": 53,
+                    "endColumn": 12,
+                    "endOffset": 3807
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 49,
+                        "startColumn": 4,
+                        "startOffset": 3566,
+                        "endLine": 53,
+                        "endColumn": 12,
+                        "endOffset": 3981
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 54,
+                    "startColumn": 4,
+                    "startOffset": 3812,
+                    "endLine": 55,
+                    "endColumn": 12,
+                    "endOffset": 3914
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 56,
+                        "startColumn": 4,
+                        "startOffset": 4165,
+                        "endLine": 57,
+                        "endColumn": 12,
+                        "endOffset": 4267
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 56,
+                    "startColumn": 4,
+                    "startOffset": 3919,
+                    "endLine": 57,
+                    "endColumn": 12,
+                    "endOffset": 4043
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 58,
+                        "startColumn": 4,
+                        "startOffset": 4272,
+                        "endLine": 59,
+                        "endColumn": 12,
+                        "endOffset": 4396
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 58,
+                    "startColumn": 4,
+                    "startOffset": 4048,
+                    "endColumn": 70,
+                    "endOffset": 4114
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 62,
+                        "startColumn": 4,
+                        "startOffset": 4580,
+                        "endColumn": 70,
+                        "endOffset": 4646
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 59,
+                    "startColumn": 4,
+                    "startOffset": 4119,
+                    "endColumn": 82,
+                    "endOffset": 4197
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 63,
+                        "startColumn": 4,
+                        "startOffset": 4651,
+                        "endColumn": 82,
+                        "endOffset": 4729
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 60,
+                    "startColumn": 4,
+                    "startOffset": 4202,
+                    "endLine": 110,
+                    "endColumn": 12,
+                    "endOffset": 7905
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 64,
+                        "startColumn": 4,
+                        "startOffset": 4734,
+                        "endLine": 114,
+                        "endColumn": 12,
+                        "endOffset": 8437
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 111,
+                    "startColumn": 4,
+                    "startOffset": 7910,
+                    "endLine": 162,
+                    "endColumn": 12,
+                    "endOffset": 11753
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 115,
+                        "startColumn": 4,
+                        "startOffset": 8442,
+                        "endLine": 166,
+                        "endColumn": 12,
+                        "endOffset": 12285
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 163,
+                    "startColumn": 4,
+                    "startOffset": 11758,
+                    "endColumn": 90,
+                    "endOffset": 11844
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v11/values-v11.xml",
+                    "position": {
+                        "startLine": 169,
+                        "startColumn": 4,
+                        "startOffset": 12469,
+                        "endColumn": 90,
+                        "endOffset": 12555
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 164,
+                    "startColumn": 4,
+                    "startOffset": 11849,
+                    "endLine": 167,
+                    "endColumn": 10,
+                    "endOffset": 12173
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/values-v11/styles_apptheme.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 2,
+                        "startOffset": 169,
+                        "endLine": 8,
+                        "endColumn": 10,
+                        "endOffset": 493
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 168,
+                    "startColumn": 4,
+                    "startOffset": 12178,
+                    "endColumn": 117,
+                    "endOffset": 12291
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/8.4.0/res/values-v11/appinvite_styles.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 101,
+                        "endColumn": 117,
+                        "endOffset": 214
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 169,
+                    "startColumn": 4,
+                    "startOffset": 12296,
+                    "endLine": 179,
+                    "endColumn": 10,
+                    "endOffset": 12742
+                },
+                "from": {
+                    "file": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/values-v11/themes_apptheme.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 2,
+                        "startOffset": 223,
+                        "endLine": 17,
+                        "endColumn": 10,
+                        "endOffset": 669
+                    }
+                }
+            }
+        ]
+    }
+]

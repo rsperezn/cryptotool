@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/res/merged/debug/menu/view_savedtext.xml",
+        "source": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/menu/view_savedtext.xml"
+    },
+    {
+        "merged": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/res/merged/debug/menu/calculate_hash.xml",
+        "source": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/menu/calculate_hash.xml"
+    },
+    {
+        "merged": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/res/merged/debug/menu/decrypt.xml",
+        "source": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/menu/decrypt.xml"
+    },
+    {
+        "merged": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/res/merged/debug/menu/stats.xml",
+        "source": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/menu/stats.xml"
+    },
+    {
+        "merged": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/res/merged/debug/menu/main.xml",
+        "source": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/menu/main.xml"
+    },
+    {
+        "merged": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/res/merged/debug/menu/crypt_operation.xml",
+        "source": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/menu/crypt_operation.xml"
+    },
+    {
+        "merged": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/res/merged/debug/menu/encrypt.xml",
+        "source": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/menu/encrypt.xml"
+    },
+    {
+        "merged": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/build/intermediates/res/merged/debug/menu/explore_savedtexts.xml",
+        "source": "/home/santiago/StudioProjects/CryptoTool/cryptoTool/src/main/res/menu/explore_savedtexts.xml"
+    }
+]
