@@ -5,11 +5,11 @@ import java.util.List;
 
 public class CryptGroup {
 
-	public String string;
-	  public final List<String> children = new ArrayList<String>();
+    public String string;
+    public final List<String> children = new ArrayList<>();
 
-	  public CryptGroup(String string) {
-	    this.string = string;
-	  }
-	
+    public CryptGroup(String string) {
+        this.string = string;
+    }
+
 }
