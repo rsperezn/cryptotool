@@ -1,7 +1,5 @@
 package com.rspn.cryptotool.model;
 
-import com.rspn.cryptotool.utils.CTUtils.EType;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
