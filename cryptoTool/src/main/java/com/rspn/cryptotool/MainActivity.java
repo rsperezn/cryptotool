@@ -13,17 +13,12 @@ import android.util.SparseArray;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ExpandableListView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.rspn.cryptotool.UIHelper.CryptExpandableListAdapter;
-import com.rspn.cryptotool.breakencryption.BreakEncryptionActivity;
-import com.rspn.cryptotool.calculatehashes.CalculateHashesActivity;
 import com.rspn.cryptotool.db.TextSamplesDataSource;
-import com.rspn.cryptotool.decrypt.DecryptActivity;
-import com.rspn.cryptotool.encrypt.EncryptActivity;
 import com.rspn.cryptotool.model.CryptGroup;
 import com.rspn.cryptotool.model.Text;
 import com.rspn.cryptotool.utils.CTUtils;
@@ -37,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
     boolean retainCase;
     boolean vibrate;
     OnSharedPreferenceChangeListener listener;
-    TextSamplesDataSource datasource;
+    TextSamplesDataSource dataSource;
     AdView adView;
     // more efficient than HashMap for mapping integers to objects
     SparseArray<CryptGroup> groups = new SparseArray<>();
@@ -65,10 +60,10 @@ public class MainActivity extends ActionBarActivity {
         prefs.registerOnSharedPreferenceChangeListener(listener);
         setContentView(R.layout.activity_main);
 
-        datasource = new TextSamplesDataSource(this);
-        datasource.open();
+        dataSource = new TextSamplesDataSource(this);
+        dataSource.open();
         //if first time opening the application create the data
-        if (datasource.findAll().size() == 0) {
+        if (dataSource.findAll().size() == 0) {
             createData();
         }
 
@@ -90,10 +85,10 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void createExpandableListGroups() {
-        CryptGroup clasicalCrypto = new CryptGroup("Classical Cryptography");
-        clasicalCrypto.children.add("Encrypt");
-        clasicalCrypto.children.add("Decrypt");
-        clasicalCrypto.children.add("Break Encryption");
+        CryptGroup classicalCrypto = new CryptGroup("Classical Cryptography");
+        classicalCrypto.children.add("Encrypt");
+        classicalCrypto.children.add("Decrypt");
+        classicalCrypto.children.add("Break Encryption");
 
         CryptGroup calculateHashes = new CryptGroup("Calculate Hashes");
         calculateHashes.children.add("File");
@@ -102,51 +97,11 @@ public class MainActivity extends ActionBarActivity {
         CryptGroup strongPassword = new CryptGroup("Password Generator");
         strongPassword.children.add("Strong Password");
 
-        groups.append(0, clasicalCrypto);
+        groups.append(0, classicalCrypto);
         groups.append(1, calculateHashes);
         groups.append(2, strongPassword);
 
     }
-
-	/*
-
-		prefs= PreferenceManager.getDefaultSharedPreferences(this);
-		CTUtils.retainCase= prefs.getBoolean("pref_letterCase", false);
-		listener= new OnSharedPreferenceChangeListener() {
-
-			@Override
-			public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {
-				retainCase= prefs.getBoolean("pref_letterCase", false);
-				vibrate = prefs.getBoolean("pref_vibrate", false);
-				CTUtils.retainCase=retainCase;
-				CTUtils.vibrate= vibrate;
-			}
-		};
-
-		prefs.registerOnSharedPreferenceChangeListener(listener);
-		setContentView(R.layout.activity_main);
-
-
-		datasource= new TextSamplesDataSource(this);
-		datasource.open();
-		//if first time opening the application create the data
-		if (datasource.findAll().size()==0){
-			createData();
-		}
-
-		//Ads
-		adView = (AdView) this.findViewById(R.id.adView_InMainActivity);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        CTUtils.windowWidth = size.x;
-        CTUtils.windowHeight = size.y;
-
-	}
-	*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -157,14 +112,14 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks herappcompat v7 when creating android appe. The action bar will
+        // Handle action bar item clicks appcompat v7 when creating android app. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
 
             case R.id.action_preferences:
-                Intent prefintent = new Intent(this, PreferencesActivity.class);
-                startActivity(prefintent);
+                Intent preferenceIntent = new Intent(this, PreferencesActivity.class);
+                startActivity(preferenceIntent);
                 break;
             case R.id.action_rateApp:
                 Uri uri = Uri.parse("market://details?id=" + this.getPackageName());
@@ -176,12 +131,9 @@ public class MainActivity extends ActionBarActivity {
                 }
                 break;
 
-            //case R.id.action_about:
-            //return true;
-            //break;
             case R.id.action_manageSaved:
-                Intent savedmanagerintent = new Intent(this, SavedTextExplorerActivity.class);
-                startActivity(savedmanagerintent);
+                Intent savedManagerIntent = new Intent(this, SavedTextExplorerActivity.class);
+                startActivity(savedManagerIntent);
                 break;
             default:
                 break;
@@ -190,53 +142,22 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //onclick buttons
-    public void encrypt(View v) {
-        Intent intent = new Intent(this, EncryptActivity.class);
-        startActivity(intent);
-    }
-
-    public void decrypt(View v) {
-        Intent intent = new Intent(this, DecryptActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void breakEncryption(View v) {
-        Intent intent = new Intent(this, BreakEncryptionActivity.class);
-        startActivity(intent);
-    }
-
-    public void calculateHashes(View v) {
-        try {
-            //PasswordGenerator.generatePassword(8,true,true,true,true,true);
-        } catch (Exception e) {
-
-
-        }
-        Intent intent = new Intent(this, CalculateHashesActivity.class);
-        startActivity(intent);
-    }
-
-
     @Override
     protected void onResume() {
         super.onResume();
-        datasource.open();
+        dataSource.open();
         if (adView != null) {
             adView.resume();
         }
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        datasource.close();
+        dataSource.close();
         if (adView != null) {
             adView.pause();
         }
-
     }
 
     @Override
@@ -251,7 +172,7 @@ public class MainActivity extends ActionBarActivity {
         TextSamplesJDOMParser parser = new TextSamplesJDOMParser();
         List<Text> textSamples = parser.parseXML(this);
         for (Text textSample : textSamples) {
-            datasource.create(textSample);
+            dataSource.create(textSample);
         }
     }
 }
