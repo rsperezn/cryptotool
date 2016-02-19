@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
         };
 
         prefs.registerOnSharedPreferenceChangeListener(listener);
-        setContentView(R.layout.activity_mainv2);
+        setContentView(R.layout.activity_main);
 
         datasource = new TextSamplesDataSource(this);
         datasource.open();
@@ -73,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         //Ads
-        adView = (AdView) this.findViewById(R.id.adView_InMainActivity_v2);
+        adView = (AdView) this.findViewById(R.id.adView_InMainActivity);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
