@@ -1,4 +1,4 @@
-package com.rspn.cryptotool.UIHelper;
+package com.rspn.cryptotool.uihelper;
 
 import android.content.Context;
 import android.view.LayoutInflater;

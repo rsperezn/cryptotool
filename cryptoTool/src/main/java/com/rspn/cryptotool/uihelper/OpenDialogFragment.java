@@ -1,11 +1,9 @@
-package com.rspn.cryptotool.UIHelper;
+package com.rspn.cryptotool.uihelper;
 
 import java.util.HashMap;
 import java.util.List;
 
 import com.rspn.cryptotool.R;
-import com.rspn.cryptotool.R.id;
-import com.rspn.cryptotool.R.layout;
 import com.rspn.cryptotool.breakencryption.BreakEncryptionActivity;
 import com.rspn.cryptotool.calculatehashes.CalculateHashesActivity;
 import com.rspn.cryptotool.db.TextSamplesDataSource;
@@ -15,15 +13,11 @@ import com.rspn.cryptotool.model.Text;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 

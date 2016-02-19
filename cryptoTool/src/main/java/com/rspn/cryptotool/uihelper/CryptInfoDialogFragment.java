@@ -1,4 +1,4 @@
-package com.rspn.cryptotool.UIHelper;
+package com.rspn.cryptotool.uihelper;
 
 import com.rspn.cryptotool.R;
 import com.rspn.cryptotool.utils.CTUtils;
@@ -6,7 +6,6 @@ import com.rspn.cryptotool.utils.CTUtils;
 import android.annotation.SuppressLint;
 import android.app.DialogFragment;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;

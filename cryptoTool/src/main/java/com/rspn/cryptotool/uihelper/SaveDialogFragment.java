@@ -1,10 +1,8 @@
-package com.rspn.cryptotool.UIHelper;
+package com.rspn.cryptotool.uihelper;
 
 import java.util.List;
 
 import com.rspn.cryptotool.R;
-import com.rspn.cryptotool.R.id;
-import com.rspn.cryptotool.R.layout;
 import com.rspn.cryptotool.breakencryption.BreakEncryptionActivity;
 import com.rspn.cryptotool.db.TextSamplesDataSource;
 import com.rspn.cryptotool.decrypt.DecryptActivity;

@@ -1,4 +1,4 @@
-package com.rspn.cryptotool.UIHelper;
+package com.rspn.cryptotool.uihelper;
 
 import android.app.DialogFragment;
 import android.content.Intent;

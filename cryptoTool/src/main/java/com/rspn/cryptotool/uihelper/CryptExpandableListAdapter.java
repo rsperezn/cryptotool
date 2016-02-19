@@ -1,18 +1,15 @@
-package com.rspn.cryptotool.UIHelper;
+package com.rspn.cryptotool.uihelper;
 
 import com.rspn.cryptotool.breakencryption.BreakEncryptionActivity;
 import com.rspn.cryptotool.calculatehashes.CalculateHashesActivity;
 import com.rspn.cryptotool.decrypt.DecryptActivity;
 import com.rspn.cryptotool.encrypt.EncryptActivity;
 import com.rspn.cryptotool.model.CryptGroup;
-import com.rspn.cryptotool.passwordgenerator.Characters.Types;
-import com.rspn.cryptotool.passwordgenerator.PasswordGenerator;
 import com.rspn.cryptotool.R;
 import com.rspn.cryptotool.passwordgenerator.StrongPasswordActivity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
 

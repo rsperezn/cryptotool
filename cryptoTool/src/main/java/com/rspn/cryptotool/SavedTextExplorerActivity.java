@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.rspn.cryptotool.UIHelper.SavedTextArrayAdapter;
+import com.rspn.cryptotool.uihelper.SavedTextArrayAdapter;
 import com.rspn.cryptotool.db.TextSamplesDataSource;
 import com.rspn.cryptotool.model.Text;
 import com.rspn.cryptotool.utils.CTUtils;

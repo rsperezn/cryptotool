@@ -17,7 +17,7 @@ import android.widget.ExpandableListView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.rspn.cryptotool.UIHelper.CryptExpandableListAdapter;
+import com.rspn.cryptotool.uihelper.CryptExpandableListAdapter;
 import com.rspn.cryptotool.db.TextSamplesDataSource;
 import com.rspn.cryptotool.model.CryptGroup;
 import com.rspn.cryptotool.model.Text;
