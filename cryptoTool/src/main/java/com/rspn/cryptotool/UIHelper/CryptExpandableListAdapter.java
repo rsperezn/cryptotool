@@ -8,6 +8,7 @@ import com.rspn.cryptotool.model.CryptGroup;
 import com.rspn.cryptotool.passwordgenerator.Characters.Types;
 import com.rspn.cryptotool.passwordgenerator.PasswordGenerator;
 import com.rspn.cryptotool.R;
+import com.rspn.cryptotool.passwordgenerator.StrongPasswordActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,8 +26,8 @@ import android.widget.Toast;
 public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
 
     private final SparseArray<CryptGroup> groups;
-    public LayoutInflater inflater;
-    public Activity activity;
+    private LayoutInflater inflater;
+    private Activity activity;
 
     public CryptExpandableListAdapter(Activity act, SparseArray<CryptGroup> groups) {
         activity = act;
@@ -48,7 +49,7 @@ public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final String children = (String) getChild(groupPosition, childPosition);
-        TextView text = null;
+        TextView text;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_details, null);
         }
@@ -77,16 +78,8 @@ public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
                     activity.startActivity(intent);
 
                 } else if (children.equals("Strong Password")) {
-                    try {
-                        String password = PasswordGenerator.generatePassword(
-                                8, false,
-                                Types.UPPER_CASE,
-                                Types.LOWER_CASE,
-                                Types.DIGITS);
-                        Log.i("Password", password);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    Intent intent = new Intent(activity, StrongPasswordActivity.class);
+                    activity.startActivity(intent);
                 }
             }
         });

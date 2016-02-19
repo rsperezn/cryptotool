@@ -24,11 +24,13 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_decrypt">Decrypt</string>
     <string name="action_break">Break Encryption</string>
+    <string name="action_generate_strong_password">Generate</string>
     <string name="action_calculateHashes">Calculate Hashes</string>
     <string name="title_activity_encrypt">Encryption</string>
     <string name="title_activity_decrypt">Decryption</string>
     <string name="title_activity_breakEncryption">Break Encryption</string>
     <string name="title_activity_calculateHashes">Calculate Hashes</string>
+    <string name="title_activity_strongPasswordGenerator">Strong Password</string>
     <string name="title_activity_exploreSavedText">Explore Saved Texts</string>
     <string name="title_activity_statsActivity">Stats</string>
     <string name="title_activity_preferences">CryptoTool Preferences</string>
@@ -39,6 +41,12 @@
     <string name="hint_output">Output</string>
     <string name="hint_hasehd_output">Hashed Output</string>
     <string name="action_plus">+</string>
+    <string name="label_password_length">Password Length</string>
+    <string name="switch_lower_case">Lower Case</string>
+    <string name="switch_upper_case">Upper Case</string>
+    <string name="switch_symbols">Symbols</string>
+    <string name="switch_digits">Digits</string>
+    <string name="switch_similar_characters">Similar Characters</string>
     <string name="checkbox_spaces">Keep whitespaces </string>
     <string name="checkbox_saveinput">Input</string>
     <string name="checkbox_saveoutput">Output</string>
