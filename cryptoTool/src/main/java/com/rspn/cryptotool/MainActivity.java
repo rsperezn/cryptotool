@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
     TextSamplesDataSource datasource;
     AdView adView;
     // more efficient than HashMap for mapping integers to objects
-    SparseArray<CryptGroup> groups = new SparseArray<CryptGroup>();
+    SparseArray<CryptGroup> groups = new SparseArray<>();
 
 
     @Override
@@ -65,7 +65,6 @@ public class MainActivity extends ActionBarActivity {
         prefs.registerOnSharedPreferenceChangeListener(listener);
         setContentView(R.layout.activity_mainv2);
 
-
         datasource = new TextSamplesDataSource(this);
         datasource.open();
         //if first time opening the application create the data
@@ -74,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         //Ads
-        adView = (AdView) this.findViewById(R.id.adView_InMainActivity);
+        adView = (AdView) this.findViewById(R.id.adView_InMainActivity_v2);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
