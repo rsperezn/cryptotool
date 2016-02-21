@@ -14,4 +14,14 @@ public class StrongPasswordActivity extends AbstractCryptActivity {
     protected void onClickMainActionButton() {
 
     }
+
+    @Override
+    protected void drawerItemClick() {
+
+    }
+
+    @Override
+    protected String getSharableContent() {
+        return "hi";
+    }
 }

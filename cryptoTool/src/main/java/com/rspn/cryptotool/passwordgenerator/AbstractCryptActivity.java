@@ -1,12 +1,16 @@
 package com.rspn.cryptotool.passwordgenerator;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -17,6 +21,7 @@ import android.widget.ListView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.rspn.cryptotool.MainActivity;
 import com.rspn.cryptotool.R;
 import com.rspn.cryptotool.model.NavigationItem;
 import com.rspn.cryptotool.uihelper.DrawerAdapter;
@@ -35,8 +40,8 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
     private DrawerLayout navDrawerLayout;
     private boolean navDrawerOpen;
     private ArrayList<NavigationItem> navigationItems;
-    CharSequence drawerTitle;
-    CharSequence title;
+    private CharSequence drawerTitle;
+    private CharSequence title;
 
     public AbstractCryptActivity(int layoutViewId, int layoutAdId, int layoutDrawerId) {
         this.layoutViewId = layoutViewId;
@@ -50,9 +55,12 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         setContentView(layoutViewId);
         setAds();
         setNavigationDrawer();
-        // TODO: 20/02/16 investigate what is this doing
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        hideAdOnSoftKeyboardDisplay();
 
+    }
+
+    private void hideAdOnSoftKeyboardDisplay() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     protected abstract void onClickMainActionButton();
@@ -101,21 +109,81 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         adView.loadAd(adRequest);
     }
 
-    public void startVibrate(View v) {
+    protected void startVibrate(View v) {
         if (CTUtils.vibrate) {
             vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(50);
         }
     }
 
-    protected void hideKeyboard(EditText et){
-        InputMethodManager imm = (InputMethodManager)getSystemService(
+    protected void hideKeyboard(EditText et) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        NavigationItem navigationItem = ((NavigationItem) navigationList.getItemAtPosition(position));
+        if (navigationItem == null) {
+            return;
+        }
+        String selectedOption = navigationItem.getItemName();
+        Intent intent = new Intent();
 
+        switch (selectedOption) {
+            case "Share":
+                intent.setAction(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, getSharableContent());
+                startActivity(intent);
+                break;
+            case "Home":
+                intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                break;
+            default:
+                drawerItemClick();
+                break;
+        }
     }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        this.title = title;
+        getSupportActionBar().setTitle(this.title);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected abstract void drawerItemClick();
+
+    protected abstract String getSharableContent();
+
 }
