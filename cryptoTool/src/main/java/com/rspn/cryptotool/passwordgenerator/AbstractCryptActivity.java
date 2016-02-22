@@ -63,8 +63,6 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
-    protected abstract void onClickMainActionButton();
-
     protected void setNavigationDrawer() {
         navDrawerLayout = (DrawerLayout) findViewById(layoutDrawerId);
         navDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);

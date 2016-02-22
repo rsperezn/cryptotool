@@ -1,5 +1,7 @@
 package com.rspn.cryptotool.passwordgenerator;
 
+import android.view.View;
+
 import com.rspn.cryptotool.R;
 
 public class StrongPasswordActivity extends AbstractCryptActivity {
@@ -11,13 +13,8 @@ public class StrongPasswordActivity extends AbstractCryptActivity {
     }
 
     @Override
-    protected void onClickMainActionButton() {
-
-    }
-
-    @Override
     protected void drawerItemClick() {
-
+        //no need to override
     }
 
     @Override
