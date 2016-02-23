@@ -15,9 +15,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -30,6 +30,8 @@ import com.rspn.cryptotool.utils.CTUtils;
 import java.util.ArrayList;
 
 public abstract class AbstractCryptActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+    private final String SHARE = "Share";
+    private final String HOME = "Home";
     private int layoutViewId;
     private int layoutAddId;
     private int layoutDrawerId;
@@ -42,6 +44,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
     private ArrayList<NavigationItem> navigationItems;
     private CharSequence drawerTitle;
     private CharSequence title;
+    protected String errorMessage;
 
     public AbstractCryptActivity(int layoutViewId, int layoutAdId, int layoutDrawerId) {
         this.layoutViewId = layoutViewId;
@@ -56,7 +59,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         setAds();
         setNavigationDrawer();
         hideAdOnSoftKeyboardDisplay();
-
+        findViews();
     }
 
     private void hideAdOnSoftKeyboardDisplay() {
@@ -68,8 +71,8 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         navDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         View header = getLayoutInflater().inflate(R.layout.header_navigation, null);
-        ImageView iv = (ImageView) header.findViewById(R.id.header);
-        iv.setImageResource(R.drawable.closed_lock_binary);
+        ImageView imageView = (ImageView) header.findViewById(R.id.header);
+        imageView.setImageResource(R.drawable.closed_lock_binary);
         navigationList = (ListView) findViewById(R.id.navigation_listInStrongPasswordActivity);
         navigationList.addHeaderView(header);
         navigationList.setOnItemClickListener(this);
@@ -90,7 +93,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
             }
 
             public void onDrawerOpened(View drawerView) {
-//                hideKeyboard(plainText_edit);
+                hideKeyboard(drawerView);
                 getSupportActionBar().setTitle(drawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
                 navDrawerOpen = true;
@@ -114,10 +117,14 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         }
     }
 
-    protected void hideKeyboard(EditText et) {
+    protected void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    protected void displayToastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -130,13 +137,13 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         Intent intent = new Intent();
 
         switch (selectedOption) {
-            case "Share":
+            case SHARE:
                 intent.setAction(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, getSharableContent());
                 startActivity(intent);
                 break;
-            case "Home":
+            case HOME:
                 intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
@@ -180,8 +187,12 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+    protected abstract void findViews();
+
     protected abstract void drawerItemClick();
 
     protected abstract String getSharableContent();
+
+    protected abstract boolean satisfiedMainButtonPreconditions();
 
 }

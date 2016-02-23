@@ -11,10 +11,23 @@ import java.util.List;
 
 public class StrongPasswordActivity extends AbstractCryptActivity {
 
+    private CheckBox lowerCase_cb;
+    private CheckBox upperCase_cb;
+    private CheckBox digits_cb;
+    private CheckBox symbols_cb;
+
     public StrongPasswordActivity() {
         super(R.layout.activity_strongpassword,
                 R.id.adView_InStrongPassword,
                 R.id.drawer_layoutInStrongPasswordActivity);
+    }
+
+    @Override
+    protected void findViews() {
+        lowerCase_cb = (CheckBox) findViewById(R.id.checkBox_lowerCase);
+        upperCase_cb = (CheckBox) findViewById(R.id.checkbox_upperCase);
+        digits_cb = (CheckBox) findViewById(R.id.checkBox_digits);
+        symbols_cb = (CheckBox) findViewById(R.id.checkBox_symbols);
     }
 
     @Override
@@ -27,28 +40,33 @@ public class StrongPasswordActivity extends AbstractCryptActivity {
         return "hi";
     }
 
-    public void generateStrongPassword(View view) {
-        int passwordLength = Integer.valueOf(((EditText) findViewById(R.id.strongPasswordLength_edit)).getText().toString());
-        boolean excludeSimilarLookingCharacters = ((CheckBox) findViewById(R.id.checkBox_excludeSimilarLookingCharacters)).isChecked();
-        EditText strongPassword_edit = (EditText) findViewById(R.id.edit_strongPassword);
+    @Override
+    protected boolean satisfiedMainButtonPreconditions() {
+        return atLeastOneCharacterTypeSelected() && validPasswordLength();
+    }
 
-        try {
-            String strongPassword = PasswordGenerator.generatePassword(passwordLength,
-                    excludeSimilarLookingCharacters,
-                    getCheckedCharacterTypes());
-            strongPassword_edit.setText(strongPassword);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void generateStrongPassword(View view) {
+        EditText strongPassword_edit = (EditText) findViewById(R.id.edit_strongPassword);
+        if (satisfiedMainButtonPreconditions()) {
+            int passwordLength = Integer.valueOf(((EditText) findViewById(R.id.strongPasswordLength_edit)).getText().toString());
+            boolean excludeSimilarLookingCharacters = ((CheckBox) findViewById(R.id.checkBox_excludeSimilarLookingCharacters)).isChecked();
+
+            try {
+                String strongPassword = PasswordGenerator.generatePassword(passwordLength,
+                        excludeSimilarLookingCharacters,
+                        getCheckedCharacterTypes());
+                strongPassword_edit.setText(strongPassword);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            displayToastMessage(errorMessage);
         }
+        hideKeyboard(strongPassword_edit);
     }
 
     private Characters.Types[] getCheckedCharacterTypes() {
         List<Characters.Types> result = new ArrayList<>();
-
-        CheckBox lowerCase_cb = (CheckBox) findViewById(R.id.checkBox_lowerCase);
-        CheckBox upperCase_cb = (CheckBox) findViewById(R.id.checkbox_upperCase);
-        CheckBox digits_cb = (CheckBox) findViewById(R.id.checkBox_digits);
-        CheckBox symbols_cb = (CheckBox) findViewById(R.id.checkBox_symbols);
 
         if (lowerCase_cb.isChecked()) {
             result.add(Characters.Types.LOWER_CASE);
@@ -63,5 +81,30 @@ public class StrongPasswordActivity extends AbstractCryptActivity {
             result.add(Characters.Types.SYMBOLS);
         }
         return result.toArray(new Characters.Types[result.size()]);
+    }
+
+    private boolean validPasswordLength() {
+        EditText passwordLength_edit = (EditText) findViewById(R.id.strongPasswordLength_edit);
+
+        String passwordLength = passwordLength_edit.getText().toString();
+        if (passwordLength.isEmpty()) {
+            errorMessage = "Please enter password Length";
+            return false;
+        }else if (Integer.valueOf(passwordLength)>1024 || Integer.valueOf(passwordLength) <1) {
+            errorMessage = "Password length must be between 1 and 1024";
+            return false;
+        }
+        return true;
+    }
+
+    private boolean atLeastOneCharacterTypeSelected() {
+        if (lowerCase_cb.isChecked()
+                || upperCase_cb.isChecked()
+                || digits_cb.isChecked()
+                || symbols_cb.isChecked()) {
+            return true;
+        }
+        errorMessage = "Please select at least one character type";
+        return false;
     }
 }

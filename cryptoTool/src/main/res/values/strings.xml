@@ -46,7 +46,7 @@
     <string name="switch_upper_case">Upper Case</string>
     <string name="switch_symbols">Symbols</string>
     <string name="switch_digits">Digits</string>
-    <string name="switch_similar_characters">Exclude similar looking characters</string>
+    <string name="switch_similar_characters">No similar looking characters</string>
     <string name="checkbox_spaces">Keep whitespaces </string>
     <string name="checkbox_saveinput">Input</string>
     <string name="checkbox_saveoutput">Output</string>
