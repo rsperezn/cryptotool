@@ -101,7 +101,6 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         };
 
         navDrawerLayout.setDrawerListener(drawerToggle);
-
     }
 
     protected void setAds() {

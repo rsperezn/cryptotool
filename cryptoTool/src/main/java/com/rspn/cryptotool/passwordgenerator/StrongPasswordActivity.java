@@ -15,6 +15,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity {
     private CheckBox upperCase_cb;
     private CheckBox digits_cb;
     private CheckBox symbols_cb;
+    private EditText strongPassword_edit;
 
     public StrongPasswordActivity() {
         super(R.layout.activity_strongpassword,
@@ -28,6 +29,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity {
         upperCase_cb = (CheckBox) findViewById(R.id.checkbox_upperCase);
         digits_cb = (CheckBox) findViewById(R.id.checkBox_digits);
         symbols_cb = (CheckBox) findViewById(R.id.checkBox_symbols);
+        strongPassword_edit = (EditText) findViewById(R.id.edit_strongPassword);
     }
 
     @Override
@@ -37,7 +39,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity {
 
     @Override
     protected String getSharableContent() {
-        return "hi";
+        return strongPassword_edit.getText().toString();
     }
 
     @Override
@@ -46,7 +48,6 @@ public class StrongPasswordActivity extends AbstractCryptActivity {
     }
 
     public void generateStrongPassword(View view) {
-        EditText strongPassword_edit = (EditText) findViewById(R.id.edit_strongPassword);
         if (satisfiedMainButtonPreconditions()) {
             int passwordLength = Integer.valueOf(((EditText) findViewById(R.id.strongPasswordLength_edit)).getText().toString());
             boolean excludeSimilarLookingCharacters = ((CheckBox) findViewById(R.id.checkBox_excludeSimilarLookingCharacters)).isChecked();
@@ -90,7 +91,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity {
         if (passwordLength.isEmpty()) {
             errorMessage = "Please enter password Length";
             return false;
-        }else if (Integer.valueOf(passwordLength)>1024 || Integer.valueOf(passwordLength) <1) {
+        } else if (Integer.valueOf(passwordLength) > 1024 || Integer.valueOf(passwordLength) < 1) {
             errorMessage = "Password length must be between 1 and 1024";
             return false;
         }
