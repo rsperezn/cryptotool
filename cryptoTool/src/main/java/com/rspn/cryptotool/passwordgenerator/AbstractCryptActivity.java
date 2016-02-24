@@ -109,7 +109,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         adView.loadAd(adRequest);
     }
 
-    protected void startVibrate(View v) {
+    protected void vibrate() {
         if (CTUtils.vibrate) {
             vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(50);

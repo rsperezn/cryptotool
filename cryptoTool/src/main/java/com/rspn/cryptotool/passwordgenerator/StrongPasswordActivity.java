@@ -64,6 +64,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity {
             displayToastMessage(errorMessage);
         }
         hideKeyboard(strongPassword_edit);
+        vibrate();
     }
 
     private Characters.Types[] getCheckedCharacterTypes() {
