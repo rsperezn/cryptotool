@@ -60,6 +60,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         setNavigationDrawer();
         hideAdOnSoftKeyboardDisplay();
         findViews();
+        setOnClickListener();
     }
 
     private void hideAdOnSoftKeyboardDisplay() {
@@ -110,9 +111,13 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
     }
 
     protected void vibrate() {
+        vibrate(50);
+    }
+
+    protected void vibrate(int length) {
         if (CTUtils.vibrate) {
             vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(50);
+            vibrator.vibrate(10);
         }
     }
 
@@ -124,6 +129,17 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
 
     protected void displayToastMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void copyToClipboard(String textToCopy) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setText(textToCopy);
+        } else {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("Copy of data", textToCopy);
+            clipboard.setPrimaryClip(clip);
+        }
     }
 
     @Override
@@ -193,5 +209,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
     protected abstract String getSharableContent();
 
     protected abstract boolean satisfiedMainButtonPreconditions();
+
+    protected abstract void setOnClickListener();
 
 }

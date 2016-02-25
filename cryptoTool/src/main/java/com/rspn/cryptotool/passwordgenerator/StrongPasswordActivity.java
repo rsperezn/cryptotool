@@ -1,6 +1,8 @@
 package com.rspn.cryptotool.passwordgenerator;
 
+import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
@@ -9,7 +11,7 @@ import com.rspn.cryptotool.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StrongPasswordActivity extends AbstractCryptActivity {
+public class StrongPasswordActivity extends AbstractCryptActivity implements View.OnClickListener {
 
     private CheckBox lowerCase_cb;
     private CheckBox upperCase_cb;
@@ -45,6 +47,18 @@ public class StrongPasswordActivity extends AbstractCryptActivity {
     @Override
     protected boolean satisfiedMainButtonPreconditions() {
         return atLeastOneCharacterTypeSelected() && validPasswordLength();
+    }
+
+    @Override
+    protected void setOnClickListener() {
+        Button copyToClipboard_bt = (Button) findViewById(R.id.copyStrongPassword);
+        copyToClipboard_bt.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        copyToClipboard(strongPassword_edit.getText().toString());
+        vibrate(25);
     }
 
     public void generateStrongPassword(View view) {
