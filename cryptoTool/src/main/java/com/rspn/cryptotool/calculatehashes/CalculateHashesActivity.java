@@ -274,7 +274,7 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
             data.add(output_edit.getText().toString());
         }
 
-        HasherDTO hasherDTO = new HasherDTO(algorithm, hashType, data);
+        HashData hasherDTO = new HashData(algorithm, hashType, data);
 
         progressDialog = new ProgressDialog(this);
         timerStartTime = System.currentTimeMillis();
@@ -493,7 +493,7 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
     }
 
     //Async task
-    class Hasher extends AsyncTask<HasherDTO, Integer, Void> {
+    class Hasher extends AsyncTask<HashData, Integer, Void> {
         EditText output_edit;
         String hashType;
         ArrayList<String> dataToHash;
@@ -508,10 +508,10 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
         }
 
         @Override
-        protected Void doInBackground(HasherDTO... params) {
-            hashType = (String) ((HasherDTO) params[0]).getHashType();
-            dataToHash = (ArrayList<String>) ((HasherDTO) params[0]).getData();
-            algorithm = (String) ((HasherDTO) params[0]).getAlgorithm();
+        protected Void doInBackground(HashData... params) {
+            hashType = (String) ((HashData) params[0]).getHashType();
+            dataToHash = (ArrayList<String>) ((HashData) params[0]).getData();
+            algorithm = (String) ((HashData) params[0]).getAlgorithm();
             for (String data : dataToHash) {
                 if (hashType.equals("Text")) {
                     calculateHashOfText(data);

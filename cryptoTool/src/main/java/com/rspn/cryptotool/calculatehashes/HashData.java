@@ -3,13 +3,13 @@ package com.rspn.cryptotool.calculatehashes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HasherDTO {
+public class HashData {
 	private String algorithm;
 	private String hashType;
 	private ArrayList<String> data;
 	
 	
-	public HasherDTO(String algorithm, String hashType, ArrayList<String> data) {
+	public HashData(String algorithm, String hashType, ArrayList<String> data) {
 		this.algorithm = algorithm;
 		this.hashType = hashType;
 		this.data = data;
