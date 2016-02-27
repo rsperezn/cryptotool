@@ -223,6 +223,7 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
                     comparingHashes = true;
                     setEditTextsHints();
                     copyToClipboard_bt.setVisibility(View.INVISIBLE);
+                    output_edit.setText("");
                 } else {
                     calculate_bt.setText("Calculate Hash");
                     comparingHashes = false;
@@ -294,7 +295,6 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
                                long id) {
         if (position == 0) {
             calculate_bt.setEnabled(false);
-            return;
         } else {
             calculate_bt.setEnabled(true);
             algorithm = algorithms_sp.getSelectedItem().toString();
@@ -460,7 +460,7 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
             InputStream inputStream = new FileInputStream(f);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             byte[] b = new byte[1024 * 8];
-            int bytesRead = 0;
+            int bytesRead;
 
             while ((bytesRead = inputStream.read(b)) != -1) {
                 bos.write(b, 0, bytesRead);
@@ -509,9 +509,9 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
 
         @Override
         protected Void doInBackground(HashData... params) {
-            hashType = (String) ((HashData) params[0]).getHashType();
-            dataToHash = (ArrayList<String>) ((HashData) params[0]).getData();
-            algorithm = (String) ((HashData) params[0]).getAlgorithm();
+            hashType =  ((HashData) params[0]).getHashType();
+            dataToHash = ((HashData) params[0]).getData();
+            algorithm =  ((HashData) params[0]).getAlgorithm();
             for (String data : dataToHash) {
                 if (hashType.equals("Text")) {
                     calculateHashOfText(data);
@@ -548,7 +548,7 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
             }
 
             byte[] buffer = new byte[8192];
-            int read = 0;
+            int read;
             try {
                 if (is != null)
                     while ((read = is.read(buffer)) > 0) {
@@ -573,7 +573,7 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
         }
 
         private void calculateHashOfText(String text) {
-            byte[] byteArray = null;
+            byte[] byteArray;
             byteArray = text.getBytes();
 
             try {
