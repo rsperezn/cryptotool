@@ -18,7 +18,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
     private CheckBox digits_cb;
     private CheckBox symbols_cb;
     private TextView strongPassword_textView;
-
+    private Button copyToClipboard_bt;
     public StrongPasswordActivity() {
         super(R.layout.activity_strongpassword,
                 R.id.adView_InStrongPassword,
@@ -32,6 +32,8 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
         digits_cb = (CheckBox) findViewById(R.id.checkBox_digits);
         symbols_cb = (CheckBox) findViewById(R.id.checkBox_symbols);
         strongPassword_textView = (TextView) findViewById(R.id.textView_strongPassword);
+        copyToClipboard_bt = (Button) findViewById(R.id.copyStrongPassword);
+        copyToClipboard_bt.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -51,7 +53,6 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
 
     @Override
     protected void setOnClickListener() {
-        Button copyToClipboard_bt = (Button) findViewById(R.id.copyStrongPassword);
         copyToClipboard_bt.setOnClickListener(this);
     }
 
@@ -71,6 +72,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
                         excludeSimilarLookingCharacters,
                         getCheckedCharacterTypes());
                 strongPassword_textView.setText(strongPassword);
+                copyToClipboard_bt.setVisibility(View.VISIBLE);
             } catch (Exception e) {
                 e.printStackTrace();
             }
