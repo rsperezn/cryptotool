@@ -1,10 +1,10 @@
 package com.rspn.cryptotool.passwordgenerator;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.rspn.cryptotool.R;
 
@@ -17,7 +17,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
     private CheckBox upperCase_cb;
     private CheckBox digits_cb;
     private CheckBox symbols_cb;
-    private EditText strongPassword_edit;
+    private TextView strongPassword_textView;
 
     public StrongPasswordActivity() {
         super(R.layout.activity_strongpassword,
@@ -31,7 +31,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
         upperCase_cb = (CheckBox) findViewById(R.id.checkbox_upperCase);
         digits_cb = (CheckBox) findViewById(R.id.checkBox_digits);
         symbols_cb = (CheckBox) findViewById(R.id.checkBox_symbols);
-        strongPassword_edit = (EditText) findViewById(R.id.edit_strongPassword);
+        strongPassword_textView = (TextView) findViewById(R.id.textView_strongPassword);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
 
     @Override
     protected String getSharableContent() {
-        return strongPassword_edit.getText().toString();
+        return strongPassword_textView.getText().toString();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
 
     @Override
     public void onClick(View v) {
-        copyToClipboard(strongPassword_edit.getText().toString());
+        copyToClipboard(strongPassword_textView.getText().toString());
         vibrate(25);
     }
 
@@ -70,14 +70,14 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
                 String strongPassword = PasswordGenerator.generatePassword(passwordLength,
                         excludeSimilarLookingCharacters,
                         getCheckedCharacterTypes());
-                strongPassword_edit.setText(strongPassword);
+                strongPassword_textView.setText(strongPassword);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             displayToastMessage(errorMessage);
         }
-        hideKeyboard(strongPassword_edit);
+        hideKeyboard(strongPassword_textView);
         vibrate();
     }
 
