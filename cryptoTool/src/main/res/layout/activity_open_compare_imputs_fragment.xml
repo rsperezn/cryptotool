@@ -2,31 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
+    android:orientation="vertical">
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:text="Input 1"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
         <EditText
             android:id="@+id/compareInput_EditText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:singleLine="true" >
-
+            android:singleLine="true">
             <requestFocus />
         </EditText>
-
         <Button
             android:id="@+id/buttonSelect_Input1"
             style="?android:attr/buttonStyleSmall"
@@ -35,19 +34,20 @@
             android:layout_weight="1"
             android:text="@string/action_select" />
     </LinearLayout>
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:text="Input 2"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
         <EditText
             android:id="@+id/compareInput_EditText2"
             android:layout_width="wrap_content"
@@ -55,39 +55,39 @@
             android:layout_weight="1"
             android:ems="10"
             android:singleLine="true" />
-
         <Button
             android:id="@+id/buttonSelect_Input2"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/action_select" >
-        </Button>
+            android:text="@string/action_select"/>
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom" >
-
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="5dp">
         <Button
             android:id="@+id/button_Cancel_CompareHashes"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_marginLeft="35dp"
+            android:layout_marginStart="35dp"
             android:text="@string/action_cancel" />
-
         <Button
             android:id="@+id/button_OK_CompareHashes"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="35dp"
             android:layout_marginRight="35dp"
-            android:text="@string/action_OK"/>
+            android:text="@string/action_OK" />
     </RelativeLayout>
-
 </LinearLayout>
