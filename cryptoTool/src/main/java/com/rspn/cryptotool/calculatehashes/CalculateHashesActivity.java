@@ -348,20 +348,24 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
         }
         String selectedOption = navigationItem.getItemName();
 
-        if (selectedOption.equals("Share")) {
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, output_edit.getText().toString());
-            startActivity(shareIntent);
-        } else if (selectedOption.equals("Home")) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-        } else if (selectedOption.equals("Info")) {
-            FragmentManager manager = getFragmentManager();
-            CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("calculateHashes");
-            dialog.show(manager, "dialog");
+        switch (selectedOption) {
+            case "Share":
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, output_edit.getText().toString());
+                startActivity(shareIntent);
+                break;
+            case "Home":
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                break;
+            case "Info":
+                FragmentManager manager = getFragmentManager();
+                CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("calculateHashes");
+                dialog.show(manager, "dialog");
+                break;
         }
     }
 
@@ -509,9 +513,9 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
 
         @Override
         protected Void doInBackground(HashData... params) {
-            hashType =  ((HashData) params[0]).getHashType();
-            dataToHash = ((HashData) params[0]).getData();
-            algorithm =  ((HashData) params[0]).getAlgorithm();
+            hashType =  params[0].getHashType();
+            dataToHash = params[0].getData();
+            algorithm =  params[0].getAlgorithm();
             for (String data : dataToHash) {
                 if (hashType.equals("Text")) {
                     calculateHashOfText(data);
@@ -619,9 +623,7 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
                     byte[] output = null;
                     try {
                         output = cipher.doFinal(byteArray);
-                    } catch (IllegalBlockSizeException e) {
-                        e.printStackTrace();
-                    } catch (BadPaddingException e) {
+                    } catch (IllegalBlockSizeException | BadPaddingException e) {
                         e.printStackTrace();
                     }
                     hashResults.add(CTUtils.bytesToHex(output));
@@ -643,9 +645,7 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
                     byte[] output = null;
                     try {
                         output = cipher.doFinal(byteArray);
-                    } catch (IllegalBlockSizeException e) {
-                        e.printStackTrace();
-                    } catch (BadPaddingException e) {
+                    } catch (IllegalBlockSizeException | BadPaddingException e) {
                         e.printStackTrace();
                     }
                     hashResults.add(CTUtils.bytesToHex(output));
@@ -663,7 +663,6 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
-            copyToClipboard_bt.setVisibility(View.VISIBLE);
             if (!comparingHashes) {
                 output_edit.setText(hashResults.get(0));
                 if (hashType.equals("File")) {
@@ -671,6 +670,7 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
                     hashingTime = (now - timerStartTime) / 1000.0;
                     hashingDetailsMenuItem.setVisible(true);
                     shouldShowDetailsItem = true;
+                    copyToClipboard_bt.setVisibility(View.VISIBLE);
                 }
             } else {
                 displayHashComparisonResult(areMatchingHashes);
