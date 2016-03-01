@@ -82,7 +82,6 @@ public class HorizontalNumberPicker extends LinearLayout {
                 return false;
             }
         });
-
     }
 
     protected void touchSet(int i) {
@@ -118,7 +117,6 @@ public class HorizontalNumberPicker extends LinearLayout {
                 } catch (Exception e) {
                     ret = "";
                 }
-
                 break;
         }
         return ret;
@@ -142,7 +140,9 @@ public class HorizontalNumberPicker extends LinearLayout {
         switch (getOrientation()) {
             case LinearLayout.HORIZONTAL:
                 decButton.setText("-");
+                decButton.setLayoutParams(new LinearLayout.LayoutParams(180, 150));
                 incButton.setText("+");
+                incButton.setLayoutParams(new LinearLayout.LayoutParams(180, 150));
                 lp.width += 5;
                 lp.leftMargin = 5;
                 lp.rightMargin = 5;
@@ -155,26 +155,12 @@ public class HorizontalNumberPicker extends LinearLayout {
                 lp.bottomMargin = 5;
                 break;
         }
-
         valueView.setText(getValueString());
     }
 
     public void setStyle(int style) {
         this.style = style;
         reCalculateWidthAndCaption();
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public void setMin(int min) {
-        this.min = min;
-        value = value < min ? min : value;
-    }
-
-    public int getMax() {
-        return max;
     }
 
     public void setMax(int max) {
@@ -190,57 +176,4 @@ public class HorizontalNumberPicker extends LinearLayout {
         this.value = value;
         valueView.setText(getValueString());
     }
-
-    public void setValueString(String[] valueString) {
-        if (valueString == null)
-            return;
-        if (valueString.length == 0)
-            return;
-        this.valueString.clear();
-        for (int i = 0; i < valueString.length; i++)
-            this.valueString.add(valueString[i]);
-
-        this.min = 0;
-        this.max = this.valueString.size() - 1;
-        this.value = 0;
-        this.style = TEXT;
-        reCalculateWidthAndCaption();
-    }
-
-    public void setValueString(ArrayList<String> valueString) {
-        if (valueString == null)
-            return;
-        if (valueString.size() == 0)
-            return;
-        this.valueString = valueString;
-
-        this.min = 0;
-        this.max = this.valueString.size() - 1;
-        this.value = 0;
-        this.style = TEXT;
-        reCalculateWidthAndCaption();
-    }
-
-    public void setNextBackgroundResource(int background) {
-        incButton.setBackgroundResource(background);
-        MarginLayoutParams lp = (MarginLayoutParams) incButton.getLayoutParams();
-        incButton.setText("");
-        lp.width = 50;
-        lp.height = 50;
-    }
-
-    public void setPrevBackgroundResource(int background) {
-        decButton.setBackgroundResource(background);
-        MarginLayoutParams lp = (MarginLayoutParams) decButton.getLayoutParams();
-        decButton.setText("");
-        lp.width = 50;
-        lp.height = 50;
-    }
-
-    public void setBackroundButtonsResources(int id) {
-        decButton.setBackgroundResource(id);
-        incButton.setBackgroundResource(id);
-    }
-
-
 }
