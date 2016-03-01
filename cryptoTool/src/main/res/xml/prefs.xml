@@ -4,12 +4,12 @@
     <PreferenceCategory android:title="Main" >
         <CheckBoxPreference
             android:key="pref_vibrate"
-            android:summary="Device vibrates when ecrypting/decrypting/breaking encription/calculating hashes"
+            android:summary="Device vibrates when ecrypting/decrypting/breaking encryption/calculating hashes/generating passwords "
             android:title="Vibration" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_letterCase"
-            android:summary="Results of ecryption/decryption/breaking encryption retain the same case as the input"
+            android:summary="Results of encryption/decryption/breaking encryption retain the same case as the input"
             android:title="Retain input's letter case" />
     </PreferenceCategory>
     <!--  <PreferenceCategory android:title="Additional" >
