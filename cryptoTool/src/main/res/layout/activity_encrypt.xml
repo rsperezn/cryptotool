@@ -23,7 +23,7 @@
                 
 
                 <LinearLayout
-                    android:id="@+id/layout_options"
+                    android:id="@+id/layout_options_InEncryptActivity"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal" 
