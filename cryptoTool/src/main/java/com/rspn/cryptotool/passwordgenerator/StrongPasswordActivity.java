@@ -6,6 +6,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.rspn.cryptotool.AbstractCryptActivity;
 import com.rspn.cryptotool.R;
 
 import java.util.ArrayList;

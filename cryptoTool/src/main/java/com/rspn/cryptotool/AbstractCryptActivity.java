@@ -1,4 +1,4 @@
-package com.rspn.cryptotool.passwordgenerator;
+package com.rspn.cryptotool;
 
 import android.content.Context;
 import android.content.Intent;
