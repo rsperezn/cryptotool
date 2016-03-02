@@ -21,8 +21,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.rspn.cryptotool.MainActivity;
-import com.rspn.cryptotool.R;
 import com.rspn.cryptotool.model.NavigationItem;
 import com.rspn.cryptotool.uihelper.DrawerAdapter;
 import com.rspn.cryptotool.utils.CTUtils;
@@ -35,21 +33,29 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
     private int layoutViewId;
     private int layoutAddId;
     private int layoutDrawerId;
-    private ListView navigationList;
+    private int navigationListDrawerId;
+    private int navigationDrawerIcon;
+    protected ListView navigationList;
     private Vibrator vibrator;
     protected AdView adView;
-    private ActionBarDrawerToggle drawerToggle;
+    protected ActionBarDrawerToggle drawerToggle;
     private DrawerLayout navDrawerLayout;
     private boolean navDrawerOpen;
-    private ArrayList<NavigationItem> navigationItems;
+    protected ArrayList<NavigationItem> navigationItems;
     private CharSequence drawerTitle;
     private CharSequence title;
     protected String errorMessage;
 
-    public AbstractCryptActivity(int layoutViewId, int layoutAdId, int layoutDrawerId) {
+    public AbstractCryptActivity(int layoutViewId,
+                                 int layoutAdId,
+                                 int layoutDrawerId,
+                                 int navigationListDrawerId,
+                                 int navigationDrawerIcon) {
         this.layoutViewId = layoutViewId;
         this.layoutAddId = layoutAdId;
         this.layoutDrawerId = layoutDrawerId;
+        this.navigationListDrawerId = navigationListDrawerId;
+        this.navigationDrawerIcon = navigationDrawerIcon;
     }
 
     @Override
@@ -59,8 +65,9 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         setAds();
         setNavigationDrawer();
         hideAdOnSoftKeyboardDisplay();
-        findViews();
+        findAndSetViews();
         setOnClickListener();
+        setDataFromOriginatingActivity();
     }
 
     private void hideAdOnSoftKeyboardDisplay() {
@@ -73,8 +80,8 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
 
         View header = getLayoutInflater().inflate(R.layout.header_navigation, null);
         ImageView imageView = (ImageView) header.findViewById(R.id.header);
-        imageView.setImageResource(R.drawable.closed_lock_binary);
-        navigationList = (ListView) findViewById(R.id.navigation_listInStrongPasswordActivity);
+        imageView.setImageResource(navigationDrawerIcon);
+        navigationList = (ListView) findViewById(navigationListDrawerId);
         navigationList.addHeaderView(header);
         navigationList.setOnItemClickListener(this);
         navigationItems = new ArrayList<>();
@@ -100,7 +107,6 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
                 navDrawerOpen = true;
             }
         };
-
         navDrawerLayout.setDrawerListener(drawerToggle);
     }
 
@@ -142,6 +148,10 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         }
     }
 
+    protected boolean isNavigationDrawerOpen() {
+        return navDrawerOpen;
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         NavigationItem navigationItem = ((NavigationItem) navigationList.getItemAtPosition(position));
@@ -164,7 +174,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
                 startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
             default:
-                drawerItemClick();
+                drawerItemClick(position);
                 break;
         }
     }
@@ -202,14 +212,16 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    protected abstract void findViews();
+    protected abstract void findAndSetViews();
 
-    protected abstract void drawerItemClick();
+    protected abstract void drawerItemClick(int position);
 
     protected abstract String getSharableContent();
 
     protected abstract boolean satisfiedMainButtonPreconditions();
 
     protected abstract void setOnClickListener();
+
+    protected abstract void setDataFromOriginatingActivity();
 
 }

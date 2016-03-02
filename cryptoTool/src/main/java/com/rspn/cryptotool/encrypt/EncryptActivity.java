@@ -1,45 +1,29 @@
 package com.rspn.cryptotool.encrypt;
 
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Vibrator;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.rspn.cryptotool.MainActivity;
+import com.rspn.cryptotool.AbstractCryptActivity;
 import com.rspn.cryptotool.R;
 import com.rspn.cryptotool.breakencryption.BreakEncryptionActivity;
 import com.rspn.cryptotool.decrypt.DecryptActivity;
 import com.rspn.cryptotool.model.NavigationItem;
 import com.rspn.cryptotool.uihelper.CryptInfoDialogFragment;
-import com.rspn.cryptotool.uihelper.DrawerAdapter;
 import com.rspn.cryptotool.uihelper.HorizontalNumberPicker;
 import com.rspn.cryptotool.uihelper.OpenDialogFragment;
 import com.rspn.cryptotool.uihelper.SaveDialogFragment;
@@ -50,108 +34,108 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class EncryptActivity extends ActionBarActivity implements OnItemSelectedListener, SaveDialogFragment.Communicator, OnItemClickListener {
-    Spinner scheme_spinner;
-    EditText keyword_edit;
+public class EncryptActivity extends AbstractCryptActivity implements OnItemSelectedListener, SaveDialogFragment.Communicator {
+    private static final String DECRYPT_OUTPUT = "Decrypt Output";
+    private static final String BREAK_ENCRYPTION_OF_OUTPUT = "Break Encryption of Output";
+    private static final String INFO = "Info";
+    private Spinner scheme_spinner;
+    private EditText keyword_edit;
     static EditText plainText_edit;
     static EditText encryptedText_edit;
-    LinearLayout options_ll;
-    EType encryptionType;
-    Button run_encrypt_bt;
-    CheckBox whitespaces_cb;
-    TextView shift_tv;
-    HorizontalNumberPicker horizontalNP;
-    MenuItem saveMenuItem;
-    boolean directActivity = true;
+    private LinearLayout options_ll;
+    private EType encryptionType;
+    private Button run_encrypt_bt;
+    private CheckBox whitespaces_cb;
+    private TextView shift_tv;
+    private HorizontalNumberPicker horizontalNP;
+    private MenuItem saveMenuItem;
+    private boolean directActivity = true;
+    private boolean drawerIconsAdded = false;
+    private boolean shouldShowShowSaveItem = false;
 
-    DrawerLayout navDrawerLayout;
-    ListView navList;
-    List<NavigationItem> navItems;
-    ActionBarDrawerToggle drawerToggle;
-    CharSequence drawerTitle;
-    CharSequence title;
-    boolean drawerIconsAdded = false;
-    Vibrator vibrator;
-    AdView adView;
-    boolean shouldShowShowSaveItem = false;
-    boolean navDrawerOpen = false;
-
+    public EncryptActivity() {
+        super(R.layout.activity_encrypt,
+                R.id.adView_InEncryptActivity,
+                R.id.drawer_layoutInEncryptActivity,
+                R.id.navigation_listInEncryptActivity,
+                R.drawable.closed_lock_binary);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_encrypt);
-
+    protected void findAndSetViews() {
         scheme_spinner = (Spinner) findViewById(R.id.spinner_InEncryptActivity);
-        scheme_spinner.setOnItemSelectedListener(this);
         options_ll = (LinearLayout) findViewById(R.id.layout_options_InEncryptActivity);
-
         keyword_edit = new EditText(this);
         keyword_edit.setHint("Keyword");
-
+        setKeywordTextFilter();
         plainText_edit = (EditText) findViewById(R.id.edit_plainText);
-        if (this.getIntent().hasExtra("data")) {
-            plainText_edit.setText(this.getIntent().getStringExtra("data"));
-            directActivity = false;
-        }
         whitespaces_cb = (CheckBox) findViewById(R.id.checkBox_spaces_InEncryptActivity);
-
         encryptedText_edit = (EditText) findViewById(R.id.edit_encryptedText_InEncryptActivity);
         run_encrypt_bt = (Button) findViewById(R.id.run_encryption);
-        run_encrypt_bt.setEnabled(false);
-
-        navDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoutInEncryptActivity);
-        navDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
-        View header = getLayoutInflater().inflate(R.layout.header_navigation, null);
-        ImageView iv = (ImageView) header.findViewById(R.id.header);
-        iv.setImageResource(R.drawable.closed_lock_binary);
-        navList = (ListView) findViewById(R.id.navigation_listInEncryptActivity);
-        navList.addHeaderView(header);
-        navList.setOnItemClickListener(this);
-        navItems = new ArrayList<>();
-        navItems.add(new NavigationItem("Home", R.drawable.ic_home));
-        navItems.add(new NavigationItem("Share", R.drawable.ic_share));
-        DrawerAdapter adapter = new DrawerAdapter(this, navItems);
-        navList.setAdapter(adapter);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        title = drawerTitle = getTitle();
-        drawerToggle = new ActionBarDrawerToggle(this, navDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-            public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle(title);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-                navDrawerOpen = false;
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                hideKeyboard(plainText_edit);
-                getSupportActionBar().setTitle(drawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-                navDrawerOpen = true;
-            }
-        };
-
-        navDrawerLayout.setDrawerListener(drawerToggle);
-
         shift_tv = new TextView(this);
         shift_tv.setText(R.string.label_switchBy);
         horizontalNP = new HorizontalNumberPicker(this);
         horizontalNP.setMax(25);
-
-        addEditTextFilter();
-
-        //Ads
-        adView = (AdView) this.findViewById(R.id.adView_InEncryptActivity);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
     }
 
-    private void addEditTextFilter() {
+    @Override
+    protected void drawerItemClick(int position) {
+        NavigationItem navigationItem = ((NavigationItem) navigationList.getItemAtPosition(position));
+        if (navigationItem == null) {
+            return;
+        }
+        String selectedOption = navigationItem.getItemName();
+        switch (selectedOption) {
+            case DECRYPT_OUTPUT: {
+                Intent intent = new Intent(this, DecryptActivity.class);
+                intent.putExtra("data", encryptedText_edit.getText().toString());
+                startActivity(intent);
+                break;
+            }
+            case BREAK_ENCRYPTION_OF_OUTPUT: {
+                Intent intent = new Intent(this, BreakEncryptionActivity.class);
+                intent.putExtra("data", encryptedText_edit.getText().toString());
+                startActivity(intent);
+                break;
+            }
+            case INFO:
+                if (encryptionType == EType.CAESARS) {
+                    FragmentManager manager = getFragmentManager();
+                    CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("encryptCaesar");
+                    dialog.show(manager, "dialog");
+                } else {
+                    FragmentManager manager = getFragmentManager();
+                    CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("encryptVigenere");
+                    dialog.show(manager, "dialog");
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected String getSharableContent() {
+        return encryptedText_edit.getText().toString();
+    }
+
+    @Override
+    protected boolean satisfiedMainButtonPreconditions() {
+        return plainText_edit.getText().length() > 0;
+    }
+
+    @Override
+    protected void setOnClickListener() {
+        scheme_spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    protected void setDataFromOriginatingActivity() {
+        if (this.getIntent().hasExtra("data")) {
+            plainText_edit.setText(this.getIntent().getStringExtra("data"));
+            directActivity = false;
+        }
+    }
+
+    private void setKeywordTextFilter() {
         InputFilter filterKeyword = new InputFilter() {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
@@ -163,13 +147,10 @@ public class EncryptActivity extends ActionBarActivity implements OnItemSelected
                 return null;
             }
         };
-
         keyword_edit.setFilters(new InputFilter[]{filterKeyword});
     }
 
     private void updateNavigationDrawer() {
-
-
         if (drawerIconsAdded) {
             return;
         }
@@ -178,16 +159,16 @@ public class EncryptActivity extends ActionBarActivity implements OnItemSelected
             return;
         }
         //else
-        navItems.add(new NavigationItem("Decrypt Output", R.drawable.ic_go_to_decryption));
-        navItems.add(new NavigationItem("Break Encryption of Output", R.drawable.ic_go_to_break));
-        navItems.add(new NavigationItem("Info", R.drawable.ic_info));
+        navigationItems.add(new NavigationItem("Decrypt Output", R.drawable.ic_go_to_decryption));
+        navigationItems.add(new NavigationItem("Break Encryption of Output", R.drawable.ic_go_to_break));
+        navigationItems.add(new NavigationItem("Info", R.drawable.ic_info));
 
         drawerIconsAdded = true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (!navDrawerOpen && shouldShowShowSaveItem)
+        if (!isNavigationDrawerOpen() && shouldShowShowSaveItem)
             saveMenuItem.setVisible(true);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -265,95 +246,40 @@ public class EncryptActivity extends ActionBarActivity implements OnItemSelected
     }
 
     public void runEncryption(View v) {
-        if (plainText_edit.getText().length() == 0) return;
-        switch (encryptionType) {
+        if (satisfiedMainButtonPreconditions()) {
+            switch (encryptionType) {
+                case VIGENERE:
+                    if (keyword_edit.getText().toString().equals("")) {
+                        Toast.makeText(this, "Please enter a keyword", Toast.LENGTH_SHORT).show();
+                        hideKeyboard(keyword_edit);
+                        return;
+                    }
+                    hideKeyboard(plainText_edit);
 
-            case VIGENERE:
-                if (keyword_edit.getText().toString().equals("")) {
-                    Toast.makeText(this, "Please enter a keyword", Toast.LENGTH_SHORT).show();
-                    hideKeyboard(keyword_edit);
-                    return;
-                }
-                hideKeyboard(plainText_edit);
+                    VigenereEncryption.initComponents();
+                    new MyEncryptionTask().execute(EType.VIGENERE);
+                    vibrate();
+                    break;
 
-                VigenereEncryption.initComponents();
-                new MyEncryptionTask().execute(EType.VIGENERE);
-                startVibrate(v);
-                break;
+                case CAESARS:
+                    hideKeyboard(plainText_edit);
+                    CaesarEncryption.initComponents();
+                    new MyEncryptionTask().execute(EType.CAESARS);
+                    vibrate();
+                    break;
+                case NULL:
+                    break;
 
-            case CAESARS:
-                hideKeyboard(plainText_edit);
-                CaesarEncryption.initComponents();
-                new MyEncryptionTask().execute(EType.CAESARS);
-                startVibrate(v);
-                break;
-            case NULL:
-                break;
-
-            default:
-                Toast.makeText(this, "Encryption Case error", Toast.LENGTH_LONG).show();
-                break;
-        }
-        saveMenuItem.setVisible(true);//save button
-        shouldShowShowSaveItem = true;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        NavigationItem navigationItem = ((NavigationItem) navList.getItemAtPosition(position));
-        if (navigationItem == null) {
-            return;
-        }
-        String selectedOption = navigationItem.getItemName();
-
-        switch (selectedOption) {
-            case "Decrypt Output": {
-                Intent intent = new Intent(this, DecryptActivity.class);
-                intent.putExtra("data", encryptedText_edit.getText().toString());
-                startActivity(intent);
-                break;
+                default:
+                    Toast.makeText(this, "Encryption Case error", Toast.LENGTH_LONG).show();
+                    break;
             }
-            case "Break Encryption of Output": {
-                Intent intent = new Intent(this, BreakEncryptionActivity.class);
-                intent.putExtra("data", encryptedText_edit.getText().toString());
-                startActivity(intent);
-                break;
-            }
-            case "Share":
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, encryptedText_edit.getText().toString());
-                startActivity(shareIntent);
-                break;
-            case "Info":
-                if (encryptionType == EType.CAESARS) {
-                    FragmentManager manager = getFragmentManager();
-                    CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("encryptCaesar");
-                    dialog.show(manager, "dialog");
-                } else {
-                    FragmentManager manager = getFragmentManager();
-                    CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("encryptVigenere");
-                    dialog.show(manager, "dialog");
-                }
-                break;
-            case "Home": {
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                break;
-            }
+            saveMenuItem.setVisible(true);//save button
+            shouldShowShowSaveItem = true;
         }
-    }
-
-    public void hideKeyboard(EditText et) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(
-                Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
     }
 
     public void onUserSelectedTextSample(String selection) {
-        plainText_edit.setText("");
         plainText_edit.setText(selection);
     }
 
@@ -377,34 +303,6 @@ public class EncryptActivity extends ActionBarActivity implements OnItemSelected
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void setTitle(CharSequence title) {
-        this.title = title;
-        getSupportActionBar().setTitle(this.title);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        drawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggles
-        drawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    public void startVibrate(View v) {
-        if (CTUtils.vibrate) {
-            vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(50);
-        }
-    }
-    
-	
 	/*
      * ASYNC TASK
 	 * */

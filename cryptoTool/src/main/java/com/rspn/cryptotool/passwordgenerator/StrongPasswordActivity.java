@@ -23,11 +23,13 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
     public StrongPasswordActivity() {
         super(R.layout.activity_strongpassword,
                 R.id.adView_InStrongPassword,
-                R.id.drawer_layoutInStrongPasswordActivity);
+                R.id.drawer_layoutInStrongPasswordActivity,
+                R.id.navigation_listInStrongPasswordActivity,
+                R.drawable.closed_lock_binary);//// TODO: 02/03/16 change this icon
     }
 
     @Override
-    protected void findViews() {
+    protected void findAndSetViews() {
         lowerCase_cb = (CheckBox) findViewById(R.id.checkBox_lowerCase);
         upperCase_cb = (CheckBox) findViewById(R.id.checkbox_upperCase);
         digits_cb = (CheckBox) findViewById(R.id.checkBox_digits);
@@ -38,7 +40,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
     }
 
     @Override
-    protected void drawerItemClick() {
+    protected void drawerItemClick(int position) {
         //no need to override
     }
 
@@ -55,6 +57,11 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
     @Override
     protected void setOnClickListener() {
         copyToClipboard_bt.setOnClickListener(this);
+    }
+
+    @Override
+    protected void setDataFromOriginatingActivity() {
+        //nothing to do
     }
 
     @Override
