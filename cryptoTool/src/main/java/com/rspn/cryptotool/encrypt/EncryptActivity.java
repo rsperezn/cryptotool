@@ -33,7 +33,6 @@ import com.rspn.cryptotool.utils.CTUtils.EType;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("deprecation")
 public class EncryptActivity extends AbstractCryptActivity implements OnItemSelectedListener, SaveDialogFragment.Communicator {
     private static final String DECRYPT_OUTPUT = "Decrypt Output";
     private static final String BREAK_ENCRYPTION_OF_OUTPUT = "Break Encryption of Output";
@@ -141,7 +140,7 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 for (int i = start; i < end; i++) {
                     if (!Character.isLetter(source.charAt(i))) {
-                        return "";
+                        return source.subSequence(0,i);
                     }
                 }
                 return null;
@@ -158,7 +157,6 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
         if (!directActivity) {
             return;
         }
-        //else
         navigationItems.add(new NavigationItem("Decrypt Output", R.drawable.ic_go_to_decryption));
         navigationItems.add(new NavigationItem("Break Encryption of Output", R.drawable.ic_go_to_break));
         navigationItems.add(new NavigationItem("Info", R.drawable.ic_info));
@@ -303,11 +301,7 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-	/*
-     * ASYNC TASK
-	 * */
-
-    class MyEncryptionTask extends AsyncTask<EType, Void, String> {
+    private class MyEncryptionTask extends AsyncTask<EType, Void, String> {
         private String plainText, keyword;
         private int delta;
         private EditText plainText_edit;
