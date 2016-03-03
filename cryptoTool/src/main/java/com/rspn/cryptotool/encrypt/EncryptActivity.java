@@ -66,7 +66,7 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
         options_ll = (LinearLayout) findViewById(R.id.layout_options_InEncryptActivity);
         keyword_edit = new EditText(this);
         keyword_edit.setHint("Keyword");
-        setKeywordTextFilter();
+        setKeywordTextFilter(keyword_edit);
         plainText_edit = (EditText) findViewById(R.id.edit_plainText);
         whitespaces_cb = (CheckBox) findViewById(R.id.checkBox_spaces_InEncryptActivity);
         encryptedText_edit = (EditText) findViewById(R.id.edit_encryptedText_InEncryptActivity);
@@ -132,21 +132,6 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
             plainText_edit.setText(this.getIntent().getStringExtra("data"));
             directActivity = false;
         }
-    }
-
-    private void setKeywordTextFilter() {
-        InputFilter filterKeyword = new InputFilter() {
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                for (int i = start; i < end; i++) {
-                    if (!Character.isLetter(source.charAt(i))) {
-                        return source.subSequence(0,i);
-                    }
-                }
-                return null;
-            }
-        };
-        keyword_edit.setFilters(new InputFilter[]{filterKeyword});
     }
 
     private void updateNavigationDrawer() {

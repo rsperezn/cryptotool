@@ -9,12 +9,15 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -177,6 +180,21 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
                 drawerItemClick(position);
                 break;
         }
+    }
+
+    protected void setKeywordTextFilter(EditText editText) {
+        InputFilter filterKeyword = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                for (int i = start; i < end; i++) {
+                    if (!Character.isLetter(source.charAt(i))) {
+                        return source.subSequence(0,i);
+                    }
+                }
+                return null;
+            }
+        };
+        editText.setFilters(new InputFilter[]{filterKeyword});
     }
 
     @Override
