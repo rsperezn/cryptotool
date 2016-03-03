@@ -308,11 +308,11 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
 	 * */
 
     class MyEncryptionTask extends AsyncTask<EType, Void, String> {
-        String plainText, keyword;
-        int delta;
-        EditText plainText_edit;
-        EditText encryptedText_edit;
-        CheckBox whitespaces_cb;
+        private String plainText, keyword;
+        private int delta;
+        private EditText plainText_edit;
+        private EditText encryptedText_edit;
+        private boolean isWhitespacesChecked;
 
         @Override
         protected void onPreExecute() {
@@ -320,7 +320,7 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
             plainText = plainText_edit.getText().toString();
             delta = horizontalNP.getValue();
             encryptedText_edit = (EditText) findViewById(R.id.edit_encryptedText_InEncryptActivity);
-            whitespaces_cb = (CheckBox) findViewById(R.id.checkBox_spaces_InEncryptActivity);
+            isWhitespacesChecked = ((CheckBox) findViewById(R.id.checkBox_spaces_InEncryptActivity)).isChecked();
             keyword = keyword_edit.getText().toString();
         }
 
@@ -330,11 +330,11 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
             String result = null;
             switch (encryption) {
                 case VIGENERE:
-                    result = VigenereEncryption.runEncryption(plainText, keyword, whitespaces_cb.isChecked());
+                    result = VigenereEncryption.runEncryption(plainText, keyword, isWhitespacesChecked);
                     break;
 
                 case CAESARS:
-                    result = CaesarEncryption.runEncryption(plainText, delta, whitespaces_cb.isChecked());
+                    result = CaesarEncryption.runEncryption(plainText, delta, isWhitespacesChecked);
                     break;
 
                 case NULL:
