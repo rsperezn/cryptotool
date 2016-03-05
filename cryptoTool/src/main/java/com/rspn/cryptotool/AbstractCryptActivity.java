@@ -14,6 +14,7 @@ import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -63,6 +64,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_PROGRESS);
         super.onCreate(savedInstanceState);
         setContentView(layoutViewId);
         setAds();
@@ -188,7 +190,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 for (int i = start; i < end; i++) {
                     if (!Character.isLetter(source.charAt(i))) {
-                        return source.subSequence(0,i);
+                        return source.subSequence(0, i);
                     }
                 }
                 return null;
