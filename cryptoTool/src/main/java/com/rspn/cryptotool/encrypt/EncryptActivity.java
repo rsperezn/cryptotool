@@ -3,8 +3,6 @@ package com.rspn.cryptotool.encrypt;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,11 +98,11 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
             case INFO:
                 if (encryptionType == EType.CAESARS) {
                     FragmentManager manager = getFragmentManager();
-                    CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("encryptCaesar");
+                    CryptInfoDialogFragment dialog = CryptInfoDialogFragment.newInstance("encryptCaesar");
                     dialog.show(manager, "dialog");
                 } else {
                     FragmentManager manager = getFragmentManager();
-                    CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("encryptVigenere");
+                    CryptInfoDialogFragment dialog = CryptInfoDialogFragment.newInstance("encryptVigenere");
                     dialog.show(manager, "dialog");
                 }
                 break;

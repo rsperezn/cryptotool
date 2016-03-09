@@ -89,11 +89,11 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
         } else if (selectedOption.equals(INFO)) {
             if (decryptionType == EType.CAESARS) {
                 FragmentManager manager = getFragmentManager();
-                CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("decryptCaesar");
+                CryptInfoDialogFragment dialog = CryptInfoDialogFragment.newInstance("decryptCaesar");
                 dialog.show(manager, "dialog");
             } else {
                 FragmentManager manager = getFragmentManager();
-                CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("decryptVigenere");
+                CryptInfoDialogFragment dialog = CryptInfoDialogFragment.newInstance("decryptVigenere");
                 dialog.show(manager, "dialog");
             }
         }

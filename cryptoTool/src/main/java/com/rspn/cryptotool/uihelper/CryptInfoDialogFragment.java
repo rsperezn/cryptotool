@@ -17,36 +17,50 @@ import android.widget.ProgressBar;
 
 public class CryptInfoDialogFragment extends DialogFragment {
 
-    String Url;
-    String title;
+    private String Url;
+    private  String title;
+    private String request;
 
-    public CryptInfoDialogFragment() {
+    public static CryptInfoDialogFragment newInstance(String request) {
+        CryptInfoDialogFragment fragment = new CryptInfoDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("request", request);
+        fragment.setArguments(args);
+        return fragment;
+
     }
 
-    public CryptInfoDialogFragment(String request) {
-        if (request.equals("encryptCaesar")) {
-            Url = "http://en.wikipedia.org/wiki/Caesar_cipher";
-            title = "Caesar Encryption";
-        } else if (request.equals("encryptVigenere")) {
-            Url = "http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher#Description";
-            title = "Vigenere Encryption";
-        } else if (request.equals("decryptCaesar")) {
-            Url = "http://en.wikipedia.org/wiki/Caesar_cipher";
-            title = "Caesar Decryption";
-        } else if (request.equals("decryptVigenere")) {
-            Url = "http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher#Description";
-            title = "Vigenere Decryption";
-        } else if (request.equals("breakCaesar")) {
-            Url = "http://en.wikipedia.org/wiki/Caesar_cipher#Breaking_the_cipher";
-            title = "Breaking Caesar Encryption";
-        } else if (request.equals("breakVigenere")) {
-            Url = "http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher#Cryptanalysis";
-            title = "Breaking Vigenere Encryption";
-        } else if (request.equals("calculateHashes")) {
-            Url = "http://en.wikipedia.org/wiki/Cryptographic_hash_function";
-            title = "Hashing Algorithms";
+    private  void setContent() {
+        switch (request) {
+            case "encryptCaesar":
+                Url = "http://en.wikipedia.org/wiki/Caesar_cipher";
+                title = "Caesar Encryption";
+                break;
+            case "encryptVigenere":
+                Url = "http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher#Description";
+                title = "Vigenere Encryption";
+                break;
+            case "decryptCaesar":
+                Url = "http://en.wikipedia.org/wiki/Caesar_cipher";
+                title = "Caesar Decryption";
+                break;
+            case "decryptVigenere":
+                Url = "http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher#Description";
+                title = "Vigenere Decryption";
+                break;
+            case "breakCaesar":
+                Url = "http://en.wikipedia.org/wiki/Caesar_cipher#Breaking_the_cipher";
+                title = "Breaking Caesar Encryption";
+                break;
+            case "breakVigenere":
+                Url = "http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher#Cryptanalysis";
+                title = "Breaking Vigenere Encryption";
+                break;
+            case "calculateHashes":
+                Url = "http://en.wikipedia.org/wiki/Cryptographic_hash_function";
+                title = "Hashing Algorithms";
+                break;
         }
-
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -77,6 +91,13 @@ public class CryptInfoDialogFragment extends DialogFragment {
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        request = getArguments().getString("request");
+        setContent();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         getDialog().getWindow().setLayout((int) (CTUtils.windowWidth * 0.95), (int) (CTUtils.windowHeight * 0.95));
@@ -103,10 +124,13 @@ public class CryptInfoDialogFragment extends DialogFragment {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            // TODO Auto-generated method stub
             super.onPageFinished(view, url);
             progressBar.setVisibility(View.GONE);
-            getDialog().setTitle(title);
+            try {
+                getDialog().setTitle(title);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

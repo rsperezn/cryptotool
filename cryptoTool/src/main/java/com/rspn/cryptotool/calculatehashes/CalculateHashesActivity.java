@@ -363,7 +363,7 @@ public class CalculateHashesActivity extends ActionBarActivity implements OnClic
                 break;
             case "Info":
                 FragmentManager manager = getFragmentManager();
-                CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("calculateHashes");
+                CryptInfoDialogFragment dialog = CryptInfoDialogFragment.newInstance("calculateHashes");
                 dialog.show(manager, "dialog");
                 break;
         }

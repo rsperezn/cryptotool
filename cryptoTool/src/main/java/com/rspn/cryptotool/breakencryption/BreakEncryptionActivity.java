@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -109,11 +108,11 @@ public class BreakEncryptionActivity extends AbstractCryptActivity implements Sa
             case INFO:
                 if (encryptionType == EType.VIGENERE) {
                     FragmentManager manager = getFragmentManager();
-                    CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("breakVigenere");
+                    CryptInfoDialogFragment dialog = CryptInfoDialogFragment.newInstance("breakVigenere");
                     dialog.show(manager, "dialog");
                 } else {
                     FragmentManager manager = getFragmentManager();
-                    CryptInfoDialogFragment dialog = new CryptInfoDialogFragment("breakCaesar");
+                    CryptInfoDialogFragment dialog = CryptInfoDialogFragment.newInstance("breakCaesar");
                     dialog.show(manager, "dialog");
                 }
                 break;
