@@ -6,13 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.rspn.cryptotool.R;
 import com.rspn.cryptotool.utils.CTUtils;
@@ -23,6 +23,7 @@ public class CryptInfoDialogFragment extends DialogFragment {
     private String title;
     private String request;
     private ProgressBar progressBar;
+    private TextView loading_text;
 
     public static CryptInfoDialogFragment newInstance(String request) {
         CryptInfoDialogFragment fragment = new CryptInfoDialogFragment();
@@ -35,10 +36,10 @@ public class CryptInfoDialogFragment extends DialogFragment {
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().setTitle("Loading info...");
         View view = inflater.inflate(R.layout.activity_cryptinfo, null, false);
         WebView webView = (WebView) view.findViewById(R.id.webView_cryptInfo);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar_LoadInfo);
+        loading_text = (TextView) view.findViewById(R.id.textView_loadingInfo);
         //Scroll bars should not be hidden
         webView.setScrollbarFadingEnabled(false);
         //Disable the horizontal scroll bar
@@ -107,6 +108,7 @@ public class CryptInfoDialogFragment extends DialogFragment {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
             progressBar.setVisibility(View.VISIBLE);
+            loading_text.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -119,12 +121,7 @@ public class CryptInfoDialogFragment extends DialogFragment {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             progressBar.setVisibility(View.GONE);
-            try {
-                getDialog().setTitle(title);
-                Log.i("Title", title);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            loading_text.setVisibility(View.GONE);
         }
     }
 }
