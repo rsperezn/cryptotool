@@ -170,6 +170,7 @@ public class BreakEncryptionActivity extends AbstractCryptActivity implements Sa
             vibrate();
             shouldShowSaveItem = true;
         }
+        hideKeyboard(encryptedText_edit);
     }
 
     public CTUtils.EType getEncryptionType(String encryptedText) {
