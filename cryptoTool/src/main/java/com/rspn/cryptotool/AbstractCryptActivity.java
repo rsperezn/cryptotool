@@ -128,7 +128,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
     protected void vibrate(int length) {
         if (CTUtils.vibrate) {
             vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(10);
+            vibrator.vibrate(length);
         }
     }
 
