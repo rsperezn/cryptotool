@@ -16,22 +16,17 @@ import java.util.ArrayList;
 /*http://learnandroid.blogspot.ca/2012/11/number-picker-or-text-picker.html*/
 
 public class HorizontalNumberPicker extends LinearLayout {
-    public static final int NUMBER = 0;
-    public static final int TEXT = 1;
-
+    private static final int NUMBER = 0;
+    private static final int TEXT = 1;
     private int style = 0;
     private TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
     private int min = 1;
     private int max = 100;
-
     private ArrayList<String> valueString = new ArrayList<>();
     private int value = 1;
-
-
-    //---
-    Button incButton;
-    Button decButton;
-    TextView valueView;
+    private Button incButton;
+    private Button decButton;
+    private TextView valueView;
 
     public HorizontalNumberPicker(Context context) {
         super(context);
