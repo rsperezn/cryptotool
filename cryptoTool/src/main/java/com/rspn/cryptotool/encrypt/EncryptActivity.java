@@ -149,7 +149,7 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (!isNavigationDrawerOpen() && shouldShowShowSaveItem)
+        if (isNavigationDrawerClosed() && shouldShowShowSaveItem)
             saveMenuItem.setVisible(true);
         return super.onPrepareOptionsMenu(menu);
     }

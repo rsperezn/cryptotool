@@ -137,7 +137,7 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (!isNavigationDrawerOpen() && shouldShowSaveItem) {
+        if (isNavigationDrawerClosed() && shouldShowSaveItem) {
             saveMenuItem.setVisible(true);
         }
         return super.onPrepareOptionsMenu(menu);

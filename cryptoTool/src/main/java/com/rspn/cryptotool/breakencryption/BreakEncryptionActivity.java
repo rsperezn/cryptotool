@@ -190,7 +190,7 @@ public class BreakEncryptionActivity extends AbstractCryptActivity implements Sa
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (!isNavigationDrawerOpen() && shouldShowSaveItem)
+        if (isNavigationDrawerClosed() && shouldShowSaveItem)
             saveMenuItem.setVisible(true);
         return super.onPrepareOptionsMenu(menu);
     }

@@ -327,7 +327,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (!isNavigationDrawerOpen() && shouldShowDetailsItem && hashType.equals("File")) {
+        if (isNavigationDrawerClosed() && shouldShowDetailsItem && hashType.equals("File")) {
             hashingDetailsMenuItem.setVisible(true);
         }
         return super.onPrepareOptionsMenu(menu);

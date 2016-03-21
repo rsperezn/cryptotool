@@ -40,10 +40,8 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
     private int navigationListDrawerId;
     private int navigationDrawerIcon;
     protected ListView navigationList;
-    private Vibrator vibrator;
     protected AdView adView;
     protected ActionBarDrawerToggle drawerToggle;
-    private DrawerLayout navDrawerLayout;
     private boolean navDrawerOpen;
     protected ArrayList<NavigationItem> navigationItems;
     private CharSequence drawerTitle;
@@ -80,7 +78,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
     }
 
     protected void setNavigationDrawer() {
-        navDrawerLayout = (DrawerLayout) findViewById(layoutDrawerId);
+        DrawerLayout navDrawerLayout = (DrawerLayout) findViewById(layoutDrawerId);
         navDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         View header = getLayoutInflater().inflate(R.layout.header_navigation, null);
@@ -127,7 +125,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
 
     protected void vibrate(int length) {
         if (CTUtils.vibrate) {
-            vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(length);
         }
     }
@@ -153,8 +151,8 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         }
     }
 
-    protected boolean isNavigationDrawerOpen() {
-        return navDrawerOpen;
+    protected boolean isNavigationDrawerClosed() {
+        return !navDrawerOpen;
     }
 
     @Override
