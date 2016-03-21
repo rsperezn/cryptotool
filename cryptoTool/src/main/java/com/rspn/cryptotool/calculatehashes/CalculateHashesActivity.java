@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,7 +28,6 @@ import com.rspn.cryptotool.uihelper.OpenComparisonInputsFragment;
 import com.rspn.cryptotool.uihelper.OpenDialogFragment;
 import com.rspn.cryptotool.utils.CTUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -60,11 +58,8 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
     private String algorithm;
     private Spinner algorithms_sp;
     private EditText output_edit;
-    private LinearLayout calculate_layout;
-    private LinearLayout main_layout;
     private final int FILE_CHOOSER = 1; // onActivityResult request code
     private String hashType = "Text";
-    private CheckBox compare_chb;
     private ProgressDialog progressDialog;
     private long timerStartTime;
     private long fileSize;
@@ -94,13 +89,11 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
                 android.R.layout.simple_spinner_dropdown_item, textHashingAlgorithms);
         algorithms_sp.setAdapter(algorithmsAdapter);
         setSpinnerAlgorithms();
-        calculate_layout = (LinearLayout) findViewById(R.id.bottomCalculateHashes_layout);
-        main_layout = (LinearLayout) findViewById(R.id.mainCalculateHashes_layout);
         output_edit = (EditText) findViewById(R.id.edit_hashedText);
         copyToClipboard_bt = (Button) findViewById(R.id.copyToClipboard_hash);
         copyToClipboard_bt.setOnClickListener(this);
         copyToClipboard_bt.setVisibility(View.INVISIBLE);
-        compare_chb = (CheckBox) findViewById(R.id.checkBox_compareHashes);
+        CheckBox compare_chb = (CheckBox) findViewById(R.id.checkBox_compareHashes);
         compare_chb.setOnClickListener(this);
         setEditTextsHints();
     }
@@ -166,13 +159,13 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
 
             case R.id.checkBox_compareHashes:
                 if (((CheckBox) v).isChecked()) {
-                    calculate_bt.setText("Compare Hashes");
+                    calculate_bt.setText(R.string.label_compareHashButton);
                     comparingHashes = true;
                     setEditTextsHints();
                     copyToClipboard_bt.setVisibility(View.INVISIBLE);
                     output_edit.setText("");
                 } else {
-                    calculate_bt.setText("Calculate Hash");
+                    calculate_bt.setText(R.string.label_calculateHashButton);
                     comparingHashes = false;
                     setEditTextsHints();
                     copyToClipboard_bt.setVisibility(View.VISIBLE);
@@ -268,7 +261,6 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
         int id = item.getItemId();
 
         if (id == R.id.menu_open) {
-            //TODO fix here the logic
             FragmentManager manager = getFragmentManager();
             if (hashType.equals("Text")) {
                 if (comparingHashes) {
@@ -321,7 +313,6 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
         ArrayAdapter<String> algorithmsAdapter;
 
         if (hashType.equals("Text")) {
-            //hashingDetailsMenuItem.setVisible(false);
             algorithms_sp.setAdapter(null);
             algorithmsAdapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_spinner_dropdown_item, textHashingAlgorithms);
@@ -332,27 +323,6 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
                     android.R.layout.simple_spinner_dropdown_item, fileHashingAlgorithms);
             algorithms_sp.setAdapter(algorithmsAdapter);
         }
-    }
-
-    public byte[] convertFileToByteArray(File f) {
-        byte[] byteArray = null;
-        try {
-            InputStream inputStream = new FileInputStream(f);
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            byte[] b = new byte[1024 * 8];
-            int bytesRead;
-
-            while ((bytesRead = inputStream.read(b)) != -1) {
-                bos.write(b, 0, bytesRead);
-            }
-
-            byteArray = bos.toByteArray();
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return byteArray;
     }
 
     @Override
@@ -450,78 +420,87 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
 
             try {
                 hideKeyboard(input1_edit);
-                if (algorithm.equals("Blowfish")) {
-                    KeyGenerator keyGenerator = KeyGenerator.getInstance("Blowfish");
-                    keyGenerator.init(128);
-                    Key secretKey = keyGenerator.generateKey();
-                    Cipher cipher = null;
-                    try {
-                        cipher = Cipher.getInstance("Blowfish/CFB/NoPadding");
-                    } catch (NoSuchPaddingException e) {
-                        e.printStackTrace();
-                    }
+                switch (algorithm) {
+                    case "Blowfish": {
+                        KeyGenerator keyGenerator = KeyGenerator.getInstance("Blowfish");
+                        keyGenerator.init(128);
+                        Key secretKey = keyGenerator.generateKey();
+                        Cipher cipher = null;
+                        try {
+                            cipher = Cipher.getInstance("Blowfish/CFB/NoPadding");
+                        } catch (NoSuchPaddingException e) {
+                            e.printStackTrace();
+                        }
 
-                    try {
-                        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-                    } catch (InvalidKeyException e) {
-                        e.printStackTrace();
+                        try {
+                            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+                        } catch (InvalidKeyException e) {
+                            e.printStackTrace();
+                        }
+                        byte output[] = cipher.getIV();
+                        hashResults.add(CTUtils.bytesToHex(output));
+                        break;
                     }
-                    byte output[] = cipher.getIV();
-                    hashResults.add(CTUtils.bytesToHex(output));
-                } else if (algorithm.equals("RC4")) {
-                    SecureRandom secureRandom = new SecureRandom(new byte[128]);
-                    KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
-                    keyGenerator.init(secureRandom);
-                    SecretKey sk = keyGenerator.generateKey();
+                    case "RC4": {
+                        SecureRandom secureRandom = new SecureRandom(new byte[128]);
+                        KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
+                        keyGenerator.init(secureRandom);
+                        SecretKey sk = keyGenerator.generateKey();
 
-                    // create an instance of cipher
-                    Cipher cipher = null;
-                    try {
-                        cipher = Cipher.getInstance(algorithm);
-                    } catch (NoSuchPaddingException e) {
-                        e.printStackTrace();
-                    }
+                        // create an instance of cipher
+                        Cipher cipher = null;
+                        try {
+                            cipher = Cipher.getInstance(algorithm);
+                        } catch (NoSuchPaddingException e) {
+                            e.printStackTrace();
+                        }
 
-                    // initialize the cipher with the key
-                    try {
-                        cipher.init(Cipher.ENCRYPT_MODE, sk);
-                    } catch (InvalidKeyException e) {
-                        e.printStackTrace();
+                        // initialize the cipher with the key
+                        try {
+                            cipher.init(Cipher.ENCRYPT_MODE, sk);
+                        } catch (InvalidKeyException e) {
+                            e.printStackTrace();
+                        }
+                        byte[] output = null;
+                        try {
+                            output = cipher.doFinal(byteArray);
+                        } catch (IllegalBlockSizeException | BadPaddingException e) {
+                            e.printStackTrace();
+                        }
+                        hashResults.add(CTUtils.bytesToHex(output));
+                        break;
                     }
-                    byte[] output = null;
-                    try {
-                        output = cipher.doFinal(byteArray);
-                    } catch (IllegalBlockSizeException | BadPaddingException e) {
-                        e.printStackTrace();
+                    case "AES": {
+                        KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
+                        keyGenerator.init(128);
+                        Key key = keyGenerator.generateKey();
+                        Cipher cipher = null;
+                        try {
+                            cipher = Cipher.getInstance("AES");
+                        } catch (NoSuchPaddingException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            cipher.init(Cipher.ENCRYPT_MODE, key);
+                        } catch (InvalidKeyException e) {
+                            e.printStackTrace();
+                        }
+                        byte[] output = null;
+                        try {
+                            output = cipher.doFinal(byteArray);
+                        } catch (IllegalBlockSizeException | BadPaddingException e) {
+                            e.printStackTrace();
+                        }
+                        hashResults.add(CTUtils.bytesToHex(output));
+                        break;
                     }
-                    hashResults.add(CTUtils.bytesToHex(output));
-                } else if (algorithm.equals("AES")) {
-                    KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
-                    keyGenerator.init(128);
-                    Key key = keyGenerator.generateKey();
-                    Cipher cipher = null;
-                    try {
-                        cipher = Cipher.getInstance("AES");
-                    } catch (NoSuchPaddingException e) {
-                        e.printStackTrace();
+                    default: {
+                        MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
+                        messageDigest.update(byteArray);
+                        byte[] output = messageDigest.digest();
+                        hashResults.add(CTUtils.bytesToHex(output));
+                        break;
                     }
-                    try {
-                        cipher.init(Cipher.ENCRYPT_MODE, key);
-                    } catch (InvalidKeyException e) {
-                        e.printStackTrace();
-                    }
-                    byte[] output = null;
-                    try {
-                        output = cipher.doFinal(byteArray);
-                    } catch (IllegalBlockSizeException | BadPaddingException e) {
-                        e.printStackTrace();
-                    }
-                    hashResults.add(CTUtils.bytesToHex(output));
-                } else {
-                    MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
-                    messageDigest.update(byteArray);
-                    byte[] output = messageDigest.digest();
-                    hashResults.add(CTUtils.bytesToHex(output));
                 }
             } catch (NoSuchAlgorithmException e) {
                 //Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT);
