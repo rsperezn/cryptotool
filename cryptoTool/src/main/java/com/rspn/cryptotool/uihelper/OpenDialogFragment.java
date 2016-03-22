@@ -1,6 +1,7 @@
 package com.rspn.cryptotool.uihelper;
 
 import android.app.DialogFragment;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,12 +27,11 @@ import java.util.Map;
 public class OpenDialogFragment extends DialogFragment implements OnItemClickListener {
 
     private String textSampleTypeFilter;
-    private ListView mylist;
-    private TextSamplesDataSource datasource;
+    private ListView listView;
+    private TextSamplesDataSource dataSource;
     private List<Text> textSamples;
     private static Map<String, String> titles;
-    private EditText previewEditText = null;
-    private Boolean isComparingHashes = false;
+    private static boolean isComparingHashes = false;
 
     static {
         titles = new HashMap<>();
@@ -51,24 +51,28 @@ public class OpenDialogFragment extends DialogFragment implements OnItemClickLis
         return fragment;
     }
 
-    public OpenDialogFragment(EditText previewEditText) {
+    public static OpenDialogFragment newInstance(int editTextId) {
+        OpenDialogFragment fragment = new OpenDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("filter", "All");
+        args.putInt("id", editTextId);
+        fragment.setArguments(args);
         isComparingHashes = true;
-        this.textSampleTypeFilter = "All";
-        this.previewEditText = previewEditText;
+        return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_open_savedtextdialogfragment, null, false);
-        mylist = (ListView) view.findViewById(R.id.list);
+        listView = (ListView) view.findViewById(R.id.list);
         textSampleTypeFilter = getArguments().getString("filter");
 
         registerForContextMenu(view);
         getDialog().setTitle(titles.get(textSampleTypeFilter) + " samples");//title
 
         //database
-        datasource = new TextSamplesDataSource(getActivity());
-        datasource.open();
+        dataSource = new TextSamplesDataSource(getActivity());
+        dataSource.open();
         return view;
     }
 
@@ -77,14 +81,14 @@ public class OpenDialogFragment extends DialogFragment implements OnItemClickLis
         super.onActivityCreated(savedInstanceState);
 
         if (textSampleTypeFilter.equals(("All"))) {
-            textSamples = datasource.findAll();
+            textSamples = dataSource.findAll();
         } else {
-            textSamples = datasource.findFiltered("type='" + textSampleTypeFilter + "'", "title ASC");
+            textSamples = dataSource.findFiltered("type='" + textSampleTypeFilter + "'", "title ASC");
         }
 
         SavedTextArrayAdapter adapter = new SavedTextArrayAdapter(getActivity(), textSamples);
-        mylist.setAdapter(adapter);
-        mylist.setOnItemClickListener(this);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
     }
 
     @Override
@@ -102,14 +106,16 @@ public class OpenDialogFragment extends DialogFragment implements OnItemClickLis
                 callingActivity.onUserSelectedTextSample(selection);
             }
         } else {// All saved Texts called by HashActivity
+            CalculateHashesActivity callingActivity = (CalculateHashesActivity) getActivity();
             if (isComparingHashes) {
+                Fragment callingFragment = getActivity().getFragmentManager().findFragmentByTag("openComparisonHashesFragment");
+                EditText previewEditText = (EditText) callingFragment.getView().findViewById(getArguments().getInt("id"));
                 previewEditText.setText(selection);
             } else {
-                CalculateHashesActivity callingActivity = (CalculateHashesActivity) getActivity();
-                callingActivity.setInputForHashCalculation(selection);
+                callingActivity.onUserSelectedTextSample(selection);
             }
         }
-        datasource.close();
+        dataSource.close();
         dismiss();
     }
 

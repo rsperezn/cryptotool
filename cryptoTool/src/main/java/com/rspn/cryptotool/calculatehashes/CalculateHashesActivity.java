@@ -265,10 +265,10 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
             if (hashType.equals("Text")) {
                 if (comparingHashes) {
                     OpenComparisonInputsFragment dialog = new OpenComparisonInputsFragment("Text");
-                    dialog.show(manager, "comparison manager");
+                    dialog.show(manager, "openComparisonHashesFragment");
                 } else {
                     OpenDialogFragment dialog = OpenDialogFragment.newInstance("All");
-                    dialog.show(manager, "dialog");
+                    dialog.show(manager, "openDialogFragment");
                 }
             } else {
                 if (comparingHashes) {
@@ -305,7 +305,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
         output_edit.setText(input2);
     }
 
-    public void setInputForHashCalculation(String input1) {
+    public void onUserSelectedTextSample(String input1) {
         input1_edit.setText(input1);
     }
 

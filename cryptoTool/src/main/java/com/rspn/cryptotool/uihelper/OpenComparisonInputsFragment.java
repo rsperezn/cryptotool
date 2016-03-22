@@ -66,7 +66,7 @@ public class OpenComparisonInputsFragment extends DialogFragment implements OnCl
         switch (v.getId()) {
             case R.id.buttonSelect_Input1:
                 if (comparisonType.equals("Text")) {
-                    OpenDialogFragment dialog = new OpenDialogFragment(input1_edit);
+                    OpenDialogFragment dialog = OpenDialogFragment.newInstance(R.id.compareInput_EditText1);
                     dialog.show(this.getFragmentManager(), "dialog");
                 } else {
                     Intent intent = new Intent(getActivity(), FileChooserActivity.class);
@@ -76,7 +76,7 @@ public class OpenComparisonInputsFragment extends DialogFragment implements OnCl
                 break;
             case R.id.buttonSelect_Input2:
                 if (comparisonType.equals("Text")) {
-                    OpenDialogFragment dialog = new OpenDialogFragment(input2_edit);
+                    OpenDialogFragment dialog = OpenDialogFragment.newInstance(R.id.compareInput_EditText2);
                     dialog.show(this.getFragmentManager(), "dialog");
                 } else {
                     Intent intent = new Intent(getActivity(), FileChooserActivity.class);
