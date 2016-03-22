@@ -267,7 +267,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
                     OpenComparisonInputsFragment dialog = new OpenComparisonInputsFragment("Text");
                     dialog.show(manager, "comparison manager");
                 } else {
-                    OpenDialogFragment dialog = new OpenDialogFragment("All");
+                    OpenDialogFragment dialog = OpenDialogFragment.newInstance("All");
                     dialog.show(manager, "dialog");
                 }
             } else {

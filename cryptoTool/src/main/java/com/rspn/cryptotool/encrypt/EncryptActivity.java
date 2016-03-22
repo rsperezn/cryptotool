@@ -175,7 +175,7 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
         }
         if (id == R.id.action_open) {
             FragmentManager manager = getFragmentManager();
-            OpenDialogFragment dialog = new OpenDialogFragment("PlainText");//plaintext samples so user can choose to encrypt one
+            OpenDialogFragment dialog = OpenDialogFragment.newInstance("PlainText");//plaintext samples so user can choose to encrypt one
             dialog.show(manager, "dialog");
 
         }

@@ -163,7 +163,7 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
         }
         if (id == R.id.action_open) {
             FragmentManager manager = getFragmentManager();
-            OpenDialogFragment dialog = new OpenDialogFragment("EncryptedText");//encrypted samples so user can choose to encrypt one
+            OpenDialogFragment dialog = OpenDialogFragment.newInstance("EncryptedText");//encrypted samples so user can choose to encrypt one
             dialog.show(manager, "dialog");
         }
         if (id == R.id.action_save) {
