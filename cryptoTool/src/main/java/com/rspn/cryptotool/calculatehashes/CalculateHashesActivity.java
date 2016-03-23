@@ -264,7 +264,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
             FragmentManager manager = getFragmentManager();
             if (hashType.equals("Text")) {
                 if (comparingHashes) {
-                    OpenComparisonInputsFragment dialog = new OpenComparisonInputsFragment("Text");
+                    OpenComparisonInputsFragment dialog = OpenComparisonInputsFragment.newInstance("Text");
                     dialog.show(manager, "openComparisonHashesFragment");
                 } else {
                     OpenDialogFragment dialog = OpenDialogFragment.newInstance("All");
@@ -272,7 +272,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
                 }
             } else {
                 if (comparingHashes) {
-                    OpenComparisonInputsFragment dialog = new OpenComparisonInputsFragment("File");
+                    OpenComparisonInputsFragment dialog = OpenComparisonInputsFragment.newInstance("File");
                     dialog.show(manager, "comparison manager");
                 } else {
                     Intent intent = new Intent(this, FileChooserActivity.class);

@@ -17,34 +17,33 @@ import com.rspn.cryptotool.calculatehashes.CalculateHashesActivity;
 
 public class OpenComparisonInputsFragment extends DialogFragment implements OnClickListener {
 
-    private static final int FILE_CHOOSER = 0;
     private String comparisonType;
     private EditText input1_edit;
     private EditText input2_edit;
-    private Button selectInput1_bt;
-    private Button selectInput2_bt;
-    private Button cancel_bt;
-    private Button OK_bt;
 
 
     public OpenComparisonInputsFragment() {
     }
 
-    public OpenComparisonInputsFragment(String comparisonType) {
-        this.comparisonType = comparisonType;
+    public static OpenComparisonInputsFragment newInstance(String request) {
+        OpenComparisonInputsFragment fragment = new OpenComparisonInputsFragment();
+        Bundle args = new Bundle();
+        args.putString("comparisonType", request);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        comparisonType = getArguments().getString("comparisonType");
         getDialog().setTitle("Compare Hashes of " + comparisonType + "s");
         View view = inflater.inflate(R.layout.activity_open_compare_imputs_fragment, null);
         input1_edit = (EditText) view.findViewById(R.id.compareInput_EditText1);
         input2_edit = (EditText) view.findViewById(R.id.compareInput_EditText2);
-        selectInput1_bt = (Button) view.findViewById(R.id.buttonSelect_Input1);
-        selectInput2_bt = (Button) view.findViewById(R.id.buttonSelect_Input2);
-        cancel_bt = (Button) view.findViewById(R.id.button_Cancel_CompareHashes);
-        OK_bt = (Button) view.findViewById(R.id.button_OK_CompareHashes);
+        Button selectInput1_bt = (Button) view.findViewById(R.id.buttonSelect_Input1);
+        Button selectInput2_bt = (Button) view.findViewById(R.id.buttonSelect_Input2);
+        Button cancel_bt = (Button) view.findViewById(R.id.button_Cancel_CompareHashes);
+        Button OK_bt = (Button) view.findViewById(R.id.button_OK_CompareHashes);
 
         selectInput1_bt.setOnClickListener(this);
         selectInput2_bt.setOnClickListener(this);
