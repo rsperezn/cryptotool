@@ -1,15 +1,5 @@
 package com.rspn.cryptotool.uihelper;
 
-import java.util.List;
-
-import com.rspn.cryptotool.R;
-import com.rspn.cryptotool.breakencryption.BreakEncryptionActivity;
-import com.rspn.cryptotool.db.TextSamplesDataSource;
-import com.rspn.cryptotool.decrypt.DecryptActivity;
-import com.rspn.cryptotool.encrypt.EncryptActivity;
-import com.rspn.cryptotool.model.Text;
-import com.rspn.cryptotool.utils.CTUtils;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -22,18 +12,23 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.rspn.cryptotool.R;
+import com.rspn.cryptotool.breakencryption.BreakEncryptionActivity;
+import com.rspn.cryptotool.db.TextSamplesDataSource;
+import com.rspn.cryptotool.decrypt.DecryptActivity;
+import com.rspn.cryptotool.encrypt.EncryptActivity;
+import com.rspn.cryptotool.model.Text;
+import com.rspn.cryptotool.utils.CTUtils;
+
+import java.util.List;
+
 public class SaveDialogFragment extends DialogFragment implements OnClickListener {
-    CheckBox input_cb, output_cb;
-    EditText inputTitle_edit, outputTitle_edit;
-    Button save_bt, cancel_bt;
-    String parentClass;
-    Communicator communicator;
+    private CheckBox input_cb, output_cb;
+    private EditText inputTitle_edit, outputTitle_edit;
+    private Button save_bt, cancel_bt;
+    private Communicator communicator;
 
     public SaveDialogFragment() {
-    }
-
-    public SaveDialogFragment(String parentClass) {//need to know in which databases to save
-        this.parentClass = parentClass;
     }
 
     @Override
@@ -41,7 +36,6 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
         super.onAttach(activity);
         communicator = (Communicator) activity;
     }
-
 
     @SuppressLint("InflateParams")
     @SuppressWarnings("static-access")
@@ -77,16 +71,43 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                 dismiss();
                 break;
             case R.id.button_Save:
-                TextSamplesDataSource datasource = new TextSamplesDataSource(getActivity());
-                datasource.open();
+                TextSamplesDataSource dataSource = new TextSamplesDataSource(getActivity());
+                dataSource.open();
                 //need to know who created this object
-                if (parentClass.equals(CTUtils.EA)) {//Encrypt Activity
-                    List<String> contentToSave = EncryptActivity.getTextsToSave(input_cb.isChecked(), output_cb.isChecked());
-                    if (contentToSave.size() == 1) {
-                        //check what type of text it is
-                        Text text = new Text();
-                        if (input_cb.isChecked()) {//saving a plainText
-                            if (inputTitle_edit.getText().toString().trim().equals("")) {
+                String parentClass = getActivity().getClass().getSimpleName();
+                switch (parentClass) {
+                    case "EncryptActivity": {
+                        List<String> contentToSave = EncryptActivity.getTextsToSave(input_cb.isChecked(), output_cb.isChecked());
+                        if (contentToSave.size() == 1) {
+                            //check what type of text it is
+                            Text text = new Text();
+                            if (input_cb.isChecked()) {//saving a plainText
+                                if (inputTitle_edit.getText().toString().trim().isEmpty()) {
+                                    text.setTitle("Plain Text");
+                                } else {
+                                    text.setTitle(inputTitle_edit.getText().toString());
+                                }
+                                text.setType(CTUtils.PT);
+                                text.setContent(contentToSave.get(0));
+                                text.setDeletable(1);
+                                dataSource.create(text);
+                            } else {//saving an EncryptedText
+                                if (outputTitle_edit.getText().toString().trim().isEmpty()) {
+                                    text.setTitle("Encrypted Text");
+                                } else {
+                                    text.setTitle(outputTitle_edit.getText().toString());
+                                }
+                                text.setType(CTUtils.ET);
+                                text.setContent(contentToSave.get(0));
+                                text.setDeletable(1);
+                                dataSource.create(text);
+                            }
+                        }
+                        //if returning two strings, first one is plaintext second one is encrypted text
+                        else {
+                            //input
+                            Text text = new Text();
+                            if (inputTitle_edit.getText().toString().trim().isEmpty()) {
                                 text.setTitle("Plain Text");
                             } else {
                                 text.setTitle(inputTitle_edit.getText().toString());
@@ -94,52 +115,54 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                             text.setType(CTUtils.PT);
                             text.setContent(contentToSave.get(0));
                             text.setDeletable(1);
-                            datasource.create(text);
-                        } else {//saving an EncryptedText
-                            if (outputTitle_edit.getText().toString().trim().equals("")) {
-                                text.setTitle("Encrypted Text");
+                            dataSource.create(text);
+                            //output
+                            text = new Text();
+                            if (outputTitle_edit.getText().toString().trim().isEmpty()) {
+                                text.setTitle("Plain Text");
                             } else {
                                 text.setTitle(outputTitle_edit.getText().toString());
                             }
                             text.setType(CTUtils.ET);
-                            text.setContent(contentToSave.get(0));
+                            text.setContent(contentToSave.get(1));
                             text.setDeletable(1);
-                            datasource.create(text);
+                            dataSource.create(text);
                         }
-                    }
-                    //if returning two strings, first one is plaintext second one is encrypted text
-                    else {
-                        //input
-                        Text text = new Text();
-                        if (inputTitle_edit.getText().toString().trim().equals("")) {
-                            text.setTitle("Plain Text");
-                        } else {
-                            text.setTitle(inputTitle_edit.getText().toString());
-                        }
-                        text.setType(CTUtils.PT);
-                        text.setContent(contentToSave.get(0));
-                        text.setDeletable(1);
-                        datasource.create(text);
-                        //output
-                        text = new Text();
-                        if (outputTitle_edit.getText().toString().trim().equals("")) {
-                            text.setTitle("Plain Text");
-                        } else {
-                            text.setTitle(outputTitle_edit.getText().toString());
-                        }
-                        text.setType(CTUtils.ET);
-                        text.setContent(contentToSave.get(1));
-                        text.setDeletable(1);
-                        datasource.create(text);
-                    }
 
-                } else if (parentClass.equals(CTUtils.DA)) {//DecryptActivity
-                    List<String> contentToSave = DecryptActivity.getTextsToSave(input_cb.isChecked(), output_cb.isChecked());
-                    if (contentToSave.size() == 1) {
-                        //check what type of text it is
-                        Text text = new Text();
-                        if (input_cb.isChecked()) {//saving a Encrypted Text
-                            if (inputTitle_edit.getText().toString().trim().equals("")) {
+                        break;
+                    }
+                    case "DecryptActivity": {
+                        List<String> contentToSave = DecryptActivity.getTextsToSave(input_cb.isChecked(), output_cb.isChecked());
+                        if (contentToSave.size() == 1) {
+                            //check what type of text it is
+                            Text text = new Text();
+                            if (input_cb.isChecked()) {//saving a Encrypted Text
+                                if (inputTitle_edit.getText().toString().trim().isEmpty()) {
+                                    text.setTitle("Encrypted Text");
+                                } else {
+                                    text.setTitle(inputTitle_edit.getText().toString());
+                                }
+                                text.setType(CTUtils.ET);
+                                text.setContent(contentToSave.get(0));
+                                text.setDeletable(1);
+                                dataSource.create(text);
+                            } else {//saving an Decrypted
+                                if (outputTitle_edit.getText().toString().trim().isEmpty()) {
+                                    text.setTitle("Decrypted Text");
+                                } else {
+                                    text.setTitle(outputTitle_edit.getText().toString());
+                                }
+                                text.setType(CTUtils.DT);
+                                text.setContent(contentToSave.get(0));
+                                text.setDeletable(1);
+                                dataSource.create(text);
+                            }
+                        }
+                        //if returning two strings, first one is plaintext second one is encrypted text
+                        else {
+                            //input
+                            Text text = new Text();
+                            if (inputTitle_edit.getText().toString().trim().isEmpty()) {
                                 text.setTitle("Encrypted Text");
                             } else {
                                 text.setTitle(inputTitle_edit.getText().toString());
@@ -147,51 +170,51 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                             text.setType(CTUtils.ET);
                             text.setContent(contentToSave.get(0));
                             text.setDeletable(1);
-                            datasource.create(text);
-                        } else {//saving an Decrypted
-                            if (outputTitle_edit.getText().toString().trim().equals("")) {
+                            dataSource.create(text);
+                            //output
+                            text = new Text();
+                            if (outputTitle_edit.getText().toString().trim().isEmpty()) {
                                 text.setTitle("Decrypted Text");
                             } else {
                                 text.setTitle(outputTitle_edit.getText().toString());
                             }
                             text.setType(CTUtils.DT);
-                            text.setContent(contentToSave.get(0));
+                            text.setContent(contentToSave.get(1));
                             text.setDeletable(1);
-                            datasource.create(text);
+                            dataSource.create(text);
                         }
+                        break;
                     }
-                    //if returning two strings, first one is plaintext second one is encrypted text
-                    else {
-                        //input
-                        Text text = new Text();
-                        if (inputTitle_edit.getText().toString().trim().equals("")) {
-                            text.setTitle("Encrypted Text");
+                    default: //BreakEncryptionActivity
+                        List<String> contentToSave = BreakEncryptionActivity.getTextsToSave(input_cb.isChecked(), output_cb.isChecked());
+                        if (contentToSave.size() == 1) {
+                            //check what type of text it is
+                            Text text = new Text();
+                            if (input_cb.isChecked()) {//saving a Encrypted Text
+                                if (inputTitle_edit.getText().toString().trim().isEmpty()) {
+                                    text.setTitle("Encrypted Text");
+                                } else {
+                                    text.setTitle(inputTitle_edit.getText().toString());
+                                }
+                                text.setType(CTUtils.ET);
+                                text.setContent(contentToSave.get(0));
+                                text.setDeletable(1);
+                                dataSource.create(text);
+                            } else {//saving an Broken Encryption Text
+                                if (outputTitle_edit.getText().toString().trim().isEmpty()) {
+                                    text.setTitle("Broken Encryption Text");
+                                } else {
+                                    text.setTitle(outputTitle_edit.getText().toString());
+                                }
+                                text.setType(CTUtils.BET);
+                                text.setContent(contentToSave.get(0));
+                                text.setDeletable(1);
+                                dataSource.create(text);
+                            }
                         } else {
-                            text.setTitle(inputTitle_edit.getText().toString());
-                        }
-                        text.setType(CTUtils.ET);
-                        text.setContent(contentToSave.get(0));
-                        text.setDeletable(1);
-                        datasource.create(text);
-                        //output
-                        text = new Text();
-                        if (outputTitle_edit.getText().toString().trim().equals("")) {
-                            text.setTitle("Decrypted Text");
-                        } else {
-                            text.setTitle(outputTitle_edit.getText().toString());
-                        }
-                        text.setType(CTUtils.DT);
-                        text.setContent(contentToSave.get(1));
-                        text.setDeletable(1);
-                        datasource.create(text);
-                    }
-                } else {//BreakEncryptionActivity
-                    List<String> contentToSave = BreakEncryptionActivity.getTextsToSave(input_cb.isChecked(), output_cb.isChecked());
-                    if (contentToSave.size() == 1) {
-                        //check what type of text it is
-                        Text text = new Text();
-                        if (input_cb.isChecked()) {//saving a Encrypted Text
-                            if (inputTitle_edit.getText().toString().trim().equals("")) {
+                            //input
+                            Text text = new Text();
+                            if (inputTitle_edit.getText().toString().trim().isEmpty()) {
                                 text.setTitle("Encrypted Text");
                             } else {
                                 text.setTitle(inputTitle_edit.getText().toString());
@@ -199,46 +222,24 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                             text.setType(CTUtils.ET);
                             text.setContent(contentToSave.get(0));
                             text.setDeletable(1);
-                            datasource.create(text);
-                        } else {//saving an Broken Encryption Text
-                            if (outputTitle_edit.getText().toString().trim().equals("")) {
+                            dataSource.create(text);
+                            //output
+                            text = new Text();
+                            if (outputTitle_edit.getText().toString().trim().isEmpty()) {
                                 text.setTitle("Broken Encryption Text");
                             } else {
                                 text.setTitle(outputTitle_edit.getText().toString());
                             }
                             text.setType(CTUtils.BET);
-                            text.setContent(contentToSave.get(0));
+                            text.setContent(contentToSave.get(1));
                             text.setDeletable(1);
-                            datasource.create(text);
+                            dataSource.create(text);
                         }
-                    } else {
-                        //input
-                        Text text = new Text();
-                        if (inputTitle_edit.getText().toString().trim().equals("")) {
-                            text.setTitle("Encrypted Text");
-                        } else {
-                            text.setTitle(inputTitle_edit.getText().toString());
-                        }
-                        text.setType(CTUtils.ET);
-                        text.setContent(contentToSave.get(0));
-                        text.setDeletable(1);
-                        datasource.create(text);
-                        //output
-                        text = new Text();
-                        if (outputTitle_edit.getText().toString().trim().equals("")) {
-                            text.setTitle("Broken Encryption Text");
-                        } else {
-                            text.setTitle(outputTitle_edit.getText().toString());
-                        }
-                        text.setType(CTUtils.BET);
-                        text.setContent(contentToSave.get(1));
-                        text.setDeletable(1);
-                        datasource.create(text);
-                    }
+                        break;
                 }
 
-                datasource.close();
-                communicator.onDialogMessage("Saved succesfully");
+                dataSource.close();
+                communicator.onDialogMessage("Saved successfully");
                 dismiss();
                 break;
             case R.id.checkBox_saveInput:

@@ -68,6 +68,20 @@ public class BreakEncryptionActivity extends AbstractCryptActivity implements Sa
         );
     }
 
+    public static List<String> getTextsToSave(boolean input, boolean output) {
+        List<String> results = new ArrayList<>();
+        if (input && !output) {
+            results.add(encryptedText_edit.getText().toString());
+        } else if (!input && output) {
+
+            results.add(brokenText_edit.getText().toString());
+        } else {
+            results.add(encryptedText_edit.getText().toString());
+            results.add(brokenText_edit.getText().toString());
+        }
+        return results;
+    }
+
     @Override
     protected void findAndSetViews() {
         encryptedText_edit = (EditText) findViewById(R.id.edit_encryptedText_InBreakActivity);
@@ -220,7 +234,7 @@ public class BreakEncryptionActivity extends AbstractCryptActivity implements Sa
         }
         if (id == R.id.action_save) {
             FragmentManager manager = getFragmentManager();
-            SaveDialogFragment dialog = new SaveDialogFragment(CTUtils.BEA);//plaintext samples so user can choose to encrypt one
+            SaveDialogFragment dialog = new SaveDialogFragment();//plaintext samples so user can choose to encrypt one
             dialog.show(manager, "dialog");
         }
 
@@ -246,20 +260,6 @@ public class BreakEncryptionActivity extends AbstractCryptActivity implements Sa
     @Override
     public void onDialogMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
-    public static List<String> getTextsToSave(boolean input, boolean output) {
-        List<String> results = new ArrayList<>();
-        if (input && !output) {
-            results.add(encryptedText_edit.getText().toString());
-        } else if (!input && output) {
-
-            results.add(brokenText_edit.getText().toString());
-        } else {
-            results.add(encryptedText_edit.getText().toString());
-            results.add(brokenText_edit.getText().toString());
-        }
-        return results;
     }
 
     private class MyEncryptionBreaker extends AsyncTask<EType, Integer, Void> {

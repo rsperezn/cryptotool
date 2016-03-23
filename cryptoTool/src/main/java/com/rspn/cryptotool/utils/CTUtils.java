@@ -4,29 +4,23 @@ import java.util.Hashtable;
 
 public class CTUtils{
     public static final String TAG = "CryptoTool";
-    private static char[] alphabet = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
-            'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    public final static String ET = "EncryptedText";
+    public final static String PT = "PlainText";
+    public final static String DT = "DecryptedText";
+    public final static String BET = "BrokenEncryptionText";
     public static Hashtable<Character, Integer> charToInt = new Hashtable<>();
-    private static boolean initialized = false;
-    private static double[] characterProbabilities = {0.08167, 0.0492, 0.02782, 0.04253, 0.12702, 0.02228, 0.02015, 0.06094, 0.06966, 0.00153, 0.00772,
-            0.04025, 0.02406, 0.06749, 0.07507, 0.01929, 0.00095, 0.05987, 0.06327, 0.09056, 0.02758, 0.00978,
-            0.02360, 0.00150, 0.01974, 0.00074};
     public static double EnglishIC = 0.065;
     public static boolean retainCase = false;
     public static boolean vibrate = false;
     public static double windowWidth = 0;
     public static double windowHeight = 0;
-    public final static String ET = "EncryptedText";
-    public final static String PT = "PlainText";
-    public final static String DT = "DecryptedText";
-    public final static String BET = "BrokenEncryptionText";
-    public final static String EA = "EncryptActivity";
-    public final static String DA = "DecryptActivity";
-    public final static String BEA = "BreakEncryptionActivity";
-    public enum EType {//Encryption Types
-        VIGENERE, CAESARS, NULL
-    }
+    private static char[] alphabet = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
+            'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    private static boolean initialized = false;
+    private static double[] characterProbabilities = {0.08167, 0.0492, 0.02782, 0.04253, 0.12702, 0.02228, 0.02015, 0.06094, 0.06966, 0.00153, 0.00772,
+            0.04025, 0.02406, 0.06749, 0.07507, 0.01929, 0.00095, 0.05987, 0.06327, 0.09056, 0.02758, 0.00978,
+            0.02360, 0.00150, 0.01974, 0.00074};
 
     public static char[] getAlphabet() {
         return alphabet;
@@ -88,6 +82,10 @@ public class CTUtils{
             stringBuilder.append(hexDigit[abyte & 0x0f]);
         }
         return stringBuilder.toString();
+    }
+
+    public enum EType {//Encryption Types
+        VIGENERE, CAESARS, NULL
     }
 
 }

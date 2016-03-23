@@ -33,10 +33,10 @@ import java.util.List;
 public class DecryptActivity extends AbstractCryptActivity implements OnItemSelectedListener, SaveDialogFragment.Communicator {
     private final static String ENCRYPT_OUTPUT = "Encrypt Output";
     private final static String INFO = "Info";
-    private Spinner scheme_spinner;
-    private EditText keyword_edit;
     private static EditText encryptedText_edit;
     private static EditText decryptedText_edit;
+    private Spinner scheme_spinner;
+    private EditText keyword_edit;
     private LinearLayout options_ll;
     private EType decryptionType;
     private Button run_decrypt_bt;
@@ -54,6 +54,20 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
                 R.id.drawer_layoutInDecryptActivity,
                 R.id.navigation_listInDecryptActivity,
                 R.drawable.open_lock_binary);
+    }
+
+    public static List<String> getTextsToSave(boolean input, boolean output) {
+        List<String> results = new ArrayList<>();
+        if (input && !output) {
+            results.add(encryptedText_edit.getText().toString());
+        } else if (!input && output) {
+
+            results.add(decryptedText_edit.getText().toString());
+        } else {
+            results.add(encryptedText_edit.getText().toString());
+            results.add(decryptedText_edit.getText().toString());
+        }
+        return results;
     }
 
     @Override
@@ -168,7 +182,7 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
         }
         if (id == R.id.action_save) {
             FragmentManager manager = getFragmentManager();
-            SaveDialogFragment dialog = new SaveDialogFragment(CTUtils.DA);//plaintext samples so user can choose to encrypt one
+            SaveDialogFragment dialog = new SaveDialogFragment();//plaintext samples so user can choose to encrypt one
             dialog.show(manager, "dialog");
         }
 
@@ -240,20 +254,6 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
 
     public void onUserSelectedTextSample(String selection) {
         encryptedText_edit.setText(selection);
-    }
-
-    public static List<String> getTextsToSave(boolean input, boolean output) {
-        List<String> results = new ArrayList<>();
-        if (input && !output) {
-            results.add(encryptedText_edit.getText().toString());
-        } else if (!input && output) {
-
-            results.add(decryptedText_edit.getText().toString());
-        } else {
-            results.add(encryptedText_edit.getText().toString());
-            results.add(decryptedText_edit.getText().toString());
-        }
-        return results;
     }
 
     @Override

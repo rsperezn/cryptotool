@@ -35,10 +35,10 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
     private static final String DECRYPT_OUTPUT = "Decrypt Output";
     private static final String BREAK_ENCRYPTION_OF_OUTPUT = "Break Encryption of Output";
     private static final String INFO = "Info";
-    private Spinner scheme_spinner;
-    private EditText keyword_edit;
     static EditText plainText_edit;
     static EditText encryptedText_edit;
+    private Spinner scheme_spinner;
+    private EditText keyword_edit;
     private LinearLayout options_ll;
     private EType encryptionType;
     private Button run_encrypt_bt;
@@ -56,6 +56,21 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
                 R.id.drawer_layoutInEncryptActivity,
                 R.id.navigation_listInEncryptActivity,
                 R.drawable.closed_lock_binary);
+    }
+
+    public static List<String> getTextsToSave(boolean input, boolean output) {
+        List<String> results = new ArrayList<>();
+        if (input && !output) {
+            results.add(plainText_edit.getText().toString());
+        } else if (!input && output) {
+
+            results.add(encryptedText_edit.getText().toString());
+        } else {
+            results.add(plainText_edit.getText().toString());
+            results.add(encryptedText_edit.getText().toString());
+        }
+
+        return results;
     }
 
     @Override
@@ -181,7 +196,7 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
         }
         if (id == R.id.action_save) {
             FragmentManager manager = getFragmentManager();
-            SaveDialogFragment dialog = new SaveDialogFragment(CTUtils.EA);//plaintext samples so user can choose to encrypt one
+            SaveDialogFragment dialog = new SaveDialogFragment();//plaintext samples so user can choose to encrypt one
             dialog.show(manager, "dialog");
         }
 
@@ -262,21 +277,6 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
 
     public void onUserSelectedTextSample(String selection) {
         plainText_edit.setText(selection);
-    }
-
-    public static List<String> getTextsToSave(boolean input, boolean output) {
-        List<String> results = new ArrayList<>();
-        if (input && !output) {
-            results.add(plainText_edit.getText().toString());
-        } else if (!input && output) {
-
-            results.add(encryptedText_edit.getText().toString());
-        } else {
-            results.add(plainText_edit.getText().toString());
-            results.add(encryptedText_edit.getText().toString());
-        }
-
-        return results;
     }
 
     @Override
