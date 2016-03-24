@@ -4,10 +4,6 @@ import java.util.Hashtable;
 
 public class CTUtils{
     public static final String TAG = "CryptoTool";
-    public final static String ET = "EncryptedText";
-    public final static String PT = "PlainText";
-    public final static String DT = "DecryptedText";
-    public final static String BET = "BrokenEncryptionText";
     public static Hashtable<Character, Integer> charToInt = new Hashtable<>();
     public static double EnglishIC = 0.065;
     public static boolean retainCase = false;

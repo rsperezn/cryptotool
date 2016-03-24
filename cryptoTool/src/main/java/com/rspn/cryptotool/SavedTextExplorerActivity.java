@@ -1,36 +1,38 @@
 package com.rspn.cryptotool;
 
-import java.util.List;
-
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.rspn.cryptotool.uihelper.SavedTextArrayAdapter;
-import com.rspn.cryptotool.db.TextSamplesDataSource;
-import com.rspn.cryptotool.model.Text;
-import com.rspn.cryptotool.utils.CTUtils;
-
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.rspn.cryptotool.db.TextSamplesDataSource;
+import com.rspn.cryptotool.model.Text;
+import com.rspn.cryptotool.uihelper.SavedTextArrayAdapter;
+
+import java.util.List;
+
+import static com.rspn.cryptotool.utils.TextTypes.BET;
+import static com.rspn.cryptotool.utils.TextTypes.DT;
+import static com.rspn.cryptotool.utils.TextTypes.ET;
+import static com.rspn.cryptotool.utils.TextTypes.PT;
+
 public class SavedTextExplorerActivity extends ListActivity {
 
+    private static final int MENU_DELETE_ID = 100;
     List<Text> texts;
     TextSamplesDataSource datasource;
     Text textToDelete;
     AdView adView;
-
-    private static final int MENU_DELETE_ID = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,24 +108,24 @@ public class SavedTextExplorerActivity extends ListActivity {
             return true;
         }
         if (id == R.id.action_ExplorePlainText) {
-            texts = datasource.findFiltered("type='" + CTUtils.PT + "'", "title DESC");
+            texts = datasource.findFiltered("type='" + PT.toString() + "'", "title DESC");
             refreshDisplay();
             return true;
         }
 
         if (id == R.id.action_ExploreDecrypted) {
-            texts = datasource.findFiltered("type='" + CTUtils.DT + "'", "title DESC");
+            texts = datasource.findFiltered("type='" + DT.toString() + "'", "title DESC");
             refreshDisplay();
             return true;
         }
         if (id == R.id.action_ExploreEncrypted) {
-            texts = datasource.findFiltered("type='" + CTUtils.ET + "'", "title DESC");
+            texts = datasource.findFiltered("type='" + ET.toString() + "'", "title DESC");
             refreshDisplay();
             return true;
         }
 
         if (id == R.id.action_ExploreBrokenEncrypted) {
-            texts = datasource.findFiltered("type='" + CTUtils.BET + "'", "title DESC");
+            texts = datasource.findFiltered("type='" + BET.toString() + "'", "title DESC");
             refreshDisplay();
             return true;
         }

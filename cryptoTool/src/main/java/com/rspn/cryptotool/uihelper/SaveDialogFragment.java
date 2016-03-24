@@ -18,9 +18,13 @@ import com.rspn.cryptotool.db.TextSamplesDataSource;
 import com.rspn.cryptotool.decrypt.DecryptActivity;
 import com.rspn.cryptotool.encrypt.EncryptActivity;
 import com.rspn.cryptotool.model.Text;
-import com.rspn.cryptotool.utils.CTUtils;
 
 import java.util.List;
+
+import static com.rspn.cryptotool.utils.TextTypes.BET;
+import static com.rspn.cryptotool.utils.TextTypes.DT;
+import static com.rspn.cryptotool.utils.TextTypes.ET;
+import static com.rspn.cryptotool.utils.TextTypes.PT;
 
 public class SaveDialogFragment extends DialogFragment implements OnClickListener {
     private CheckBox input_cb, output_cb;
@@ -87,7 +91,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                                 } else {
                                     text.setTitle(inputTitle_edit.getText().toString());
                                 }
-                                text.setType(CTUtils.PT);
+                                text.setType(PT.toString());
                                 text.setContent(contentToSave.get(0));
                                 text.setDeletable(1);
                                 dataSource.create(text);
@@ -97,7 +101,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                                 } else {
                                     text.setTitle(outputTitle_edit.getText().toString());
                                 }
-                                text.setType(CTUtils.ET);
+                                text.setType(ET.toString());
                                 text.setContent(contentToSave.get(0));
                                 text.setDeletable(1);
                                 dataSource.create(text);
@@ -112,7 +116,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                             } else {
                                 text.setTitle(inputTitle_edit.getText().toString());
                             }
-                            text.setType(CTUtils.PT);
+                            text.setType(PT.toString());
                             text.setContent(contentToSave.get(0));
                             text.setDeletable(1);
                             dataSource.create(text);
@@ -123,7 +127,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                             } else {
                                 text.setTitle(outputTitle_edit.getText().toString());
                             }
-                            text.setType(CTUtils.ET);
+                            text.setType(ET.toString());
                             text.setContent(contentToSave.get(1));
                             text.setDeletable(1);
                             dataSource.create(text);
@@ -142,7 +146,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                                 } else {
                                     text.setTitle(inputTitle_edit.getText().toString());
                                 }
-                                text.setType(CTUtils.ET);
+                                text.setType(ET.toString());
                                 text.setContent(contentToSave.get(0));
                                 text.setDeletable(1);
                                 dataSource.create(text);
@@ -152,7 +156,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                                 } else {
                                     text.setTitle(outputTitle_edit.getText().toString());
                                 }
-                                text.setType(CTUtils.DT);
+                                text.setType(DT.toString());
                                 text.setContent(contentToSave.get(0));
                                 text.setDeletable(1);
                                 dataSource.create(text);
@@ -167,7 +171,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                             } else {
                                 text.setTitle(inputTitle_edit.getText().toString());
                             }
-                            text.setType(CTUtils.ET);
+                            text.setType(ET.toString());
                             text.setContent(contentToSave.get(0));
                             text.setDeletable(1);
                             dataSource.create(text);
@@ -178,7 +182,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                             } else {
                                 text.setTitle(outputTitle_edit.getText().toString());
                             }
-                            text.setType(CTUtils.DT);
+                            text.setType(DT.toString());
                             text.setContent(contentToSave.get(1));
                             text.setDeletable(1);
                             dataSource.create(text);
@@ -196,7 +200,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                                 } else {
                                     text.setTitle(inputTitle_edit.getText().toString());
                                 }
-                                text.setType(CTUtils.ET);
+                                text.setType(ET.toString());
                                 text.setContent(contentToSave.get(0));
                                 text.setDeletable(1);
                                 dataSource.create(text);
@@ -206,7 +210,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                                 } else {
                                     text.setTitle(outputTitle_edit.getText().toString());
                                 }
-                                text.setType(CTUtils.BET);
+                                text.setType(BET.toString());
                                 text.setContent(contentToSave.get(0));
                                 text.setDeletable(1);
                                 dataSource.create(text);
@@ -219,7 +223,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                             } else {
                                 text.setTitle(inputTitle_edit.getText().toString());
                             }
-                            text.setType(CTUtils.ET);
+                            text.setType(ET.toString());
                             text.setContent(contentToSave.get(0));
                             text.setDeletable(1);
                             dataSource.create(text);
@@ -230,7 +234,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
                             } else {
                                 text.setTitle(outputTitle_edit.getText().toString());
                             }
-                            text.setType(CTUtils.BET);
+                            text.setType(BET.toString());
                             text.setContent(contentToSave.get(1));
                             text.setDeletable(1);
                             dataSource.create(text);
