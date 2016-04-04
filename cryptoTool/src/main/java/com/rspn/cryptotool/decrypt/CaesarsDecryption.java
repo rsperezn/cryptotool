@@ -8,8 +8,6 @@ public class CaesarsDecryption {
     private static char[] alphabet = CTUtils.getAlphabet();
     private static Hashtable<Character, Integer> charToint = new Hashtable<>();
     private static boolean initialized = false;
-    private static char[] decryptedText;
-    private static boolean retainCase;
 
     public static void initComponents() {
         if (!initialized) {
@@ -21,10 +19,9 @@ public class CaesarsDecryption {
     }
 
     public static String runDecryption(String encryptedText, int delta, boolean whitespaces) {
-        decryptedText = new char[encryptedText.length()];
-        retainCase = CTUtils.retainCase;
+        char[] decryptedText = new char[encryptedText.length()];
 
-        if (!retainCase) {
+        if (!CTUtils.retainCase) {
             encryptedText = encryptedText.toUpperCase();
         }
 
