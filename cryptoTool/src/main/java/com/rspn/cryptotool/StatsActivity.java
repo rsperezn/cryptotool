@@ -34,23 +34,22 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 public class StatsActivity extends ActionBarActivity {
 
-    LinearLayout charcount_layout;
-    LinearLayout indexofcoincidence_layout;
-    AdView adView;
+    private LinearLayout characterCount_layout;
+    private LinearLayout indexOfCoincidence_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_stats);
-        charcount_layout = (LinearLayout) findViewById(R.id.charcount_layout);
-        indexofcoincidence_layout = (LinearLayout) findViewById(R.id.indexofcoincidence_layout);
-        StatsResults statsResults = (StatsResults) getIntent().getParcelableExtra("data");
+        characterCount_layout = (LinearLayout) findViewById(R.id.charcount_layout);
+        indexOfCoincidence_layout = (LinearLayout) findViewById(R.id.indexofcoincidence_layout);
+        StatsResults statsResults = getIntent().getParcelableExtra("data");
 
         createBarChart(statsResults);
 
         //Ads
-        adView = (AdView) this.findViewById(R.id.adView_InStatsActivity);
+        AdView adView = (AdView) this.findViewById(R.id.adView_InStatsActivity);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
@@ -208,10 +207,10 @@ public class StatsActivity extends ActionBarActivity {
         }
 
         multirendererCharCount.addSeriesRenderer(rendererCharCount);
-        charcount_layout.removeAllViews();
+        characterCount_layout.removeAllViews();
         View charCountChart = ChartFactory.getBarChartView(this, datasetCharCount, multirendererCharCount, Type.DEFAULT);
         charCountChart.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        charcount_layout.addView(charCountChart);
+        characterCount_layout.addView(charCountChart);
         charCountChart.setId(1);
 
         if (EType.valueOf(data.getResultType()) == EType.VIGENERE) {
@@ -326,7 +325,7 @@ public class StatsActivity extends ActionBarActivity {
 
             View icValuesChart = ChartFactory.getCombinedXYChartView(this, datasetICValues, multirendererICValues, types);
             icValuesChart.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-            indexofcoincidence_layout.addView(icValuesChart);
+            indexOfCoincidence_layout.addView(icValuesChart);
             icValuesChart.setId(2);
 
         }
