@@ -234,7 +234,6 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
                     }
                     hideKeyboard(encryptedText_edit);
 
-                    VigenereDecryption.initComponents();
                     new MyDecryptionTask().execute(EType.VIGENERE);
                     vibrate();
                     break;

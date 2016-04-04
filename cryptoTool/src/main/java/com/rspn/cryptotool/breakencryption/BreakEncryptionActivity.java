@@ -249,7 +249,6 @@ public class BreakEncryptionActivity extends AbstractCryptActivity implements Sa
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String selectedKey = possibleKeys_sp.getSelectedItem().toString();
-        VigenereDecryption.initComponents();
         brokenText_edit.setText(VigenereDecryption.runDecryption(encryptedText_edit.getText().toString(), selectedKey, whitespaces_cb.isChecked()));
     }
 
