@@ -6,13 +6,12 @@ import com.rspn.cryptotool.utils.CTUtils;
 import java.util.Hashtable;
 
 public class VigenereEncryption {
+    public static char[] cypherText;
     private static char[] alphabet = CTUtils.getAlphabet();
     private static Hashtable<Character, Integer> charToint = new Hashtable<>();
-    public static char[] cypherText;
     private static boolean initialized = false;
-    private static boolean retainCase;
 
-    public static void initComponents() {
+    static {
         if (!initialized) {
             //for upper case characters
             for (int i = 0; i < alphabet.length / 2; i++) {
@@ -30,9 +29,7 @@ public class VigenereEncryption {
         int length = plainText.length();
         String fmtKeyword = CTUtils.formatKeyword(length, keyword);
         cypherText = new char[length];
-        retainCase = CTUtils.retainCase;
-        //TODO implement on sharedpreferences retainCase
-        if (!retainCase) {
+        if (!CTUtils.retainCase) {
             plainText = plainText.toUpperCase();
             fmtKeyword = fmtKeyword.toUpperCase();
         }
@@ -46,7 +43,7 @@ public class VigenereEncryption {
                 int key = (charToint.get(currKeywordChar));
                 int cipher = (plain + key) % 26;
                 char encryptedChar = alphabet[cipher];
-                if (retainCase)//if we need to retain the case then convert it to the case plaintext's character
+                if (CTUtils.retainCase)//if we need to retain the case then convert it to the case plaintext's character
                     encryptedChar = (upper) ? Character.toUpperCase(encryptedChar) : Character.toLowerCase(encryptedChar);
                 cypherText[i] = encryptedChar;
                 keypos++;
@@ -62,6 +59,4 @@ public class VigenereEncryption {
             return new String(cypherText).replaceAll(" ", "");
 
     }
-
-
 }
