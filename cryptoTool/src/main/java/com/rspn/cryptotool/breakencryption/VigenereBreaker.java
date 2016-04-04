@@ -1,5 +1,8 @@
 package com.rspn.cryptotool.breakencryption;
 
+import com.rspn.cryptotool.utils.CTUtils;
+import com.rspn.cryptotool.utils.IC;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,29 +12,26 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.rspn.cryptotool.utils.CTUtils;
-import com.rspn.cryptotool.utils.IC;
-
 public class VigenereBreaker {
+    public static int maxKeyLength = 20;
     private static Set<Integer> possibleKeysLength = new HashSet<>();
     private static List<Integer> tripletsDifference = new ArrayList<>();
-    public static int maxKeylength = 20;
-    private static List<Double> ICStats = new ArrayList<>(maxKeylength);
-    static List<String> forcedKEYS = new ArrayList<>();// all the possible keys generated
+    private static List<Double> ICStats = new ArrayList<>(maxKeyLength);
+    private static List<String> forcedKeys = new ArrayList<>();// all the possible keys generated
 
-    public static HashMap<String, Object> runBreak(String encryptedText, boolean whitespaces) {
+    public static HashMap<String, Object> runBreak(String encryptedText) {
         encryptedText = CTUtils.sanitize(encryptedText);
         initialize();
         int kasikisguess = kasikisTest(encryptedText);
         possibleKeysLength.add(kasikisguess);
         // Now use Friedman Test and see what are the Index of Coincidence that
         //have the closest value to the English IC and then try those sizes of keys
-        List<IC> ICS = new ArrayList<IC>(maxKeylength);
-        for (int i = 0; i < maxKeylength; i++) {
+        List<IC> ICS = new ArrayList<>(maxKeyLength);
+        for (int i = 0; i < maxKeyLength; i++) {
             ICS.add(new IC());
         }
         //create the ArrayList with their poss and value correspondingly
-        for (int i = 1; i <= maxKeylength; i++) {
+        for (int i = 1; i <= maxKeyLength; i++) {
             ICS.get(i - 1).setPos(i);//set just the position
             float currIC = confirmKeyLength(encryptedText, i);
             ICS.get(i - 1).setVal(currIC);
@@ -41,7 +41,7 @@ public class VigenereBreaker {
         }
         Collections.sort(ICS);
         //find the position that is interesting for the IC
-        for (int i = 0; i < maxKeylength; i++) {
+        for (int i = 0; i < maxKeyLength; i++) {
             float currIC = ICS.get(i).getVal();
             //just use the number that are useful
             if (currIC >= 0.06) {
@@ -56,26 +56,26 @@ public class VigenereBreaker {
             String[] guessedKeys = guessKey(splits);
             //cannot add keys that are empty since they will cause an error later when trying to format it
             if (!guessedKeys[0].equals("") && !guessedKeys[0].equals(" ")) {
-                forcedKEYS.add(guessedKeys[0]);
+                forcedKeys.add(guessedKeys[0]);
             }
             if (!guessedKeys[0].equals("") && !guessedKeys[1].equals(" ")) {
-                forcedKEYS.add(guessedKeys[1]);
+                forcedKeys.add(guessedKeys[1]);
             }
         }
         HashMap<String, Object> resultInfo = new HashMap<>();
-        resultInfo.put("forcedKeys", forcedKEYS);
+        resultInfo.put("forcedKeys", forcedKeys);
         return resultInfo;
     }
 
     private static void initialize() {
         tripletsDifference.clear();
         possibleKeysLength.clear();
-        forcedKEYS.clear();
+        forcedKeys.clear();
         ICStats.clear();
     }
 
     private static int kasikisTest(String encryptedText) {
-        Set<String> checkedTriplets = new HashSet<String>();
+        Set<String> checkedTriplets = new HashSet<>();
         //read triplets and check if they appear in the rest of the string
         for (int i = 0; i < encryptedText.length() - 3; i++) {
             String target = encryptedText.substring(i, i + 3);
@@ -86,8 +86,7 @@ public class VigenereBreaker {
             }
         }
         //after triplets difference is generated find gcd
-        int guess = gcdOfList(tripletsDifference.toArray(new Integer[tripletsDifference.size()]));
-        return guess;
+        return greatestCommonDenominatorOfList(tripletsDifference.toArray(new Integer[tripletsDifference.size()]));
     }
 
     private static void getAllTargetPos(String encryptedText, String target) {
@@ -103,15 +102,15 @@ public class VigenereBreaker {
             System.out.println(" Found: " + m.group());
         }
         System.out.println("count:" + count);
-        settriplesDiff(repeatedPos);
+        setTriplesDifference(repeatedPos);
     }
 
-    private static void settriplesDiff(List<Integer> repeatedPos) {
+    private static void setTriplesDifference(List<Integer> repeatedPos) {
         int size = repeatedPos.size();
-        int firsthalf = size - 1;//the initial round
+        int firstHalf = size - 1;//the initial round
         int dist = size - 2;
-        int secondhalf = (dist * (dist + 1)) / 2;//second half
-        int total = firsthalf + secondhalf;
+        int secondHalf = (dist * (dist + 1)) / 2;//second half
+        int total = firstHalf + secondHalf;
         int[] result = new int[total];
         //filling in the first half
         for (int i = 0; i < size - 1; i++) {
@@ -121,7 +120,7 @@ public class VigenereBreaker {
         //filling in the second half
         if (total >= 3) {
             int pos = 2;
-            int index = firsthalf;
+            int index = firstHalf;
             for (int i = 0; i < dist; i++) {
                 for (int j = 0; j < pos - 1; j++) {
                     result[index] = repeatedPos.get(pos) - repeatedPos.get(j);
@@ -134,18 +133,17 @@ public class VigenereBreaker {
     }
 
     // loop though list of distances and get the gcd
-    private static int gcdOfList(Integer[] intArray) {
+    private static int greatestCommonDenominatorOfList(Integer[] intArray) {
         int size = intArray.length;
         if (size < 2) {
             return 0;
         }
         int firstgcd = gcd(intArray[0], intArray[1]);
         //recursively find gdc with the already found first gcd
-        for (int i = 0; i < size; i++) {
-            firstgcd = gcd(firstgcd, intArray[i]);
+        for (Integer anIntArray : intArray) {
+            firstgcd = gcd(firstgcd, anIntArray);
         }
         return firstgcd;
-
     }
 
     //recursively find the gcd of two numbers
@@ -156,17 +154,17 @@ public class VigenereBreaker {
         return gcd(b, a % b);
     }
 
-    public static float confirmKeyLength(String encryptedText, int lengthguess) {
-        String[] splits = splitCiphertext(encryptedText, lengthguess);
-        float[] ICs = new float[lengthguess];//same number as lengthguess
+    public static float confirmKeyLength(String encryptedText, int guessedLength) {
+        String[] splits = splitCiphertext(encryptedText, guessedLength);
+        float[] ICs = new float[guessedLength];//same number as lengthguess
         //calculate the IC of each substring
         float currSum = 0;
-        for (int i = 0; i < lengthguess; i++) {
+        for (int i = 0; i < guessedLength; i++) {
             ICs[i] = (Float) IC.calculte(splits[i]).get("IC");
             currSum += ICs[i];
         }
         //average IC of the whole splitted version of the original string
-        return (float) currSum / lengthguess;
+        return currSum / guessedLength;
     }
 
     /*split the string in the corresponding substring such as 
@@ -266,8 +264,7 @@ public class VigenereBreaker {
                 }
             }
         }
-        int[] result = {min1, min2};
-        return result;
+        return new int[]{min1, min2};
     }
 
     public static double[] getICs() {

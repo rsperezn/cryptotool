@@ -300,7 +300,7 @@ public class BreakEncryptionActivity extends AbstractCryptActivity implements Sa
                     break;
                 case VIGENERE:
                     publishProgress(50);
-                    resultsInfo = VigenereBreaker.runBreak(encryptedText, false);
+                    resultsInfo = VigenereBreaker.runBreak(encryptedText);
                     List<String> forcedKeys = (List<String>) resultsInfo.get("forcedKeys");
 
                     if (forcedKeys.isEmpty()) {//was not able to generate keys with Vigenere so force to break with Caesars

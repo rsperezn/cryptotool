@@ -304,7 +304,7 @@ public class StatsActivity extends ActionBarActivity {
             //setting used to move the graph on yaxiz to .5 up
             multirendererICValues.setYAxisMin(-0.0010);
             //setting max values to be display in x axis
-            multirendererICValues.setXAxisMax(VigenereBreaker.maxKeylength);
+            multirendererICValues.setXAxisMax(VigenereBreaker.maxKeyLength);
             //setting bar size or space between two bars
             multirendererICValues.setBarSpacing(0.5);
             //Setting background color of the graph to transparent
@@ -315,7 +315,7 @@ public class StatsActivity extends ActionBarActivity {
             //setting the margin size for the graph in the order top, left, bottom, right
             multirendererICValues.setMargins(new int[]{30, 30, 30, 30});
 
-            for (int i = 1; i <= VigenereBreaker.maxKeylength; i++) {
+            for (int i = 1; i <= VigenereBreaker.maxKeyLength; i++) {
                 multirendererICValues.addTextLabel(i - 1, Integer.toString(i));
             }
 
