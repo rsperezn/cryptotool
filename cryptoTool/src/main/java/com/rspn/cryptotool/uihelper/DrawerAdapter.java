@@ -50,9 +50,9 @@ public class DrawerAdapter extends ArrayAdapter<NavigationItem> {
 
         }
 
-        NavigationItem dItem = (NavigationItem) this.drawerItemList.get(position);
+        NavigationItem dItem =  this.drawerItemList.get(position);
 
-        drawerHolder.icon.setImageDrawable(view.getResources().getDrawable(dItem.getImgResID()));
+        drawerHolder.icon.setImageDrawable(view.getResources().getDrawable(dItem.getImageResourceId()));
         drawerHolder.ItemName.setText(dItem.getItemName());
 
         return view;

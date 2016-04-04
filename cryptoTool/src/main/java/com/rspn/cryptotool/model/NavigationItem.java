@@ -2,26 +2,20 @@ package com.rspn.cryptotool.model;
 
 public class NavigationItem {
 
-	private String ItemName;
-	private int imgResID;
+	private String itemName;
+	private int imageResourceId;
 
-	public NavigationItem(String itemName, int imgResID) {
+	public NavigationItem(String itemName, int imageResourceId) {
 		super();
-		ItemName = itemName;
-		this.imgResID = imgResID;
+		this.itemName = itemName;
+		this.imageResourceId = imageResourceId;
 	}
 
 	public String getItemName() {
-		return ItemName;
+		return itemName;
 	}
-	public void setItemName(String itemName) {
-		ItemName = itemName;
-	}
-	public int getImgResID() {
-		return imgResID;
-	}
-	public void setImgResID(int imgResID) {
-		this.imgResID = imgResID;
+	public int getImageResourceId() {
+		return imageResourceId;
 	}
 
 
