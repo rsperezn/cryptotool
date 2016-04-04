@@ -239,7 +239,6 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
                     break;
                 case CAESARS:
                     hideKeyboard(encryptedText_edit);
-                    CaesarsDecryption.initComponents();
                     new MyDecryptionTask().execute(EType.CAESARS);
                     vibrate();
                     break;

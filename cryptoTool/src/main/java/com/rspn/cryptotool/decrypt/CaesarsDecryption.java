@@ -9,7 +9,7 @@ public class CaesarsDecryption {
     private static Hashtable<Character, Integer> charToint = new Hashtable<>();
     private static boolean initialized = false;
 
-    public static void initComponents() {
+    static {
         if (!initialized) {
             for (int i = 0; i < alphabet.length; i++) {
                 charToint.put(alphabet[i], i);

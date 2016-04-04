@@ -292,7 +292,6 @@ public class BreakEncryptionActivity extends AbstractCryptActivity implements Sa
             encryption = params[0];
             switch (encryption) {
                 case CAESARS:
-                    CaesarsDecryption.initComponents();
                     publishProgress(50);
                     resultsInfo = CaesarBreaker.runBreak(encryptedText, isWhitespacesChecked);
                     publishProgress(80);
