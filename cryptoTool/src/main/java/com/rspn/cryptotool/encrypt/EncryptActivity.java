@@ -259,7 +259,6 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
 
                 case CAESARS:
                     hideKeyboard(plainText_edit);
-                    CaesarEncryption.initComponents();
                     new MyEncryptionTask().execute(EType.CAESARS);
                     vibrate();
                     break;

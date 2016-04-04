@@ -11,7 +11,7 @@ public class CaesarEncryption {
     private static char[] encryptedText;
     private static boolean retainCase;
 
-    public static void initComponents() {
+    static {
         if (!initialized) {
             //upper case letter
             for (int i = 0; i < alphabet.length; i++) {
