@@ -17,8 +17,8 @@ import android.widget.EditText;
 
 public class SavedTextViewerActivity extends ActionBarActivity{
 
-	EditText et;
-	AdView adView;
+	private EditText et;
+	private AdView adView;
 
 	
 	@Override
@@ -42,40 +42,24 @@ public class SavedTextViewerActivity extends ActionBarActivity{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.view_savedtext, menu);
-		MenuItem item = (MenuItem)menu.findItem(R.id.share);
-
 		return super.onCreateOptionsMenu(menu);
 	}
-
-	// TODO Auto-generated method stub
-
-
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-		if(id==R.id.share){
+		if (id == R.id.share) {
 			Intent shareIntent = new Intent();
 			shareIntent.setAction(Intent.ACTION_SEND);
 			shareIntent.setType("text/plain");
-			shareIntent.putExtra(Intent.EXTRA_TEXT,et.getText().toString());
+			shareIntent.putExtra(Intent.EXTRA_TEXT, et.getText().toString());
 			startActivity(shareIntent);
 		}
 
-		if(id==android.R.id.home){
+		if (id == android.R.id.home) {
 			finish();
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
-
-
-
-
-
-
-
-
-
-
 }
