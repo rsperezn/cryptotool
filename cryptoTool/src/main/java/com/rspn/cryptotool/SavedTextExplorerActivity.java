@@ -29,24 +29,23 @@ import static com.rspn.cryptotool.utils.TextTypes.PT;
 public class SavedTextExplorerActivity extends ListActivity {
 
     private static final int MENU_DELETE_ID = 100;
-    List<Text> texts;
-    TextSamplesDataSource datasource;
-    Text textToDelete;
-    AdView adView;
+    private List<Text> texts;
+    private TextSamplesDataSource dataSource;
+    private Text textToDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore_savedtexts);
-        datasource = new TextSamplesDataSource(this);
-        datasource.open();
+        dataSource = new TextSamplesDataSource(this);
+        dataSource.open();
 
         //Ads
-        adView = (AdView) this.findViewById(R.id.adView_InExploreSavedTextsActivity);
+        AdView adView = (AdView) this.findViewById(R.id.adView_InExploreSavedTextsActivity);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
-        texts = datasource.findAll();
+        texts = dataSource.findAll();
         refreshDisplay();
         registerForContextMenu(getListView());
     }
@@ -66,7 +65,7 @@ public class SavedTextExplorerActivity extends ListActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == MENU_DELETE_ID) {
-            boolean result = datasource.delete(textToDelete.getId());
+            boolean result = dataSource.delete(textToDelete.getId());
             if (result) {
                 Toast.makeText(this, "Deleted Succesfully", Toast.LENGTH_SHORT).show();
             } else {
@@ -90,8 +89,6 @@ public class SavedTextExplorerActivity extends ListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.explore_savedtexts, menu);
-        //TODO add action bar http://stackoverflow.com/questions/13875090/actionbar-and-listactivity-in-one-activity
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -103,35 +100,35 @@ public class SavedTextExplorerActivity extends ListActivity {
             return true;
         }
         if (id == R.id.action_ExploreAll) {
-            texts = datasource.findAll();
+            texts = dataSource.findAll();
             refreshDisplay();
             return true;
         }
         if (id == R.id.action_ExplorePlainText) {
-            texts = datasource.findFiltered("type='" + PT.toString() + "'", "title DESC");
+            texts = dataSource.findFiltered("type='" + PT.toString() + "'", "title DESC");
             refreshDisplay();
             return true;
         }
 
         if (id == R.id.action_ExploreDecrypted) {
-            texts = datasource.findFiltered("type='" + DT.toString() + "'", "title DESC");
+            texts = dataSource.findFiltered("type='" + DT.toString() + "'", "title DESC");
             refreshDisplay();
             return true;
         }
         if (id == R.id.action_ExploreEncrypted) {
-            texts = datasource.findFiltered("type='" + ET.toString() + "'", "title DESC");
+            texts = dataSource.findFiltered("type='" + ET.toString() + "'", "title DESC");
             refreshDisplay();
             return true;
         }
 
         if (id == R.id.action_ExploreBrokenEncrypted) {
-            texts = datasource.findFiltered("type='" + BET.toString() + "'", "title DESC");
+            texts = dataSource.findFiltered("type='" + BET.toString() + "'", "title DESC");
             refreshDisplay();
             return true;
         }
 
         if (id == R.id.action_ExploreSamples) {
-            texts = datasource.findSamples();
+            texts = dataSource.findSamples();
             refreshDisplay();
             return true;
         }
