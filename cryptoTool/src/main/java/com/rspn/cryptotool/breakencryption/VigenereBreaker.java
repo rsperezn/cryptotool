@@ -35,9 +35,7 @@ public class VigenereBreaker {
             ICS.get(i - 1).setPos(i);//set just the position
             float currIC = confirmKeyLength(encryptedText, i);
             ICS.get(i - 1).setVal(currIC);
-            System.out.print("For key length " + i + ":" + confirmKeyLength(encryptedText, i));
             ICStats.add((double) currIC);//adding the values for each correspondent ic
-            System.out.println();
         }
         Collections.sort(ICS);
         //find the position that is interesting for the IC
@@ -46,7 +44,6 @@ public class VigenereBreaker {
             //just use the number that are useful
             if (currIC >= 0.06) {
                 int position = ICS.get(i).getPos();
-                System.out.println("Index: " + position + " value: " + currIC);
                 possibleKeysLength.add(position);
             }
         }
@@ -93,15 +90,9 @@ public class VigenereBreaker {
         List<Integer> repeatedPos = new ArrayList<>();
         Pattern p = Pattern.compile(target);
         Matcher m = p.matcher(encryptedText);
-        int count = 0;
         while (m.find()) {
-            count += 1;
-            System.out.print("Start index: " + (m.start() + 1));
             repeatedPos.add(m.start() + 1);
-            System.out.print(" End index: " + (m.end() + 1));
-            System.out.println(" Found: " + m.group());
         }
-        System.out.println("count:" + count);
         setTriplesDifference(repeatedPos);
     }
 
@@ -215,8 +206,6 @@ public class VigenereBreaker {
             theguess1 = theguess1.concat(Character.toString(CTUtils.getChar(keypos[k * 2])));
             theguess2 = theguess2.concat(Character.toString(CTUtils.getChar(keypos[2 * k + 1])));
         }
-        System.out.println("The guessed key1: " + theguess1);
-        System.out.println("The guessed key2: " + theguess2);
 
         String[] theGuesses = new String[2];
         theGuesses[0] = theguess1;
