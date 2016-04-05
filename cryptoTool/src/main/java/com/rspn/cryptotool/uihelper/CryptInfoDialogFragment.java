@@ -20,7 +20,6 @@ import com.rspn.cryptotool.utils.CTUtils;
 public class CryptInfoDialogFragment extends DialogFragment {
 
     private String url;
-    private String title;
     private String request;
     private ProgressBar progressBar;
     private TextView loading_text;
@@ -73,31 +72,24 @@ public class CryptInfoDialogFragment extends DialogFragment {
         switch (request) {
             case "encryptCaesar":
                 url = "http://en.wikipedia.org/wiki/Caesar_cipher";
-                title = "Caesar Encryption";
                 break;
             case "encryptVigenere":
                 url = "http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher#Description";
-                title = "Vigenere Encryption";
                 break;
             case "decryptCaesar":
                 url = "http://en.wikipedia.org/wiki/Caesar_cipher";
-                title = "Caesar Decryption";
                 break;
             case "decryptVigenere":
                 url = "http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher#Description";
-                title = "Vigenere Decryption";
                 break;
             case "breakCaesar":
                 url = "http://en.wikipedia.org/wiki/Caesar_cipher#Breaking_the_cipher";
-                title = "Breaking Caesar Encryption";
                 break;
             case "breakVigenere":
                 url = "http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher#Cryptanalysis";
-                title = "Breaking Vigenere Encryption";
                 break;
             case "calculateHashes":
                 url = "http://en.wikipedia.org/wiki/Cryptographic_hash_function";
-                title = "Hashing Algorithms";
                 break;
         }
     }
