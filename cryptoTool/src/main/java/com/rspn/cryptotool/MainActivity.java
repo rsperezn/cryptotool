@@ -28,14 +28,13 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
-    SharedPreferences prefs;
-    boolean retainCase;
-    boolean vibrate;
-    OnSharedPreferenceChangeListener listener;
-    TextSamplesDataSource dataSource;
-    AdView adView;
+    private SharedPreferences prefs;
+    private boolean retainCase;
+    private boolean vibrate;
+    private TextSamplesDataSource dataSource;
+    private AdView adView;
     // more efficient than HashMap for mapping integers to objects
-    SparseArray<CryptGroup> groups = new SparseArray<>();
+    private SparseArray<CryptGroup> groups = new SparseArray<>();
 
 
     @Override
@@ -46,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
         CTUtils.initialize();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         CTUtils.retainCase = prefs.getBoolean("pref_letterCase", false);
-        listener = new OnSharedPreferenceChangeListener() {
+        OnSharedPreferenceChangeListener listener = new OnSharedPreferenceChangeListener() {
 
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
