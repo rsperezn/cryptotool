@@ -1,13 +1,5 @@
 package com.rspn.cryptotool.uihelper;
 
-import com.rspn.cryptotool.breakencryption.BreakEncryptionActivity;
-import com.rspn.cryptotool.calculatehashes.CalculateHashesActivity;
-import com.rspn.cryptotool.decrypt.DecryptActivity;
-import com.rspn.cryptotool.encrypt.EncryptActivity;
-import com.rspn.cryptotool.model.CryptGroup;
-import com.rspn.cryptotool.R;
-import com.rspn.cryptotool.passwordgenerator.StrongPasswordActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.util.SparseArray;
@@ -18,6 +10,14 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
+
+import com.rspn.cryptotool.R;
+import com.rspn.cryptotool.breakencryption.BreakEncryptionActivity;
+import com.rspn.cryptotool.calculatehashes.CalculateHashesActivity;
+import com.rspn.cryptotool.decrypt.DecryptActivity;
+import com.rspn.cryptotool.encrypt.EncryptActivity;
+import com.rspn.cryptotool.model.CryptGroup;
+import com.rspn.cryptotool.passwordgenerator.StrongPasswordActivity;
 
 public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -44,42 +44,82 @@ public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        final String children = (String) getChild(groupPosition, childPosition);
-        TextView text;
+        final String child = (String) getChild(groupPosition, childPosition);
+        TextView textView;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_details, null);
         }
-        text = (TextView) convertView.findViewById(R.id.textView1);
-        text.setText(children);
+        textView = (TextView) convertView.findViewById(R.id.textView_CryptExpandableListItem);
+        textView.setText(child);
+        textView.setCompoundDrawablesWithIntrinsicBounds(getChildDrawable(child), 0, 0, 0);
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (children.equals("Encrypt")) {
-                    Intent intent = new Intent(activity, EncryptActivity.class);
-                    activity.startActivity(intent);
-                } else if (children.equals("Decrypt")) {
-                    Intent intent = new Intent(activity, DecryptActivity.class);
-                    activity.startActivity(intent);
-                } else if (children.equals("Break Encryption")) {
-                    Intent intent = new Intent(activity, BreakEncryptionActivity.class);
-                    activity.startActivity(intent);
+                switch (child) {
+                    case "Encrypt": {
+                        Intent intent = new Intent(activity, EncryptActivity.class);
+                        activity.startActivity(intent);
+                        break;
+                    }
+                    case "Decrypt": {
+                        Intent intent = new Intent(activity, DecryptActivity.class);
+                        activity.startActivity(intent);
+                        break;
+                    }
+                    case "Break Encryption": {
+                        Intent intent = new Intent(activity, BreakEncryptionActivity.class);
+                        activity.startActivity(intent);
 
-                } else if (children.equals("File")) {
-                    Intent intent = new Intent(activity, CalculateHashesActivity.class);
-                    intent.putExtra("HashType", "File");
-                    activity.startActivity(intent);
-                } else if (children.equals("Text")) {
-                    Intent intent = new Intent(activity, CalculateHashesActivity.class);
-                    intent.putExtra("HashType", "Text");
-                    activity.startActivity(intent);
+                        break;
+                    }
+                    case "File": {
+                        Intent intent = new Intent(activity, CalculateHashesActivity.class);
+                        intent.putExtra("HashType", "File");
+                        activity.startActivity(intent);
+                        break;
+                    }
+                    case "Text": {
+                        Intent intent = new Intent(activity, CalculateHashesActivity.class);
+                        intent.putExtra("HashType", "Text");
+                        activity.startActivity(intent);
 
-                } else if (children.equals("Strong Password")) {
-                    Intent intent = new Intent(activity, StrongPasswordActivity.class);
-                    activity.startActivity(intent);
+                        break;
+                    }
+                    case "Strong Password": {
+                        Intent intent = new Intent(activity, StrongPasswordActivity.class);
+                        activity.startActivity(intent);
+                        break;
+                    }
                 }
             }
         });
         return convertView;
+    }
+
+    private int getChildDrawable(String child) {
+        switch (child) {
+
+            case "Encrypt": {
+                return R.drawable.lock_closed_black_200_px;
+            }
+            case "Decrypt": {
+                return R.drawable.lock_open_black_200_px;
+            }
+            case "Break Encryption": {
+                return R.drawable.lock_broken_black_200_px;
+            }
+            case "File": {
+                return R.drawable.folder_icon;
+            }
+            case "Text": {
+                return R.drawable.text_icon_1;
+            }
+            case "Strong Password": {
+                return R.drawable.password_asteriks2;
+            }
+            default:
+                return R.drawable.lock_closed_black_200_px;
+        }
     }
 
     @Override
