@@ -26,6 +26,8 @@ import com.rspn.cryptotool.xml.TextSamplesJDOMParser;
 
 import java.util.List;
 
+import static com.rspn.cryptotool.uihelper.CryptExpandableListAdapter.*;
+
 public class MainActivity extends ActionBarActivity {
 
     private SharedPreferences prefs;
@@ -84,17 +86,17 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void createExpandableListGroups() {
-        CryptGroup classicalCrypto = new CryptGroup("Classical Cryptography");
-        classicalCrypto.children.add("Encrypt");
-        classicalCrypto.children.add("Decrypt");
-        classicalCrypto.children.add("Break Encryption");
+        CryptGroup classicalCrypto = new CryptGroup("Classical Cipher");
+        classicalCrypto.children.add(ENCRYPT);
+        classicalCrypto.children.add(DECRYPT);
+        classicalCrypto.children.add(BREAK_ENCRYPTION);
 
-        CryptGroup calculateHashes = new CryptGroup("Calculate Hashes");
-        calculateHashes.children.add("File");
-        calculateHashes.children.add("Text");
+        CryptGroup calculateHashes = new CryptGroup("Hash Generator");
+        calculateHashes.children.add(FILE);
+        calculateHashes.children.add(TEXT);
 
         CryptGroup strongPassword = new CryptGroup("Password Generator");
-        strongPassword.children.add("Strong Password");
+        strongPassword.children.add(STRONG_PASSWORD);
 
         groups.append(0, classicalCrypto);
         groups.append(1, calculateHashes);

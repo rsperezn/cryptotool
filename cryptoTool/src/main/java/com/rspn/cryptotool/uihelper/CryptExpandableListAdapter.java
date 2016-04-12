@@ -21,6 +21,12 @@ import com.rspn.cryptotool.passwordgenerator.StrongPasswordActivity;
 
 public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
 
+    public static final String ENCRYPT = "Encrypt";
+    public static final String DECRYPT = "Decrypt";
+    public static final String BREAK_ENCRYPTION = "Break Encryption";
+    public static final String FILE = "of File";
+    public static final String TEXT = "of Text";
+    public static final String STRONG_PASSWORD = "Strong Password";
     private final SparseArray<CryptGroup> groups;
     private LayoutInflater inflater;
     private Activity activity;
@@ -56,36 +62,36 @@ public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 switch (child) {
-                    case "Encrypt": {
+                    case ENCRYPT: {
                         Intent intent = new Intent(activity, EncryptActivity.class);
                         activity.startActivity(intent);
                         break;
                     }
-                    case "Decrypt": {
+                    case DECRYPT: {
                         Intent intent = new Intent(activity, DecryptActivity.class);
                         activity.startActivity(intent);
                         break;
                     }
-                    case "Break Encryption": {
+                    case BREAK_ENCRYPTION: {
                         Intent intent = new Intent(activity, BreakEncryptionActivity.class);
                         activity.startActivity(intent);
 
                         break;
                     }
-                    case "File": {
+                    case FILE: {
                         Intent intent = new Intent(activity, CalculateHashesActivity.class);
-                        intent.putExtra("HashType", "File");
+                        intent.putExtra("HashType", FILE);
                         activity.startActivity(intent);
                         break;
                     }
-                    case "Text": {
+                    case TEXT: {
                         Intent intent = new Intent(activity, CalculateHashesActivity.class);
-                        intent.putExtra("HashType", "Text");
+                        intent.putExtra("HashType", TEXT);
                         activity.startActivity(intent);
 
                         break;
                     }
-                    case "Strong Password": {
+                    case STRONG_PASSWORD: {
                         Intent intent = new Intent(activity, StrongPasswordActivity.class);
                         activity.startActivity(intent);
                         break;
@@ -99,22 +105,22 @@ public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
     private int getChildDrawable(String child) {
         switch (child) {
 
-            case "Encrypt": {
+            case ENCRYPT: {
                 return R.drawable.lock_closed_black_200_px;
             }
-            case "Decrypt": {
+            case DECRYPT: {
                 return R.drawable.lock_open_black_200_px;
             }
-            case "Break Encryption": {
+            case BREAK_ENCRYPTION: {
                 return R.drawable.lock_broken_black_200_px;
             }
-            case "File": {
+            case FILE: {
                 return R.drawable.folder_icon;
             }
-            case "Text": {
+            case TEXT: {
                 return R.drawable.text_icon_1;
             }
-            case "Strong Password": {
+            case STRONG_PASSWORD: {
                 return R.drawable.password_asteriks2;
             }
             default:
