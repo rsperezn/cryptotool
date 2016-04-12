@@ -52,13 +52,13 @@ import javax.crypto.SecretKey;
 
 public class CalculateHashesActivity extends AbstractCryptActivity implements OnItemSelectedListener, View.OnClickListener {
 
+    private final int FILE_CHOOSER = 1; // onActivityResult request code
     private EditText input1_edit;
     private Button calculate_bt;
     private Button copyToClipboard_bt;
     private String algorithm;
     private Spinner algorithms_sp;
     private EditText output_edit;
-    private final int FILE_CHOOSER = 1; // onActivityResult request code
     private String hashType = "Text";
     private ProgressDialog progressDialog;
     private long timerStartTime;
@@ -132,7 +132,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
     protected void setDataFromOriginatingActivity() {
         if (this.getIntent().hasExtra("HashType")) {
             hashType = this.getIntent().getStringExtra("HashType");
-            setTitle("Calculate Hashes of " + hashType);
+            setTitle("Generate Hashes " + hashType);
         }
     }
 
