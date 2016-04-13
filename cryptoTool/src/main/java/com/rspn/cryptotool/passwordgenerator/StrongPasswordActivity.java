@@ -25,7 +25,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
                 R.id.adView_InStrongPassword,
                 R.id.drawer_layoutInStrongPasswordActivity,
                 R.id.navigation_listInStrongPasswordActivity,
-                R.drawable.closed_lock_binary);//// TODO: 02/03/16 change this icon
+                R.drawable.password_asteriks_black);
     }
 
     @Override
