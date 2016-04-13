@@ -32,6 +32,7 @@ import static com.rspn.cryptotool.uihelper.CryptExpandableListAdapter.*;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TITLE = "  CryptoTool";
     private SharedPreferences prefs;
     private boolean retainCase;
     private boolean vibrate;
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setLogo(R.drawable.ic_launcher);
             getSupportActionBar().setDisplayUseLogoEnabled(true);
+            getSupportActionBar().setTitle(TITLE);
         }
     }
 
