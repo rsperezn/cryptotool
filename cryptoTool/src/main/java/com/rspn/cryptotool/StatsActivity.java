@@ -211,7 +211,7 @@ public class StatsActivity extends ActionBarActivity {
         View charCountChart = ChartFactory.getBarChartView(this, datasetCharCount, multirendererCharCount, Type.DEFAULT);
         charCountChart.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         characterCount_layout.addView(charCountChart);
-        charCountChart.setId(1);
+        charCountChart.setId(R.id.charCountChart_View);
 
         if (EType.valueOf(data.getResultType()) == EType.VIGENERE) {
             double[] icValues = data.getICforKeyLength();
@@ -326,7 +326,7 @@ public class StatsActivity extends ActionBarActivity {
             View icValuesChart = ChartFactory.getCombinedXYChartView(this, datasetICValues, multirendererICValues, types);
             icValuesChart.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
             indexOfCoincidence_layout.addView(icValuesChart);
-            icValuesChart.setId(2);
+            icValuesChart.setId(R.id.icValuesChart_View);
 
         }
     }
