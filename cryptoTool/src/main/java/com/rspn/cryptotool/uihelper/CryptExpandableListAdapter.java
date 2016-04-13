@@ -24,7 +24,7 @@ public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
     public static final String ENCRYPT = "Encrypt";
     public static final String DECRYPT = "Decrypt";
     public static final String BREAK_ENCRYPTION = "Break Encryption";
-    public static final String FILE = " Generate of File";
+    public static final String FILE = "Generate of File";
     public static final String TEXT = "Generate of Text";
     public static final String STRONG_PASSWORD = "Generate Strong Password";
     private final SparseArray<CryptGroup> groups;
