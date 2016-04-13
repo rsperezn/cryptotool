@@ -21,9 +21,9 @@ import com.rspn.cryptotool.passwordgenerator.StrongPasswordActivity;
 
 public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
 
-    public static final String ENCRYPT = "Encrypt";
-    public static final String DECRYPT = "Decrypt";
-    public static final String BREAK_ENCRYPTION = "Break Encryption";
+    public static final String ENCRYPT = "Encrypt Message";
+    public static final String DECRYPT = "Decrypt Message";
+    public static final String BREAK_ENCRYPTION = "Break Encrypted Message";
     public static final String FILE = "Generate of File";
     public static final String TEXT = "Generate of Text";
     public static final String STRONG_PASSWORD = "Generate Strong Password";
