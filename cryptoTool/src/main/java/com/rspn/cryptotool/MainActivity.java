@@ -8,7 +8,9 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.Display;
 import android.view.Menu;
@@ -28,7 +30,7 @@ import java.util.List;
 
 import static com.rspn.cryptotool.uihelper.CryptExpandableListAdapter.*;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences prefs;
     private boolean retainCase;
@@ -43,7 +45,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         createExpandableListGroups();
-        //Initialized CTUtils
         CTUtils.initialize();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         CTUtils.retainCase = prefs.getBoolean("pref_letterCase", false);
@@ -60,6 +61,7 @@ public class MainActivity extends ActionBarActivity {
 
         prefs.registerOnSharedPreferenceChangeListener(listener);
         setContentView(R.layout.activity_main);
+        displayLogoInActionBar();
 
         dataSource = new TextSamplesDataSource(this);
         dataSource.open();
@@ -85,6 +87,15 @@ public class MainActivity extends ActionBarActivity {
         listView.setAdapter(adapter);
     }
 
+    private void displayLogoInActionBar() {
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setLogo(R.drawable.ic_launcher);
+            getSupportActionBar().setDisplayUseLogoEnabled(true);
+        }
+    }
+
     public void createExpandableListGroups() {
         CryptGroup classicalCrypto = new CryptGroup("Classical Cipher Tool");
         classicalCrypto.children.add(ENCRYPT);
@@ -101,7 +112,6 @@ public class MainActivity extends ActionBarActivity {
         groups.append(0, classicalCrypto);
         groups.append(1, calculateHashes);
         groups.append(2, strongPassword);
-
     }
 
     @Override
