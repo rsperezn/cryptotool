@@ -106,25 +106,25 @@ public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
         switch (child) {
 
             case ENCRYPT: {
-                return R.drawable.lock_closed;
+                return R.drawable.lock_closed_black;
             }
             case DECRYPT: {
-                return R.drawable.lock_open;
+                return R.drawable.lock_open_black;
             }
             case BREAK_ENCRYPTION: {
-                return R.drawable.lock_broken;
+                return R.drawable.lock_broken_black;
             }
             case FILE: {
                 return R.drawable.folder_icon;
             }
             case TEXT: {
-                return R.drawable.text_icon;
+                return R.drawable.text_icon_black;
             }
             case STRONG_PASSWORD: {
-                return R.drawable.password_asteriks;
+                return R.drawable.password_asteriks_black;
             }
             default:
-                return R.drawable.lock_closed;
+                return R.drawable.lock_closed_black;
         }
     }
 
