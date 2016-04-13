@@ -86,7 +86,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void createExpandableListGroups() {
-        CryptGroup classicalCrypto = new CryptGroup("Classical Cipher");
+        CryptGroup classicalCrypto = new CryptGroup("Classical Cipher Tool");
         classicalCrypto.children.add(ENCRYPT);
         classicalCrypto.children.add(DECRYPT);
         classicalCrypto.children.add(BREAK_ENCRYPTION);

@@ -24,9 +24,9 @@ public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
     public static final String ENCRYPT = "Encrypt";
     public static final String DECRYPT = "Decrypt";
     public static final String BREAK_ENCRYPTION = "Break Encryption";
-    public static final String FILE = "of File";
-    public static final String TEXT = "of Text";
-    public static final String STRONG_PASSWORD = "Strong Password";
+    public static final String FILE = " Generate of File";
+    public static final String TEXT = "Generate of Text";
+    public static final String STRONG_PASSWORD = "Generate Strong Password";
     private final SparseArray<CryptGroup> groups;
     private LayoutInflater inflater;
     private Activity activity;
@@ -80,13 +80,13 @@ public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
                     }
                     case FILE: {
                         Intent intent = new Intent(activity, CalculateHashesActivity.class);
-                        intent.putExtra("HashType", FILE);
+                        intent.putExtra("HashType", "File");
                         activity.startActivity(intent);
                         break;
                     }
                     case TEXT: {
                         Intent intent = new Intent(activity, CalculateHashesActivity.class);
-                        intent.putExtra("HashType", TEXT);
+                        intent.putExtra("HashType", "Text");
                         activity.startActivity(intent);
 
                         break;

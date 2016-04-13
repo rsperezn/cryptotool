@@ -132,7 +132,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
     protected void setDataFromOriginatingActivity() {
         if (this.getIntent().hasExtra("HashType")) {
             hashType = this.getIntent().getStringExtra("HashType");
-            setTitle("Generate Hashes " + hashType);
+            setTitle("Generate Hashes of " + hashType);
         }
     }
 
@@ -219,7 +219,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
 
         progressDialog = new ProgressDialog(this);
         timerStartTime = System.currentTimeMillis();
-        progressDialog.setMessage("Calculating hash of " + hashType + " ...");
+        progressDialog.setMessage("Generating hash of " + hashType + " ...");
         progressDialog.show();
         new Hasher().execute(hashData);
         vibrate();
