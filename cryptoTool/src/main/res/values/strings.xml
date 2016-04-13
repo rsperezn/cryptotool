@@ -29,7 +29,7 @@
     <string name="title_activity_decrypt">Decryption</string>
     <string name="title_activity_breakEncryption">Break Encryption</string>
     <string name="title_activity_calculateHashes">Generate Hashes</string>
-    <string name="title_activity_strongPasswordGenerator">Strong Password</string>
+    <string name="title_activity_strongPasswordGenerator">Generate Strong Password</string>
     <string name="title_activity_exploreSavedText">Explore Saved Texts</string>
     <string name="title_activity_statsActivity">Stats</string>
     <string name="title_activity_preferences">CryptoTool Preferences</string>

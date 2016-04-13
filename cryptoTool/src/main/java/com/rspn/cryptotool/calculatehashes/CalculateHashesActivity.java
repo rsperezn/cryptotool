@@ -132,7 +132,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
     protected void setDataFromOriginatingActivity() {
         if (this.getIntent().hasExtra("HashType")) {
             hashType = this.getIntent().getStringExtra("HashType");
-            setTitle("Generate Hashes of " + hashType);
+            setTitle("Generate Hash of " + hashType);
         }
     }
 
