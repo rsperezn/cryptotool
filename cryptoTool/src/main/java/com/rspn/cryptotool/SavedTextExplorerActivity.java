@@ -1,13 +1,15 @@
 package com.rspn.cryptotool;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,7 +19,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.rspn.cryptotool.db.TextSamplesDataSource;
 import com.rspn.cryptotool.model.Text;
-import com.rspn.cryptotool.uihelper.SavedTextArrayAdapter;
 
 import java.util.List;
 
@@ -26,17 +27,20 @@ import static com.rspn.cryptotool.utils.TextTypes.DT;
 import static com.rspn.cryptotool.utils.TextTypes.ET;
 import static com.rspn.cryptotool.utils.TextTypes.PT;
 
-public class SavedTextExplorerActivity extends ListActivity {
+public class SavedTextExplorerActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private static final int MENU_DELETE_ID = 100;
     private List<Text> texts;
     private TextSamplesDataSource dataSource;
     private Text textToDelete;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore_savedtexts);
+        listView = (ListView) findViewById(R.id.list_SavedTexts);
+        registerForContextMenu(listView);
         dataSource = new TextSamplesDataSource(this);
         dataSource.open();
 
@@ -47,7 +51,14 @@ public class SavedTextExplorerActivity extends ListActivity {
 
         texts = dataSource.findAll();
         refreshDisplay();
-        registerForContextMenu(getListView());
+        setBackButton();
+    }
+
+    private void setBackButton() {
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -67,23 +78,15 @@ public class SavedTextExplorerActivity extends ListActivity {
         if (item.getItemId() == MENU_DELETE_ID) {
             boolean result = dataSource.delete(textToDelete.getId());
             if (result) {
-                Toast.makeText(this, "Deleted Succesfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Deleted Successfully", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Failed Deleting", Toast.LENGTH_SHORT).show();
             }
+            //TODO fix bug to redisplay items in list when deleting images
             refreshDisplay();
         }
 
-
         return super.onContextItemSelected(item);
-    }
-
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        Intent intent = new Intent(this, SavedTextViewerActivity.class);
-        intent.putExtra("text", texts.get(position).getContent());
-        startActivity(intent);
     }
 
     @Override
@@ -137,8 +140,16 @@ public class SavedTextExplorerActivity extends ListActivity {
     }
 
     private void refreshDisplay() {
-        ArrayAdapter<Text> adapter = new SavedTextArrayAdapter(this, texts);
-        setListAdapter(adapter);
+        ArrayAdapter<Text> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, texts);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, SavedTextViewerActivity.class);
+        intent.putExtra("text", texts.get(position).getContent());
+        startActivity(intent);
+    }
 }
