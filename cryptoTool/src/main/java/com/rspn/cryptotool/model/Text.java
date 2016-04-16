@@ -76,7 +76,7 @@ public class Text implements Parcelable {
         this.content = content;
     }
 
-    public long getDeletable() {
+    public long isDeletable() {
         return deletable;
     }
 

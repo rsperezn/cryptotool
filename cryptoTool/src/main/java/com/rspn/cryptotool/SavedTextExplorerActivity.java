@@ -63,23 +63,20 @@ public class SavedTextExplorerActivity extends AppCompatActivity implements Adap
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         int idSelected = (int) info.id;
         textToDelete = texts.get(idSelected);
-        if (textToDelete.getDeletable() == 1) {
-            menu.add(0, MENU_DELETE_ID, 1, "Delete");
-        }
+        menu.add(0, MENU_DELETE_ID, 1, "Delete");
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if (item.getItemId() == MENU_DELETE_ID) {
-            boolean result = dataSource.delete(textToDelete.getId());
-            if (result) {
-                Toast.makeText(this, "Deleted Successfully", Toast.LENGTH_SHORT).show();
-            } else {
+        if (item.getItemId() == MENU_DELETE_ID && textToDelete.isDeletable() == 1) {
+            boolean succeededDeleting = dataSource.delete(textToDelete.getId());
+            if (!succeededDeleting) {
                 Toast.makeText(this, "Failed Deleting", Toast.LENGTH_SHORT).show();
             }
             onOptionsItemSelected(currentMenuItem);
+        } else {
+            Toast.makeText(this, "Sample texts can't be deleted", Toast.LENGTH_SHORT).show();
         }
-
         return super.onContextItemSelected(item);
     }
 

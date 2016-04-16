@@ -15,12 +15,12 @@ import android.util.Log;
 
 public class TextSamplesDataSource {
 
-    SQLiteOpenHelper dbhelper;
-    SQLiteDatabase database;
     private static final String[] allColumns = {
             TextSamplesDBOpenHelper.COLUMN_ID, TextSamplesDBOpenHelper.COLUMN_TITLE,
             TextSamplesDBOpenHelper.COLUMN_TYPE, TextSamplesDBOpenHelper.COLUMN_CONTENT,
             TextSamplesDBOpenHelper.COLUMN_DELETABLE};
+    SQLiteOpenHelper dbhelper;
+    SQLiteDatabase database;
 
     public TextSamplesDataSource(Context context) {
         dbhelper = new TextSamplesDBOpenHelper(context);
@@ -43,9 +43,9 @@ public class TextSamplesDataSource {
         values.put(TextSamplesDBOpenHelper.COLUMN_TITLE, textSample.getTitle());
         values.put(TextSamplesDBOpenHelper.COLUMN_TYPE, textSample.getType());
         values.put(TextSamplesDBOpenHelper.COLUMN_CONTENT, textSample.getContent());
-        values.put(TextSamplesDBOpenHelper.COLUMN_DELETABLE, textSample.getDeletable());
-        long insertid = database.insert(TextSamplesDBOpenHelper.TABLE_TEXTSAMPLES, null, values);
-        textSample.setId(insertid);
+        values.put(TextSamplesDBOpenHelper.COLUMN_DELETABLE, textSample.isDeletable());
+        long insertId = database.insert(TextSamplesDBOpenHelper.TABLE_TEXTSAMPLES, null, values);
+        textSample.setId(insertId);
         return textSample;
     }
 
