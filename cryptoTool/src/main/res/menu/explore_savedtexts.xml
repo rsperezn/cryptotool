@@ -1,37 +1,36 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" 
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_ExploreAll"
         android:orderInCategory="100"
         android:title="@string/action_ExploreAll"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_ExplorePlainText"
         android:orderInCategory="200"
         android:title="@string/action_ExplorePlainText"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_ExploreEncrypted"
         android:orderInCategory="300"
         android:title="@string/action_ExploreEncrypted"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_ExploreDecrypted"
         android:orderInCategory="400"
         android:title="@string/action_ExploreDecrypted"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_ExploreBrokenEncrypted"
         android:orderInCategory="500"
         android:title="@string/action_ExploreBrokenEncryptionText"
-        app:showAsAction="never"/>
-	<item
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_ExploreSamples"
         android:orderInCategory="600"
         android:title="@string/action_ExploreSamples"
-        app:showAsAction="never"/>
-    
-    
+        app:showAsAction="never" />
+
+
 </menu>
