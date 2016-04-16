@@ -34,17 +34,19 @@ public class SavedTextExplorerActivity extends AppCompatActivity implements Adap
     private TextSamplesDataSource dataSource;
     private Text textToDelete;
     private ListView listView;
+    private MenuItem currentMenuItem;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore_savedtexts);
         listView = (ListView) findViewById(R.id.list_SavedTexts);
+        listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
         dataSource = new TextSamplesDataSource(this);
         dataSource.open();
 
-        //Ads
         AdView adView = (AdView) this.findViewById(R.id.adView_InExploreSavedTextsActivity);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
@@ -52,13 +54,6 @@ public class SavedTextExplorerActivity extends AppCompatActivity implements Adap
         texts = dataSource.findAll();
         refreshDisplay();
         setBackButton();
-    }
-
-    private void setBackButton() {
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     @Override
@@ -82,8 +77,7 @@ public class SavedTextExplorerActivity extends AppCompatActivity implements Adap
             } else {
                 Toast.makeText(this, "Failed Deleting", Toast.LENGTH_SHORT).show();
             }
-            //TODO fix bug to redisplay items in list when deleting images
-            refreshDisplay();
+            onOptionsItemSelected(currentMenuItem);
         }
 
         return super.onContextItemSelected(item);
@@ -92,12 +86,22 @@ public class SavedTextExplorerActivity extends AppCompatActivity implements Adap
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.explore_savedtexts, menu);
+        currentMenuItem = menu.getItem(0);
+
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, SavedTextViewerActivity.class);
+        intent.putExtra("text", texts.get(position).getContent());
+        startActivity(intent);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        currentMenuItem = item;
+        int id = currentMenuItem.getItemId();
         if (id == android.R.id.home) {
             finish();
             return true;
@@ -139,17 +143,16 @@ public class SavedTextExplorerActivity extends AppCompatActivity implements Adap
         return super.onOptionsItemSelected(item);
     }
 
+    private void setBackButton() {
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
     private void refreshDisplay() {
         ArrayAdapter<Text> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, texts);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, SavedTextViewerActivity.class);
-        intent.putExtra("text", texts.get(position).getContent());
-        startActivity(intent);
     }
 }
