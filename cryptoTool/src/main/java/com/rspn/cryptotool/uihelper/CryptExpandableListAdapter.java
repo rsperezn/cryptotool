@@ -27,6 +27,7 @@ public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
     public static final String FILE = "Generate of File";
     public static final String TEXT = "Generate of Text";
     public static final String STRONG_PASSWORD = "Generate Strong Password";
+    public static final String PRONOUNCEABLE_PASSWORD = "Generate Pronounceable Password";
     private final SparseArray<CryptGroup> groups;
     private LayoutInflater inflater;
     private Activity activity;
@@ -95,6 +96,9 @@ public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
                         Intent intent = new Intent(activity, StrongPasswordActivity.class);
                         activity.startActivity(intent);
                         break;
+                    }
+
+                    case PRONOUNCEABLE_PASSWORD: {
                     }
                 }
             }

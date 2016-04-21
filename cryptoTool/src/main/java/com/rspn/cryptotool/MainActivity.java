@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         CryptGroup strongPassword = new CryptGroup("Password Generator");
         strongPassword.children.add(STRONG_PASSWORD);
+        strongPassword.children.add(PRONOUNCEABLE_PASSWORD);
 
         groups.append(0, classicalCrypto);
         groups.append(1, calculateHashes);
