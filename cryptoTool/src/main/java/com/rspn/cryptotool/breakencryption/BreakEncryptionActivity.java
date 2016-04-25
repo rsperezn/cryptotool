@@ -24,7 +24,6 @@ import android.widget.Toast;
 import com.rspn.cryptotool.AbstractCryptActivity;
 import com.rspn.cryptotool.R;
 import com.rspn.cryptotool.StatsActivity;
-import com.rspn.cryptotool.decrypt.CaesarsDecryption;
 import com.rspn.cryptotool.decrypt.VigenereDecryption;
 import com.rspn.cryptotool.encrypt.EncryptActivity;
 import com.rspn.cryptotool.model.NavigationItem;

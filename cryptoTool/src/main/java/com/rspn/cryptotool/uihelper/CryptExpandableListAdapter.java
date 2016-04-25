@@ -2,6 +2,7 @@ package com.rspn.cryptotool.uihelper;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.rspn.cryptotool.calculatehashes.CalculateHashesActivity;
 import com.rspn.cryptotool.decrypt.DecryptActivity;
 import com.rspn.cryptotool.encrypt.EncryptActivity;
 import com.rspn.cryptotool.model.CryptGroup;
+import com.rspn.cryptotool.passwordgenerator.PronounceablePasswordGenerator;
 import com.rspn.cryptotool.passwordgenerator.StrongPasswordActivity;
 
 public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
@@ -99,6 +101,11 @@ public class CryptExpandableListAdapter extends BaseExpandableListAdapter {
                     }
 
                     case PRONOUNCEABLE_PASSWORD: {
+                        Log.i("password10", PronounceablePasswordGenerator.generateCVVPassword(10, 2).toString());
+                        Log.i("password9", PronounceablePasswordGenerator.generateCVVPassword(9, 2).toString());
+                        Log.i("password8", PronounceablePasswordGenerator.generateCVPassword(8, 2).toString());
+                        Log.i("password11", PronounceablePasswordGenerator.generateCVPassword(11, 2).toString());
+
                     }
                 }
             }

@@ -2,7 +2,7 @@ package com.rspn.cryptotool.utils;
 
 import java.util.Hashtable;
 
-public class CTUtils{
+public class CTUtils {
     public static final String TAG = "CryptoTool";
     public static Hashtable<Character, Integer> charToInt = new Hashtable<>();
     public static double EnglishIC = 0.065;
@@ -17,6 +17,17 @@ public class CTUtils{
     private static double[] characterProbabilities = {0.08167, 0.0492, 0.02782, 0.04253, 0.12702, 0.02228, 0.02015, 0.06094, 0.06966, 0.00153, 0.00772,
             0.04025, 0.02406, 0.06749, 0.07507, 0.01929, 0.00095, 0.05987, 0.06327, 0.09056, 0.02758, 0.00978,
             0.02360, 0.00150, 0.01974, 0.00074};
+
+    private static char[] vowels = new char[]{'a','e','i','o','u'};
+
+    private static char[] consonants = new char[]{'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q','r', 's', 't', 'v', 'w', 'x', 'y','z'};
+
+    public static char[] getVowels() {
+        return vowels;
+    }
+    public static char[] getConsonants() {
+        return consonants;
+    }
 
     public static char[] getAlphabet() {
         return alphabet;
