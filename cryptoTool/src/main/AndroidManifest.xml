@@ -61,7 +61,12 @@
             android:name="com.rspn.cryptotool.passwordgenerator.StrongPasswordActivity"
             android:label="@string/title_activity_strongPasswordGenerator"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name="com.rspn.cryptotool.passwordgenerator.PronounceablePasswordActivity"
+            android:label="@string/title_activity_pronounceablePasswordGenerator"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name="com.rspn.cryptotool.SavedTextExplorerActivity"
             android:label="@string/title_activity_exploreSavedText"
