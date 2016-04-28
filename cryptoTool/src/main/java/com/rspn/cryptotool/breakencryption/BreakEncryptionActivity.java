@@ -94,7 +94,7 @@ public class BreakEncryptionActivity extends AbstractCryptActivity implements Sa
     }
 
     @Override
-    protected void drawerItemClick(int position) {
+    protected void listItemClick(int position) {
         NavigationItem navigationItem = ((NavigationItem) navigationList.getItemAtPosition(position));
         if (navigationItem == null) {
             return;

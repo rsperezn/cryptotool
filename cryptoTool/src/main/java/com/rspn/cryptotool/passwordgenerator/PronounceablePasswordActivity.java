@@ -40,8 +40,8 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
     }
 
     @Override
-    protected void drawerItemClick(int position) {
-        Toast.makeText(this, list.get(position),Toast.LENGTH_SHORT).show();
+    protected void listItemClick(int position) {
+        copyToClipboard(list.get(position));
     }
 
     @Override

@@ -40,7 +40,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
     }
 
     @Override
-    protected void drawerItemClick(int position) {
+    protected void listItemClick(int position) {
         //no need to override
     }
 

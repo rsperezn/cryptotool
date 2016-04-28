@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.rspn.cryptotool.model.NavigationItem;
+import com.rspn.cryptotool.passwordgenerator.PronounceablePasswordActivity;
 import com.rspn.cryptotool.uihelper.DrawerAdapter;
 import com.rspn.cryptotool.utils.CTUtils;
 
@@ -149,6 +150,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
             android.content.ClipData clip = android.content.ClipData.newPlainText("Copy of data", textToCopy);
             clipboard.setPrimaryClip(clip);
         }
+        Toast.makeText(this,"Copied to clipboard",Toast.LENGTH_SHORT).show();
     }
 
     protected boolean isNavigationDrawerClosed() {
@@ -157,29 +159,35 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        NavigationItem navigationItem = ((NavigationItem) navigationList.getItemAtPosition(position));
-        if (navigationItem == null) {
-            return;
-        }
-        String selectedOption = navigationItem.getItemName();
-        Intent intent = new Intent();
+        if (listItemInNavigationDrawerClicked(position)) {
+            NavigationItem navigationItem = (NavigationItem) navigationList.getItemAtPosition(position);
 
-        switch (selectedOption) {
-            case SHARE:
-                intent.setAction(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, getSharableContent());
-                startActivity(intent);
-                break;
-            case HOME:
-                intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                break;
-            default:
-                drawerItemClick(position);
-                break;
+            String selectedOption = navigationItem.getItemName();
+            Intent intent = new Intent();
+
+            switch (selectedOption) {
+                case SHARE:
+                    intent.setAction(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_TEXT, getSharableContent());
+                    startActivity(intent);
+                    break;
+                case HOME:
+                    intent = new Intent(this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    break;
+                default:
+                    listItemClick(position);
+                    break;
+            }
+        } else if(this instanceof PronounceablePasswordActivity) {
+            listItemClick(position);
         }
+    }
+
+    private boolean listItemInNavigationDrawerClicked(int position) {
+        return navigationList.getItemAtPosition(position) instanceof NavigationItem;
     }
 
     protected void setKeywordTextFilter(EditText editText) {
@@ -232,7 +240,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
 
     protected abstract void findAndSetViews();
 
-    protected abstract void drawerItemClick(int position);
+    protected abstract void listItemClick(int position);
 
     protected abstract String getSharableContent();
 
