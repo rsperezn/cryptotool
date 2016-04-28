@@ -74,6 +74,11 @@
         <item>  Caesar\'s</item>
         <item>  Vigenere</item>
     </string-array>
+    <string-array name="numbers_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
     <string-array name="decrypt_scheme_array">
         <item>Decrypt with:</item>
         <item>  Caesar\'s</item>
