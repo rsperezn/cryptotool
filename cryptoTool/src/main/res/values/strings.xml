@@ -44,7 +44,7 @@
     <string name="label_password_length">Password Length</string>
     <string name="switch_lower_case">Lower Case</string>
     <string name="radio_CVV">ConsonantVowelVowel</string>
-    <string name="label_numberPronounceablePasswords">Number of passwords</string>
+    <string name="label_numberOfPasswords">Number of passwords</string>
     <string name="radio_CV">ConsonantVowel</string>
     <string name="radio_custom">Custom</string>
     <string name="switch_upper_case">Upper Case</string>

@@ -20,7 +20,6 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
     private ListView passwords_list;
     private List<String> list = new ArrayList<>();
     private ArrayAdapter<String> passwordsArrayAdapter;
-    private ArrayAdapter<Integer> numberOfPasswordsArrayAdapter;
 
     public PronounceablePasswordActivity() {
         super(R.layout.activity_pronounceablepassword,
@@ -38,7 +37,7 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
         passwords_list = (ListView) findViewById(R.id.list_PronounceablePasswords);
         passwordsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         passwords_list.setAdapter(passwordsArrayAdapter);
-        numberOfPasswordsArrayAdapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, generateList());
+        ArrayAdapter<Integer> numberOfPasswordsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, generateList());
         numberOfPasswords_spinner.setAdapter(numberOfPasswordsArrayAdapter);
 
     }
