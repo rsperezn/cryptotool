@@ -31,6 +31,8 @@ import com.rspn.cryptotool.uihelper.DrawerAdapter;
 import com.rspn.cryptotool.utils.CTUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class AbstractCryptActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private final String SHARE = "Share";
@@ -150,7 +152,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
             android.content.ClipData clip = android.content.ClipData.newPlainText("Copy of data", textToCopy);
             clipboard.setPrimaryClip(clip);
         }
-        Toast.makeText(this,"Copied to clipboard",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
     }
 
     protected boolean isNavigationDrawerClosed() {
@@ -159,7 +161,10 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (listItemInNavigationDrawerClicked(position)) {
+
+        if (this instanceof PronounceablePasswordActivity && isNotListItemFromMenu(view)) {
+            listItemClick(position);
+        } else {
             NavigationItem navigationItem = (NavigationItem) navigationList.getItemAtPosition(position);
 
             String selectedOption = navigationItem.getItemName();
@@ -181,13 +186,12 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
                     listItemClick(position);
                     break;
             }
-        } else if(this instanceof PronounceablePasswordActivity) {
-            listItemClick(position);
         }
     }
 
-    private boolean listItemInNavigationDrawerClicked(int position) {
-        return navigationList.getItemAtPosition(position) instanceof NavigationItem;
+    private boolean isNotListItemFromMenu(View view) {
+        List<Integer> idsOfNonNavigationDrawerListItems = Collections.singletonList(R.id.list_PronounceablePasswords);
+        return idsOfNonNavigationDrawerListItems.contains(((View) view.getParent()).getId());
     }
 
     protected void setKeywordTextFilter(EditText editText) {

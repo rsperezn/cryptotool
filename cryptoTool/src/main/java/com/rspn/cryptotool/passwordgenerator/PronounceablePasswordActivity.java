@@ -19,7 +19,8 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
     private EditText passwordLength_edit;
     private ListView passwords_list;
     private List<String> list = new ArrayList<>();
-    private ArrayAdapter<String> arrayAdapter;
+    private ArrayAdapter<String> passwordsArrayAdapter;
+    private ArrayAdapter<Integer> numberOfPasswordsArrayAdapter;
 
     public PronounceablePasswordActivity() {
         super(R.layout.activity_pronounceablepassword,
@@ -34,9 +35,19 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
         numberOfPasswords_spinner = (Spinner) findViewById(R.id.spinner_InPronounceablePasswords);
         passwordLength_edit = (EditText) findViewById(R.id.pronounceablePasswordLength_edit);
         passwords_list = (ListView) findViewById(R.id.list_PronounceablePasswords);
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
-        passwords_list.setAdapter(arrayAdapter);
+        passwordsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+        passwords_list.setAdapter(passwordsArrayAdapter);
+        numberOfPasswordsArrayAdapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, generateList());
+        numberOfPasswords_spinner.setAdapter(numberOfPasswordsArrayAdapter);
 
+    }
+
+    private List<Integer> generateList() {
+        List<Integer> integers = new ArrayList<>();
+        for (int i = 1; i <=20 ; i++) {
+            integers.add(i);
+        }
+        return integers;
     }
 
     @Override
@@ -78,7 +89,7 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
     public void generatePronounceablePassword(View view) {
         if (satisfiedMainButtonPreconditions()) {
             int passwordLength = Integer.valueOf(passwordLength_edit.getText().toString());
-            int numberOfPasswords = Integer.valueOf((String) numberOfPasswords_spinner.getItemAtPosition(numberOfPasswords_spinner.getSelectedItemPosition()));
+            int numberOfPasswords = (int) numberOfPasswords_spinner.getItemAtPosition(numberOfPasswords_spinner.getSelectedItemPosition());
             RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioSequence);
             int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
             switch (checkedRadioButtonId) {
@@ -102,11 +113,11 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
     }
 
     private void updatePasswordsList(List<String> generatedPasswords) {
-        arrayAdapter = null;
+        passwordsArrayAdapter = null;
         list.clear();
         list.addAll(generatedPasswords);
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
-        passwords_list.setAdapter(arrayAdapter);
-        arrayAdapter.notifyDataSetChanged();
+        passwordsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+        passwords_list.setAdapter(passwordsArrayAdapter);
+        passwordsArrayAdapter.notifyDataSetChanged();
     }
 }
