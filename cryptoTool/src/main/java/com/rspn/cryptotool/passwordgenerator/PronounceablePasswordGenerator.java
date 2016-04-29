@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Random;
 
 public class PronounceablePasswordGenerator {
-    private static Random random = new Random();
-    private static final int consonantsCount = 5;
+    private static final int consonantsCount = 21;
     private static final int vowelsCount = 5;
+    private static Random random = new Random();
 
     public static List<String> generateCVVPassword(int passwordLength, int numberOfPasswords) {
         List<String> passwords = new ArrayList<>();
