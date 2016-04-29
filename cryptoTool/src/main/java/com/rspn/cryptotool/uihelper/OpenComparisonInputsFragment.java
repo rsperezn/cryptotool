@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.orleonsoft.android.simplefilechooser.Constants;
 import com.orleonsoft.android.simplefilechooser.ui.FileChooserActivity;
@@ -36,8 +37,9 @@ public class OpenComparisonInputsFragment extends DialogFragment implements OnCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         comparisonType = getArguments().getString("comparisonType");
-        getDialog().setTitle("Compare Hashes of " + comparisonType + "s");
         View view = inflater.inflate(R.layout.activity_open_compare_imputs_fragment, null);
+        TextView title_tv = (TextView) view.findViewById(R.id.textView_titleOpenCompareInputs);
+        title_tv.setText(String.format("Compare Hashes of %ss", comparisonType));
         input1_edit = (EditText) view.findViewById(R.id.compareInput_EditText1);
         input2_edit = (EditText) view.findViewById(R.id.compareInput_EditText2);
         Button selectInput1_bt = (Button) view.findViewById(R.id.buttonSelect_Input1);
