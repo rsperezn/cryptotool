@@ -34,6 +34,7 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
     protected void findAndSetViews() {
         numberOfPasswords_spinner = (Spinner) findViewById(R.id.spinner_InPronounceablePasswords);
         passwordLength_edit = (EditText) findViewById(R.id.pronounceablePasswordLength_edit);
+        passwordLength_edit.setText("8");
         passwords_list = (ListView) findViewById(R.id.list_PronounceablePasswords);
         passwordsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         passwords_list.setAdapter(passwordsArrayAdapter);
@@ -65,9 +66,12 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
         if (passwordLength_edit.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please enter password length", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (Integer.valueOf(passwordLength_edit.getText().toString()) > 20) {
-            Toast.makeText(this, "Maximum password length is 20", Toast.LENGTH_SHORT).show();
-            return false;
+        } else {
+            int maxPasswordLength = 40;
+            if (Integer.valueOf(passwordLength_edit.getText().toString()) > maxPasswordLength) {
+                Toast.makeText(this, "Maximum password length is " + maxPasswordLength, Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
         return true;
     }
