@@ -68,6 +68,7 @@
     <string name="drawer_close">Close drawer</string>
     <string name="action_select">Select</string>
     <string name="action_OK">OK</string>
+    <string name="label_saveTexts">What do you want to save?</string>
 
     <string-array name="encrypt_scheme_array">
         <item>Encrypt with:</item>

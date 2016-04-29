@@ -45,7 +45,6 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
     @SuppressWarnings("static-access")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().setTitle("What do you want to Save?");
         View view = inflater.inflate(R.layout.activity_save_dialogfragment, null);
         input_cb = (CheckBox) view.findViewById(R.id.checkBox_saveInput);
         output_cb = (CheckBox) view.findViewById(R.id.checkBox_saveOutput);
@@ -283,7 +282,7 @@ public class SaveDialogFragment extends DialogFragment implements OnClickListene
 
     //for interfragment communication
     public interface Communicator {
-        public void onDialogMessage(String message);
+        void onDialogMessage(String message);
 
     }
 
