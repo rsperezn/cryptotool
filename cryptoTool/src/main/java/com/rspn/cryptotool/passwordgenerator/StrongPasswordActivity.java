@@ -1,9 +1,11 @@
 package com.rspn.cryptotool.passwordgenerator;
 
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.rspn.cryptotool.AbstractCryptActivity;
@@ -19,7 +21,11 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
     private CheckBox digits_cb;
     private CheckBox symbols_cb;
     private TextView strongPassword_textView;
-    private Button copyToClipboard_bt;
+    private Spinner numberOfPasswords_spinner;
+    private ListView strongPasswords_list;
+    private List<String> list = new ArrayList<>();
+    private ArrayAdapter<String> passwordsArrayAdapter;
+
     public StrongPasswordActivity() {
         super(R.layout.activity_strongpassword,
                 R.id.adView_InStrongPassword,
@@ -35,13 +41,17 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
         digits_cb = (CheckBox) findViewById(R.id.checkBox_digits);
         symbols_cb = (CheckBox) findViewById(R.id.checkBox_symbols);
         strongPassword_textView = (TextView) findViewById(R.id.textView_strongPassword);
-        copyToClipboard_bt = (Button) findViewById(R.id.copyStrongPassword);
-        copyToClipboard_bt.setVisibility(View.INVISIBLE);
+        numberOfPasswords_spinner = (Spinner) findViewById(R.id.spinner_InStrongPasswords);
+        strongPasswords_list = (ListView) findViewById(R.id.list_StrongPasswords);
+        passwordsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+        strongPasswords_list.setAdapter(passwordsArrayAdapter);
+        ArrayAdapter<Integer> numberOfPasswordsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, generateList());
+        numberOfPasswords_spinner.setAdapter(numberOfPasswordsArrayAdapter);
     }
 
     @Override
     protected void listItemClick(int position) {
-        //no need to override
+        copyToClipboard(list.get(position));
     }
 
     @Override
@@ -56,7 +66,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
 
     @Override
     protected void setOnClickListener() {
-        copyToClipboard_bt.setOnClickListener(this);
+        strongPasswords_list.setOnItemClickListener(this);
     }
 
     @Override
@@ -66,21 +76,21 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
 
     @Override
     public void onClick(View v) {
-        copyToClipboard(strongPassword_textView.getText().toString());
-        vibrate(25);
     }
 
     public void generateStrongPassword(View view) {
         if (satisfiedMainButtonPreconditions()) {
             int passwordLength = Integer.valueOf(((EditText) findViewById(R.id.strongPasswordLength_edit)).getText().toString());
+            int numberOfPasswords = (int) numberOfPasswords_spinner.getItemAtPosition(numberOfPasswords_spinner.getSelectedItemPosition());
             boolean excludeSimilarLookingCharacters = ((CheckBox) findViewById(R.id.checkBox_excludeSimilarLookingCharacters)).isChecked();
 
             try {
-                String strongPassword = PasswordGenerator.generatePassword(passwordLength,
+                List<String> strongPasswords = PasswordGenerator.generatePassword(passwordLength,
+                        numberOfPasswords,
                         excludeSimilarLookingCharacters,
                         getCheckedCharacterTypes());
-                strongPassword_textView.setText(strongPassword);
-                copyToClipboard_bt.setVisibility(View.VISIBLE);
+                updatePasswordsList(strongPasswords);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -132,5 +142,22 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
         }
         errorMessage = "Please select at least one character type";
         return false;
+    }
+
+    private List<Integer> generateList() {
+        List<Integer> integers = new ArrayList<>();
+        for (int i = 1; i <=20 ; i++) {
+            integers.add(i);
+        }
+        return integers;
+    }
+
+    private void updatePasswordsList(List<String> generatedPasswords) {
+        passwordsArrayAdapter = null;
+        list.clear();
+        list.addAll(generatedPasswords);
+        passwordsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+        strongPasswords_list.setAdapter(passwordsArrayAdapter);
+        passwordsArrayAdapter.notifyDataSetChanged();
     }
 }

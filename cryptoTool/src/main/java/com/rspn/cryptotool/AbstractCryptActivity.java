@@ -27,29 +27,30 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.rspn.cryptotool.model.NavigationItem;
 import com.rspn.cryptotool.passwordgenerator.PronounceablePasswordActivity;
+import com.rspn.cryptotool.passwordgenerator.StrongPasswordActivity;
 import com.rspn.cryptotool.uihelper.DrawerAdapter;
 import com.rspn.cryptotool.utils.CTUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractCryptActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private final String SHARE = "Share";
     private final String HOME = "Home";
+    protected ListView navigationList;
+    protected AdView adView;
+    protected ActionBarDrawerToggle drawerToggle;
+    protected ArrayList<NavigationItem> navigationItems;
+    protected String errorMessage;
     private int layoutViewId;
     private int layoutAddId;
     private int layoutDrawerId;
     private int navigationListDrawerId;
     private int navigationDrawerIcon;
-    protected ListView navigationList;
-    protected AdView adView;
-    protected ActionBarDrawerToggle drawerToggle;
     private boolean navDrawerOpen;
-    protected ArrayList<NavigationItem> navigationItems;
     private CharSequence drawerTitle;
     private CharSequence title;
-    protected String errorMessage;
 
     public AbstractCryptActivity(int layoutViewId,
                                  int layoutAdId,
@@ -162,7 +163,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if (this instanceof PronounceablePasswordActivity && isNotListItemFromMenu(view)) {
+        if (listItemIsNotFromNavigationDrawer(view)) {
             listItemClick(position);
         } else {
             NavigationItem navigationItem = (NavigationItem) navigationList.getItemAtPosition(position);
@@ -189,8 +190,12 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
         }
     }
 
+    private boolean listItemIsNotFromNavigationDrawer(View view) {
+        return this instanceof PronounceablePasswordActivity && isNotListItemFromMenu(view) ||this instanceof StrongPasswordActivity && isNotListItemFromMenu(view);
+    }
+
     private boolean isNotListItemFromMenu(View view) {
-        List<Integer> idsOfNonNavigationDrawerListItems = Collections.singletonList(R.id.list_PronounceablePasswords);
+        List<Integer> idsOfNonNavigationDrawerListItems = Arrays.asList(R.id.list_PronounceablePasswords, R.id.list_StrongPasswords);
         return idsOfNonNavigationDrawerListItems.contains(((View) view.getParent()).getId());
     }
 
