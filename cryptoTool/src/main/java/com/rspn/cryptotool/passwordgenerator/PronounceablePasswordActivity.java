@@ -62,13 +62,13 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
 
     @Override
     protected boolean satisfiedMainButtonPreconditions() {
-        if (passwordLength_edit.getText().toString().isEmpty()) {
+        String passwordLength = passwordLength_edit.getText().toString();
+        if (passwordLength.isEmpty()) {
             Toast.makeText(this, "Please enter password length", Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            int maxPasswordLength = 40;
-            if (Integer.valueOf(passwordLength_edit.getText().toString()) > maxPasswordLength) {
-                Toast.makeText(this, "Maximum password length is " + maxPasswordLength, Toast.LENGTH_SHORT).show();
+            if (Integer.valueOf(passwordLength) > 1024 || Integer.valueOf(passwordLength) < 1) {
+                Toast.makeText(this, "Password length must be between 1 and 1024 ", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
