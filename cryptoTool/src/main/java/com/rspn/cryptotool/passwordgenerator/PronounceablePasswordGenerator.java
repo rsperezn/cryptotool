@@ -72,8 +72,7 @@ public class PronounceablePasswordGenerator {
             }
             return updatedSequence.toString();
         } else {
-            int extraCharacters = passwordLength % sequence.length();
-            return trimExtraCharacters(passwordLength, updatedSequence.append(sequence), extraCharacters);
+            return sequence.substring(0, sequence.length() - passwordLength);
         }
     }
 

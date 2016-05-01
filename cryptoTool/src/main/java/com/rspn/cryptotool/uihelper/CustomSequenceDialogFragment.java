@@ -32,7 +32,6 @@ public class CustomSequenceDialogFragment extends DialogFragment implements OnCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_customsequence_dialogfragment, null);
         sequence_tv = (TextView) view.findViewById(R.id.textView_customSequence);
-        setCurrentSequence();
         OK_bt = (Button) view.findViewById(R.id.button_OK_CustomSequence);
         Button cancel_bt = (Button) view.findViewById(R.id.button_Cancel_CustomSequence);
         Button consonant_bt = (Button) view.findViewById(R.id.button_Consonant);
@@ -46,6 +45,7 @@ public class CustomSequenceDialogFragment extends DialogFragment implements OnCl
         backspace_bt.setOnClickListener(this);
 
         OK_bt.setEnabled(false);
+        setCurrentSequence();
         return view;
     }
 
@@ -53,6 +53,7 @@ public class CustomSequenceDialogFragment extends DialogFragment implements OnCl
         String currentSequence = getArguments().getString("currentSequence");
         if (currentSequence != null && !currentSequence.isEmpty()) {
             sequence_tv.setText(currentSequence);
+            OK_bt.setEnabled(true);
         }
     }
 
