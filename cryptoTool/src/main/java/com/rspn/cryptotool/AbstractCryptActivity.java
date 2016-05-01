@@ -175,7 +175,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
                 case SHARE:
                     intent.setAction(Intent.ACTION_SEND);
                     intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_TEXT, getSharableContent());
+                    intent.putExtra(Intent.EXTRA_TEXT, getShareableContent());
                     startActivity(intent);
                     break;
                 case HOME:
@@ -251,7 +251,7 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
 
     protected abstract void listItemClick(int position);
 
-    protected abstract String getSharableContent();
+    protected abstract String getShareableContent();
 
     protected abstract boolean satisfiedMainButtonPreconditions();
 

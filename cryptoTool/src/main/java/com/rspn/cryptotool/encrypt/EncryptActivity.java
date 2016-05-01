@@ -125,7 +125,7 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
     }
 
     @Override
-    protected String getSharableContent() {
+    protected String getShareableContent() {
         return encryptedText_edit.getText().toString();
     }
 

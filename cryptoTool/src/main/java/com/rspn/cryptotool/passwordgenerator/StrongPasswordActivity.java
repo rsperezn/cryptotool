@@ -55,7 +55,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
     }
 
     @Override
-    protected String getSharableContent() {
+    protected String getShareableContent() {
         return strongPassword_textView.getText().toString();
     }
 

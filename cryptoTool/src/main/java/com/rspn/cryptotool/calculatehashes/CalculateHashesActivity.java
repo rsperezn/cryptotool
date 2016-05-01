@@ -113,7 +113,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
     }
 
     @Override
-    protected String getSharableContent() {
+    protected String getShareableContent() {
         return output_edit.getText().toString();
     }
 
@@ -152,7 +152,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
                 }
 
             case R.id.copyToClipboard_hash:
-                String hashedData = getSharableContent();
+                String hashedData = getShareableContent();
                 copyToClipboard(hashedData);
                 vibrate(15);
                 break;

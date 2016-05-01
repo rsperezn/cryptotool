@@ -133,7 +133,7 @@ public class BreakEncryptionActivity extends AbstractCryptActivity implements Sa
     }
 
     @Override
-    protected String getSharableContent() {
+    protected String getShareableContent() {
         return brokenText_edit.getText().toString();
     }
 
