@@ -1,25 +1,30 @@
 package com.rspn.cryptotool.passwordgenerator;
 
+import android.app.FragmentManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.rspn.cryptotool.AbstractCryptActivity;
 import com.rspn.cryptotool.R;
+import com.rspn.cryptotool.uihelper.CustomSequenceDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PronounceablePasswordActivity extends AbstractCryptActivity implements View.OnClickListener{
+public class PronounceablePasswordActivity extends AbstractCryptActivity implements View.OnClickListener {
     private Spinner numberOfPasswords_spinner;
     private EditText passwordLength_edit;
     private ListView passwords_list;
     private List<String> list = new ArrayList<>();
     private ArrayAdapter<String> passwordsArrayAdapter;
+    private RadioButton custom_rb;
+    private String customSequence = "";
 
     public PronounceablePasswordActivity() {
         super(R.layout.activity_pronounceablepassword,
@@ -34,6 +39,7 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
         numberOfPasswords_spinner = (Spinner) findViewById(R.id.spinner_InPronounceablePasswords);
         passwordLength_edit = (EditText) findViewById(R.id.pronounceablePasswordLength_edit);
         passwordLength_edit.setText("8");
+        custom_rb = (RadioButton) findViewById(R.id.radioButton_custom);
         passwords_list = (ListView) findViewById(R.id.list_PronounceablePasswords);
         passwordsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         passwords_list.setAdapter(passwordsArrayAdapter);
@@ -44,7 +50,7 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
 
     private List<Integer> generateList() {
         List<Integer> integers = new ArrayList<>();
-        for (int i = 1; i <=20 ; i++) {
+        for (int i = 1; i <= 20; i++) {
             integers.add(i);
         }
         return integers;
@@ -78,6 +84,7 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
     @Override
     protected void setOnClickListener() {
         passwords_list.setOnItemClickListener(this);
+        custom_rb.setOnClickListener(this);
     }
 
     @Override
@@ -87,6 +94,9 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
 
     @Override
     public void onClick(View v) {
+        FragmentManager manager = getFragmentManager();
+        CustomSequenceDialogFragment dialog = CustomSequenceDialogFragment.newInstance(customSequence);
+        dialog.show(manager, "customSequenceDialog");
     }
 
     public void generatePronounceablePassword(View view) {
@@ -108,11 +118,24 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
                                     .generateCVVPassword(passwordLength, numberOfPasswords));
                     break;
                 case R.id.radioButton_custom:
+                    generatePronounceablePasswordFromCustomSequence(customSequence);
                     break;
             }
         }
         hideKeyboard(numberOfPasswords_spinner);
         vibrate();
+    }
+
+    public void generatePronounceablePasswordFromCustomSequence(String customSequence) {
+        this.customSequence = customSequence;
+        if (!customSequence.isEmpty()) {
+            if (satisfiedMainButtonPreconditions()) {
+                int passwordLength = Integer.valueOf(passwordLength_edit.getText().toString());
+                int numberOfPasswords = (int) numberOfPasswords_spinner.getItemAtPosition(numberOfPasswords_spinner.getSelectedItemPosition());
+                updatePasswordsList(PronounceablePasswordGenerator
+                        .generateCustomPassword(passwordLength, numberOfPasswords, customSequence));
+            }
+        }
     }
 
     private void updatePasswordsList(List<String> generatedPasswords) {

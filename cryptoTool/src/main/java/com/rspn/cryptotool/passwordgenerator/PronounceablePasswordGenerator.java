@@ -45,6 +45,38 @@ public class PronounceablePasswordGenerator {
         return passwords;
     }
 
+    public static List<String> generateCustomPassword(int passwordLength, int numberOfPasswords, String sequence) {
+        List<String> pronounceablePasswords = new ArrayList<>();
+        for (int i = 0; i < numberOfPasswords; i++) {
+            StringBuilder stringBuilder = new StringBuilder();
+            sequence = updateSequenceLength(sequence, passwordLength);
+            for (int j = 0; j < passwordLength; j++) {
+                if (sequence.charAt(j) == 'C') {
+                    stringBuilder.append(getRandomConsonant());
+                } else {
+                    stringBuilder.append(getRandomVowel());
+                }
+            }
+            pronounceablePasswords.add(stringBuilder.toString());
+        }
+        return pronounceablePasswords;
+    }
+
+    private static String updateSequenceLength(String sequence, int passwordLength) {
+        StringBuilder updatedSequence = new StringBuilder();
+        if (sequence.length() == passwordLength) {
+            return sequence;
+        } else if (sequence.length() < passwordLength) {
+            for (int i = 0; i < passwordLength; i++) {
+                updatedSequence.append(sequence.charAt(i % sequence.length()));
+            }
+            return updatedSequence.toString();
+        } else {
+            int extraCharacters = passwordLength % sequence.length();
+            return trimExtraCharacters(passwordLength, updatedSequence.append(sequence), extraCharacters);
+        }
+    }
+
     private static void generateConstantVowelSequence(int passwordLength, StringBuilder stringBuilder) {
         int charactersInSequence = 2;
         for (int j = 0; j < passwordLength / charactersInSequence; j++) {
