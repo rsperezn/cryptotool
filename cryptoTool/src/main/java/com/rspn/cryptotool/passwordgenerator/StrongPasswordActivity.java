@@ -20,6 +20,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
     private CheckBox upperCase_cb;
     private CheckBox digits_cb;
     private CheckBox symbols_cb;
+    private EditText passwordLength_edit;
     private TextView strongPassword_textView;
     private Spinner numberOfPasswords_spinner;
     private ListView strongPasswords_list;
@@ -40,6 +41,8 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
         upperCase_cb = (CheckBox) findViewById(R.id.checkbox_upperCase);
         digits_cb = (CheckBox) findViewById(R.id.checkBox_digits);
         symbols_cb = (CheckBox) findViewById(R.id.checkBox_symbols);
+        passwordLength_edit = (EditText) findViewById(R.id.strongPasswordLength_edit);
+        passwordLength_edit.setText("8");
         strongPassword_textView = (TextView) findViewById(R.id.textView_strongPassword);
         numberOfPasswords_spinner = (Spinner) findViewById(R.id.spinner_InStrongPasswords);
         strongPasswords_list = (ListView) findViewById(R.id.list_StrongPasswords);
@@ -56,7 +59,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
 
     @Override
     protected String getShareableContent() {
-        return strongPassword_textView.getText().toString();
+        return list.toString();
     }
 
     @Override
