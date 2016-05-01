@@ -63,7 +63,7 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
 
     @Override
     protected String getShareableContent() {
-        return null;
+        return list.toString();
     }
 
     @Override
