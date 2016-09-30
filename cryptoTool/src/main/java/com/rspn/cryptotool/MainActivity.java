@@ -9,26 +9,32 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.util.SparseArray;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ExpandableListView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.rspn.cryptotool.uihelper.CryptExpandableListAdapter;
 import com.rspn.cryptotool.db.TextSamplesDataSource;
-import com.rspn.cryptotool.model.CryptGroup;
+import com.rspn.cryptotool.model.CryptCategory;
 import com.rspn.cryptotool.model.Text;
 import com.rspn.cryptotool.utils.CTUtils;
 import com.rspn.cryptotool.xml.TextSamplesJDOMParser;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static com.rspn.cryptotool.uihelper.CryptExpandableListAdapter.*;
+import static com.rspn.cryptotool.CryptRecyclerViewAdapter.BREAK_ENCRYPTION;
+import static com.rspn.cryptotool.CryptRecyclerViewAdapter.DECRYPT;
+import static com.rspn.cryptotool.CryptRecyclerViewAdapter.ENCRYPT;
+import static com.rspn.cryptotool.CryptRecyclerViewAdapter.FILE;
+import static com.rspn.cryptotool.CryptRecyclerViewAdapter.PRONOUNCEABLE_PASSWORD;
+import static com.rspn.cryptotool.CryptRecyclerViewAdapter.STRONG_PASSWORD;
+import static com.rspn.cryptotool.CryptRecyclerViewAdapter.TEXT;
+import static java.util.Arrays.asList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,14 +44,14 @@ public class MainActivity extends AppCompatActivity {
     private boolean vibrate;
     private TextSamplesDataSource dataSource;
     private AdView adView;
-    // more efficient than HashMap for mapping integers to objects
-    private SparseArray<CryptGroup> groups = new SparseArray<>();
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createExpandableListGroups();
         CTUtils.initialize();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         CTUtils.retainCase = prefs.getBoolean("pref_letterCase", false);
@@ -82,39 +88,36 @@ public class MainActivity extends AppCompatActivity {
         CTUtils.windowWidth = size.x;
         CTUtils.windowHeight = size.y;
 
-        ExpandableListView listView = (ExpandableListView) findViewById(R.id.cryptotool_list);
-        CryptExpandableListAdapter adapter = new CryptExpandableListAdapter(this,
-                groups);
-        listView.setAdapter(adapter);
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new CryptRecyclerViewAdapter(getDataSet(), this);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private List<CryptCategory> getDataSet() {
+        List<CryptCategory> results = new ArrayList<>();
+        CryptCategory classicalTool = new CryptCategory("Classical Cipher Tool",
+                asList(ENCRYPT, DECRYPT, BREAK_ENCRYPTION));
+        CryptCategory hashesGenerator = new CryptCategory("Hash Generator",
+                asList(FILE, TEXT));
+        CryptCategory passwordGenerator = new CryptCategory("Password Generator",
+                asList(STRONG_PASSWORD, PRONOUNCEABLE_PASSWORD));
+
+        results.add(classicalTool);
+        results.add(hashesGenerator);
+        results.add(passwordGenerator);
+
+        return results;
     }
 
     private void displayLogoInActionBar() {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setLogo(R.drawable.ic_launcher);
-            getSupportActionBar().setDisplayUseLogoEnabled(true);
             getSupportActionBar().setTitle(TITLE);
         }
-    }
-
-    public void createExpandableListGroups() {
-        CryptGroup classicalCrypto = new CryptGroup("Classical Cipher Tool");
-        classicalCrypto.children.add(ENCRYPT);
-        classicalCrypto.children.add(DECRYPT);
-        classicalCrypto.children.add(BREAK_ENCRYPTION);
-
-        CryptGroup calculateHashes = new CryptGroup("Hash Generator");
-        calculateHashes.children.add(FILE);
-        calculateHashes.children.add(TEXT);
-
-        CryptGroup strongPassword = new CryptGroup("Password Generator");
-        strongPassword.children.add(STRONG_PASSWORD);
-        strongPassword.children.add(PRONOUNCEABLE_PASSWORD);
-
-        groups.append(0, classicalCrypto);
-        groups.append(1, calculateHashes);
-        groups.append(2, strongPassword);
     }
 
     @Override

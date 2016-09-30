@@ -1,13 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/background">
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent">
-
-    </ScrollView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/relativeLayout"
+        android:scrollbars="vertical" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -20,31 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4246477151358404/4307342972"/>
+            ads:adUnitId="ca-app-pub-4246477151358404/4307342972" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/LinearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/relativeLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
-
-        <ExpandableListView
-            android:id="@+id/cryptotool_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:childDivider="@color/apptheme_color"
-            android:divider="@color/apptheme_color"
-            android:dividerHeight="@dimen/crypt_group_divider" />
-
-        <LinearLayout
-            android:layout_width="64dp"
-            android:layout_height="346dp"
-            android:orientation="vertical"/>
-    </LinearLayout>
 </RelativeLayout>
