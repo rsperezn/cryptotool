@@ -45,7 +45,7 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
         passwords_list.setAdapter(passwordsArrayAdapter);
         ArrayAdapter<Integer> numberOfPasswordsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, generateList());
         numberOfPasswords_spinner.setAdapter(numberOfPasswordsArrayAdapter);
-
+        numberOfPasswords_spinner.setSelection(4);
     }
 
     private List<Integer> generateList() {

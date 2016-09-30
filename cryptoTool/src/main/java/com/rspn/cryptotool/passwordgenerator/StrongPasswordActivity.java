@@ -50,6 +50,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
         strongPasswords_list.setAdapter(passwordsArrayAdapter);
         ArrayAdapter<Integer> numberOfPasswordsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, generateList());
         numberOfPasswords_spinner.setAdapter(numberOfPasswordsArrayAdapter);
+        numberOfPasswords_spinner.setSelection(4);
     }
 
     @Override
