@@ -131,7 +131,6 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
     @Override
     protected void setDataFromOriginatingActivity() {
         if (this.getIntent().hasExtra("HashType")) {
-            hashType = this.getIntent().getStringExtra("HashType");
             setTitle("Generate Hash of " + hashType);
         }
     }
@@ -189,20 +188,21 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
     }
 
     private void setEditTextsHints() {
+        hashType = this.getIntent().getStringExtra("HashType");
         if (hashType.equals("File")) {
             if (comparingHashes) {
-                input1_edit.setHint("File path 1");
-                output_edit.setHint("File path 2");
+                input1_edit.setHint("path/to/file1");
+                output_edit.setHint("path/to/file2");
             } else {
-                input1_edit.setHint("File path");
+                input1_edit.setHint("path/to/file1");
                 output_edit.setHint("Output");
             }
         } else {
             if (comparingHashes) {
-                input1_edit.setHint("Text 1");
-                output_edit.setHint("Text 2");
+                input1_edit.setHint("Enter text1");
+                output_edit.setHint("Enter text2");
             } else {
-                input1_edit.setHint("Text");
+                input1_edit.setHint("Enter text1");
                 output_edit.setHint("Output");
             }
         }
