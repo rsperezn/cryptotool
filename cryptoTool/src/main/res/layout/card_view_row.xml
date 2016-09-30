@@ -53,7 +53,9 @@
                 android:layout_gravity="center_vertical"
                 android:text="This is some random description for the tihng hahah que lta lca fasdfaslfs "
                 android:textSize="12sp"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"/>
 
             <View
                 android:id="@+id/viewDividerCategory"
