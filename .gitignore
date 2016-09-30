@@ -1,7 +1,6 @@
 build/
 .gradle/
 .idea
-*.iml
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -11,3 +10,6 @@ local.properties
 
 # Cache of project
 .gradletasknamecache
+/CryptoTool.iml
+/fileChooserActivity/fileChooserActivity.iml
+/cryptoTool/cryptoTool.iml
