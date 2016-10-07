@@ -43,10 +43,9 @@ public class FileChooserActivity extends ListActivity {
 					@Override
 					public boolean accept(File pathname) {
 						return ((pathname.isDirectory()) || (pathname.getName()
-								.contains(".") ? extensions.contains(pathname
+								.contains(".") && extensions.contains(pathname
 								.getName().substring(
-										pathname.getName().lastIndexOf(".")))
-								: false));
+										pathname.getName().lastIndexOf(".")))));
 					}
 				};
 			}
@@ -56,9 +55,7 @@ public class FileChooserActivity extends ListActivity {
 		//start at the root
 		while(currentFolder.getParent() !=null){
 			currentFolder= currentFolder.getParentFile();
-		}		
-		
-		
+		}
 		fill(currentFolder);
 	}
 
@@ -71,7 +68,7 @@ public class FileChooserActivity extends ListActivity {
 				fill(currentFolder);
 			} else {
 				Log.i("FILE CHOOSER", "canceled");
-				setResult(Activity.RESULT_CANCELED);				
+				setResult(Activity.RESULT_CANCELED);
 				finish();
 			}
 			return false;
@@ -80,15 +77,15 @@ public class FileChooserActivity extends ListActivity {
 	}
 
 	private void fill(File f) {
-		File[] folders = null;
+		File[] folders;
 		if (fileFilter != null)
 			folders = f.listFiles(fileFilter);
 		else
 			folders = f.listFiles();
 
 		this.setTitle(getString(R.string.currentDir) + ": " + f.getName());
-		List<FileInfo> dirs = new ArrayList<FileInfo>();
-		List<FileInfo> files = new ArrayList<FileInfo>();
+		List<FileInfo> dirs = new ArrayList<>();
+		List<FileInfo> files = new ArrayList<>();
 		try {
 			for (File file : folders) {
 				if (file.isDirectory() && !file.isHidden())
@@ -137,8 +134,8 @@ public class FileChooserActivity extends ListActivity {
 			if(!fileSelected.canRead()){
 				Toast.makeText(this, "This file cannot be read", Toast.LENGTH_SHORT).show();
 				return;
-			}	
-				
+			}
+
 			Intent intent = new Intent();
 			intent.putExtra(Constants.KEY_FILE_SELECTED,
 					fileSelected.getAbsolutePath());
