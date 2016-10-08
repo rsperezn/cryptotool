@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.Menu;
@@ -54,7 +55,6 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
     private final int FILE_CHOOSER = 1; // onActivityResult request code
     private EditText input1_edit;
     private Button calculate_bt;
-    private Button copyToClipboard_bt;
     private String algorithm;
     private Spinner algorithms_sp;
     private EditText output_edit;
@@ -89,12 +89,10 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
         algorithms_sp.setAdapter(algorithmsAdapter);
         setSpinnerAlgorithms();
         output_edit = (EditText) findViewById(R.id.edit_hashedText);
-        copyToClipboard_bt = (Button) findViewById(R.id.copyToClipboard_hash);
-        copyToClipboard_bt.setOnClickListener(this);
-        copyToClipboard_bt.setVisibility(View.INVISIBLE);
         CheckBox compare_chb = (CheckBox) findViewById(R.id.checkBox_compareHashes);
         compare_chb.setOnClickListener(this);
         setEditTextsHints();
+        disableEditText();
     }
 
     @Override
@@ -149,9 +147,10 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
                     break;
                 }
 
-            case R.id.copyToClipboard_hash:
+            case R.id.edit_hashedText:
                 String hashedData = getShareableContent();
                 copyToClipboard(hashedData);
+                hideKeyboard(output_edit);
                 vibrate(15);
                 break;
 
@@ -160,16 +159,29 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
                     calculate_bt.setText(R.string.label_compareHashButton);
                     comparingHashes = true;
                     setEditTextsHints();
-                    copyToClipboard_bt.setVisibility(View.INVISIBLE);
+                    enableEditText();
                     output_edit.setText("");
                 } else {
                     calculate_bt.setText(R.string.label_calculateHashButton);
                     comparingHashes = false;
+                    disableEditText();
                     setEditTextsHints();
-                    copyToClipboard_bt.setVisibility(View.VISIBLE);
                 }
                 break;
         }
+    }
+
+    private void disableEditText() {
+        output_edit.setOnClickListener(this);
+        output_edit.setTextColor(Color.BLACK);
+        output_edit.setCursorVisible(false);
+    }
+
+    private void enableEditText() {
+        output_edit.setEnabled(true);
+        output_edit.setFocusable(true);
+        output_edit.setCursorVisible(true);
+        output_edit.setOnClickListener(null);
     }
 
     private boolean filesPathExist() {
@@ -528,7 +540,6 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
                     hashingTime = (now - timerStartTime) / 1000.0;
                     hashingDetailsMenuItem.setVisible(true);
                     shouldShowDetailsItem = true;
-                    copyToClipboard_bt.setVisibility(View.VISIBLE);
                 }
             } else {
                 displayHashComparisonResult(areMatchingHashes);

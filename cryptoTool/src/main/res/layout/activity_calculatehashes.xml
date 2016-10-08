@@ -71,8 +71,7 @@
 
                     <Button
                         android:id="@+id/calculate_hash"
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="50dp"
+                        android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="0.35"
                         android:background="@drawable/button_shape"
@@ -90,28 +89,16 @@
                     <ScrollView
                         android:id="@+id/scrollView_hashedText"
                         android:layout_width="match_parent"
-                        android:layout_height="110dp"
+                        android:layout_height="145dp"
                         android:background="@drawable/simpleborder" >
 
                         <EditText
                             android:id="@+id/edit_hashedText"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:ems="10"
                             android:hint="@string/hint_output"
-                            android:inputType="textMultiLine" />
+                            android:inputType="none" />
                     </ScrollView>
-
-                    <Button
-                        android:id="@+id/copyToClipboard_hash"
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="80dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="130dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_weight="0.35"
-                        android:background="@drawable/button_shape"
-                        android:text="@string/action_copy" />
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>
