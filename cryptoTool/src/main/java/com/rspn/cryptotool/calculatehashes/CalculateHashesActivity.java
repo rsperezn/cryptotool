@@ -30,9 +30,7 @@ import com.rspn.cryptotool.utils.CTUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -48,6 +46,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 
 public class CalculateHashesActivity extends AbstractCryptActivity implements OnItemSelectedListener, View.OnClickListener {
@@ -347,7 +346,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
         private ArrayList<String> dataToHash;
         private String algorithm;
         private ArrayList<String> hashResults = new ArrayList<>();
-        private boolean areMatchingHashes = false;
+        private boolean areMatchingHashes;
 
         @Override
         protected Void doInBackground(HashData... params) {
@@ -374,44 +373,57 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
 
         private void calculateHashOfFile(String filePath) {
             MessageDigest digest = null;
-            try {
-                digest = MessageDigest.getInstance(algorithm);
-            } catch (NoSuchAlgorithmException e1) {
-                e1.printStackTrace();
-            }
             File file = new File(filePath);
             fileSize = file.length();
             lastModified = file.lastModified();
-            InputStream is = null;
+            FileInputStream fileInputStream = null;
             try {
-                is = new FileInputStream(file);
-            } catch (FileNotFoundException e) {
-                Log.i(CTUtils.TAG, "Exception while getting FileInputStream");
-            }
-
-            byte[] buffer = new byte[8192];
-            int read;
-            try {
-                if (is != null)
-                    while ((read = is.read(buffer)) > 0) {
+                fileInputStream = new FileInputStream(file);
+                if ("Blowfish".equals(algorithm)) {
+                    encryptWithBlowfish(new FileInputStream(file));
+                } else {
+                    digest = MessageDigest.getInstance(algorithm);
+                }
+                byte[] buffer = new byte[8192];
+                int read;
+                try {
+                    while ((read = fileInputStream.read(buffer)) > 0) {
                         digest.update(buffer, 0, read);
                     }
-                byte[] algorithmSum = digest.digest();
-                BigInteger bigInt = new BigInteger(1, algorithmSum);
-                String output = bigInt.toString(16);
-                // Fill to 32 chars
-                output = String.format("%32s", output).replace(' ', '0');
-                hashResults.add(output.toUpperCase());
-            } catch (IOException e) {
-                throw new RuntimeException("Unable to process file for MD5", e);
+                    byte[] outputBytes = digest.digest();
+                    setEncryptionResults(outputBytes);
+                } catch (IOException e) {
+                    throw new RuntimeException("Unable to process file for MD5", e);
+                }
+            } catch (Exception e) {
+                Log.i(CTUtils.TAG, "Exception while getting FileInputStream");
             } finally {
                 try {
-                    if (is != null)
-                        is.close();
+                    fileInputStream.close();
                 } catch (IOException e) {
                     Log.i(CTUtils.TAG, "Exception on closing " + algorithm + " input stream");
                 }
             }
+        }
+
+        private void encryptWithBlowfish(FileInputStream fileInputStream) throws Exception {
+            Key secretKey = new SecretKeySpec("key".getBytes(), "Blowfish");
+            Cipher cipher = Cipher.getInstance("Blowfish");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+
+            byte[] inputBytes = new byte[(int) fileSize];
+            fileInputStream.read(inputBytes);
+
+            byte[] outputBytes = cipher.doFinal(inputBytes);
+            setEncryptionResults(outputBytes);
+        }
+
+        private void setEncryptionResults(byte[] outputBytes) {
+            BigInteger bigInt = new BigInteger(1, outputBytes);
+            String output = bigInt.toString(16);
+            // Fill to 32 chars
+            output = String.format("%32s", output).replace(' ', '0');
+            hashResults.add(output.toUpperCase());
         }
 
         private void calculateHashOfText(String text) {
@@ -503,7 +515,6 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
                     }
                 }
             } catch (NoSuchAlgorithmException e) {
-                //Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT);
             }
         }
 
