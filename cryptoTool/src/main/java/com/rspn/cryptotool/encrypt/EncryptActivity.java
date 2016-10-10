@@ -22,11 +22,10 @@ import com.rspn.cryptotool.breakencryption.BreakEncryptionActivity;
 import com.rspn.cryptotool.decrypt.DecryptActivity;
 import com.rspn.cryptotool.model.NavigationItem;
 import com.rspn.cryptotool.uihelper.CryptInfoDialogFragment;
-import com.rspn.cryptotool.uihelper.HorizontalNumberPicker;
 import com.rspn.cryptotool.uihelper.OpenDialogFragment;
 import com.rspn.cryptotool.uihelper.SaveDialogFragment;
-import com.rspn.cryptotool.utils.CTUtils;
 import com.rspn.cryptotool.utils.CTUtils.EType;
+import com.travijuu.numberpicker.library.NumberPicker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
     private Button run_encrypt_bt;
     private CheckBox whitespaces_cb;
     private TextView shift_tv;
-    private HorizontalNumberPicker horizontalNP;
+    private NumberPicker numberPicker;
     private MenuItem saveMenuItem;
     private boolean directActivity = true;
     private boolean drawerIconsAdded = false;
@@ -86,8 +85,10 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
         run_encrypt_bt = (Button) findViewById(R.id.run_encryption);
         shift_tv = new TextView(this);
         shift_tv.setText(R.string.label_switchBy);
-        horizontalNP = new HorizontalNumberPicker(this);
-        horizontalNP.setMax(25);
+        numberPicker = (NumberPicker) findViewById(R.id.number_picker);
+        numberPicker.setMin(1);
+        numberPicker.setMax(25);
+        options_ll.removeView(numberPicker);
     }
 
     @Override
@@ -219,19 +220,19 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
         if (position == 0) {
             run_encrypt_bt.setEnabled(false);
             options_ll.removeView(shift_tv);
-            options_ll.removeView(horizontalNP);
+            options_ll.removeView(numberPicker);
             options_ll.removeView(keyword_edit);
             encryptionType = EType.NULL;
         } else if (position == 1) {//Caesar's
             run_encrypt_bt.setEnabled(true);
             options_ll.removeView(keyword_edit);
             options_ll.addView(shift_tv);
-            options_ll.addView(horizontalNP);
+            options_ll.addView(numberPicker);
             encryptionType = EType.CAESARS;
         } else {//Vigenere
             run_encrypt_bt.setEnabled(true);
             options_ll.removeView(shift_tv);
-            options_ll.removeView(horizontalNP);
+            options_ll.removeView(numberPicker);
             options_ll.addView(keyword_edit);
             encryptionType = EType.VIGENERE;
         }
@@ -293,7 +294,7 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
         protected void onPreExecute() {
             plainText_edit = (EditText) findViewById(R.id.edit_plainText);
             plainText = plainText_edit.getText().toString();
-            delta = horizontalNP.getValue();
+            delta = numberPicker.getValue();
             encryptedText_edit = (EditText) findViewById(R.id.edit_encryptedText_InEncryptActivity);
             isWhitespacesChecked = ((CheckBox) findViewById(R.id.checkBox_spaces_InEncryptActivity)).isChecked();
             keyword = keyword_edit.getText().toString();
