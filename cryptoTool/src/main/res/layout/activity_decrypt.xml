@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:numberpicker="http://schemas.android.com/tools"
     android:id="@+id/drawer_layoutInDecryptActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -37,8 +38,16 @@
                             android:layout_marginRight="8dp"
                             android:background="@drawable/crypto_spinner"
                             android:entries="@array/decrypt_scheme_array"
-                            android:gravity="center" 
-                            />
+                            android:gravity="center" />
+                        <com.travijuu.numberpicker.library.NumberPicker
+                            android:id="@+id/number_pickerInDecrypActivity"
+                            android:layout_width="130dp"
+                            android:layout_height="40dp"
+                            numberpicker:min="1"
+                            numberpicker:max="25"
+                            numberpicker:value="-5"
+                            numberpicker:unit="1"
+                            numberpicker:custom_layout="@layout/number_picker_custom_layout"  />
                     </LinearLayout>
 
                     <ScrollView

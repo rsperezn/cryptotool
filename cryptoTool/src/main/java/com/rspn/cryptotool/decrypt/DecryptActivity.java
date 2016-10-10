@@ -21,11 +21,10 @@ import com.rspn.cryptotool.R;
 import com.rspn.cryptotool.encrypt.EncryptActivity;
 import com.rspn.cryptotool.model.NavigationItem;
 import com.rspn.cryptotool.uihelper.CryptInfoDialogFragment;
-import com.rspn.cryptotool.uihelper.HorizontalNumberPicker;
 import com.rspn.cryptotool.uihelper.OpenDialogFragment;
 import com.rspn.cryptotool.uihelper.SaveDialogFragment;
-import com.rspn.cryptotool.utils.CTUtils;
 import com.rspn.cryptotool.utils.CTUtils.EType;
+import com.travijuu.numberpicker.library.NumberPicker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,7 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
     private EType decryptionType;
     private Button run_decrypt_bt;
     private TextView shift_tv;
-    private HorizontalNumberPicker horizontalNP;
+    private NumberPicker numberPicker;
     private MenuItem saveMenuItem;
     private boolean directActivity = true;
     private CheckBox whitespaces_cb;
@@ -84,8 +83,9 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
         run_decrypt_bt = (Button) findViewById(R.id.run_decryption);
         shift_tv = new TextView(this);
         shift_tv.setText(R.string.label_switchBy);
-        horizontalNP = new HorizontalNumberPicker(this);
-        horizontalNP.setMax(25);
+        numberPicker = (NumberPicker) findViewById(R.id.number_pickerInDecrypActivity);
+        numberPicker.setMin(1);
+        numberPicker.setMax(25);
     }
 
     @Override
@@ -200,19 +200,19 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
         if (position == 0) {//selecting nothing
             run_decrypt_bt.setEnabled(false);
             options_ll.removeView(shift_tv);
-            options_ll.removeView(horizontalNP);
+            options_ll.removeView(numberPicker);
             options_ll.removeView(keyword_edit);
             decryptionType = EType.NULL;
         } else if (position == 1) {//Caesar's
             run_decrypt_bt.setEnabled(true);
             options_ll.removeView(keyword_edit);
             options_ll.addView(shift_tv);
-            options_ll.addView(horizontalNP);
+            options_ll.addView(numberPicker);
             decryptionType = EType.CAESARS;
         } else {//Vigenere
             run_decrypt_bt.setEnabled(true);
             options_ll.removeView(shift_tv);
-            options_ll.removeView(horizontalNP);
+            options_ll.removeView(numberPicker);
             options_ll.addView(keyword_edit);
             decryptionType = EType.VIGENERE;
         }
@@ -260,12 +260,11 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
     }
 
     private class MyDecryptionTask extends AsyncTask<EType, Void, String> {
-        private String encryptedText,  keyword;
+        private String encryptedText, keyword;
         private EditText encryptedText_edit;
         private EditText decryptedText_edit;
         private boolean isWhitespacesChecked;
         private int delta;
-        private HorizontalNumberPicker hnp;
 
         @Override
         protected void onPreExecute() {
@@ -273,8 +272,7 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
             encryptedText = encryptedText_edit.getText().toString();
             isWhitespacesChecked = ((CheckBox) findViewById(R.id.checkBox_spaces_InDecryptActivity)).isChecked();
             decryptedText_edit = (EditText) findViewById(R.id.edit_decryptedText);
-            hnp = horizontalNP;
-            delta = hnp.getValue();
+            delta = numberPicker.getValue();
             keyword = keyword_edit.getText().toString();
         }
 
