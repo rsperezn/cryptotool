@@ -85,7 +85,7 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
         run_encrypt_bt = (Button) findViewById(R.id.run_encryption);
         shift_tv = new TextView(this);
         shift_tv.setText(R.string.label_switchBy);
-        numberPicker = (NumberPicker) findViewById(R.id.number_picker);
+        numberPicker = (NumberPicker) findViewById(R.id.number_pickerInEncryptActivity);
         numberPicker.setMin(1);
         numberPicker.setMax(25);
         options_ll.removeView(numberPicker);
