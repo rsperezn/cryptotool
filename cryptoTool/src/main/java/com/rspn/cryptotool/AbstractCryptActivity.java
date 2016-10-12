@@ -167,31 +167,33 @@ public abstract class AbstractCryptActivity extends AppCompatActivity implements
             listItemClick(position);
         } else {
             NavigationItem navigationItem = (NavigationItem) navigationList.getItemAtPosition(position);
+            if (navigationItem != null) {
 
-            String selectedOption = navigationItem.getItemName();
-            Intent intent = new Intent();
+                String selectedOption = navigationItem.getItemName();
+                Intent intent = new Intent();
 
-            switch (selectedOption) {
-                case SHARE:
-                    intent.setAction(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_TEXT, getShareableContent());
-                    startActivity(intent);
-                    break;
-                case HOME:
-                    intent = new Intent(this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    break;
-                default:
-                    listItemClick(position);
-                    break;
+                switch (selectedOption) {
+                    case SHARE:
+                        intent.setAction(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_TEXT, getShareableContent());
+                        startActivity(intent);
+                        break;
+                    case HOME:
+                        intent = new Intent(this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        break;
+                    default:
+                        listItemClick(position);
+                        break;
+                }
             }
         }
     }
 
     private boolean listItemIsNotFromNavigationDrawer(View view) {
-        return this instanceof PronounceablePasswordActivity && isNotListItemFromMenu(view) ||this instanceof StrongPasswordActivity && isNotListItemFromMenu(view);
+        return this instanceof PronounceablePasswordActivity && isNotListItemFromMenu(view) || this instanceof StrongPasswordActivity && isNotListItemFromMenu(view);
     }
 
     private boolean isNotListItemFromMenu(View view) {
