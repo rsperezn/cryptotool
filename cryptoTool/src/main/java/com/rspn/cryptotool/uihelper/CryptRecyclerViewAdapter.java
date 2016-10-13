@@ -1,4 +1,4 @@
-package com.rspn.cryptotool;
+package com.rspn.cryptotool.uihelper;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.rspn.cryptotool.R;
 import com.rspn.cryptotool.breakencryption.BreakEncryptionActivity;
 import com.rspn.cryptotool.calculatehashes.CalculateHashesActivity;
 import com.rspn.cryptotool.decrypt.DecryptActivity;

@@ -21,19 +21,20 @@ import com.google.android.gms.ads.AdView;
 import com.rspn.cryptotool.db.TextSamplesDataSource;
 import com.rspn.cryptotool.model.CryptCategory;
 import com.rspn.cryptotool.model.Text;
+import com.rspn.cryptotool.uihelper.CryptRecyclerViewAdapter;
 import com.rspn.cryptotool.utils.CTUtils;
 import com.rspn.cryptotool.xml.TextSamplesJDOMParser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.rspn.cryptotool.CryptRecyclerViewAdapter.BREAK_ENCRYPTION;
-import static com.rspn.cryptotool.CryptRecyclerViewAdapter.DECRYPT;
-import static com.rspn.cryptotool.CryptRecyclerViewAdapter.ENCRYPT;
-import static com.rspn.cryptotool.CryptRecyclerViewAdapter.FILE;
-import static com.rspn.cryptotool.CryptRecyclerViewAdapter.PRONOUNCEABLE_PASSWORD;
-import static com.rspn.cryptotool.CryptRecyclerViewAdapter.STRONG_PASSWORD;
-import static com.rspn.cryptotool.CryptRecyclerViewAdapter.TEXT;
+import static com.rspn.cryptotool.uihelper.CryptRecyclerViewAdapter.BREAK_ENCRYPTION;
+import static com.rspn.cryptotool.uihelper.CryptRecyclerViewAdapter.DECRYPT;
+import static com.rspn.cryptotool.uihelper.CryptRecyclerViewAdapter.ENCRYPT;
+import static com.rspn.cryptotool.uihelper.CryptRecyclerViewAdapter.FILE;
+import static com.rspn.cryptotool.uihelper.CryptRecyclerViewAdapter.PRONOUNCEABLE_PASSWORD;
+import static com.rspn.cryptotool.uihelper.CryptRecyclerViewAdapter.STRONG_PASSWORD;
+import static com.rspn.cryptotool.uihelper.CryptRecyclerViewAdapter.TEXT;
 import static java.util.Arrays.asList;
 
 public class MainActivity extends AppCompatActivity {
