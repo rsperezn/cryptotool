@@ -98,11 +98,11 @@ public class MainActivity extends AppCompatActivity {
 
     private List<CryptCategory> getDataSet() {
         List<CryptCategory> results = new ArrayList<>();
-        CryptCategory classicalTool = new CryptCategory("Classical Cipher Tool",
+        CryptCategory classicalTool = new CryptCategory(CTUtils.CLASSICAL_CIPHER_TOOL,
                 asList(ENCRYPT, DECRYPT, BREAK_ENCRYPTION));
-        CryptCategory hashesGenerator = new CryptCategory("Hash Generator",
+        CryptCategory hashesGenerator = new CryptCategory(CTUtils.HASH_GENERATOR,
                 asList(FILE, TEXT));
-        CryptCategory passwordGenerator = new CryptCategory("Password Generator",
+        CryptCategory passwordGenerator = new CryptCategory(CTUtils.PASSWORD_GENERATOR,
                 asList(STRONG_PASSWORD, PRONOUNCEABLE_PASSWORD));
 
         results.add(classicalTool);

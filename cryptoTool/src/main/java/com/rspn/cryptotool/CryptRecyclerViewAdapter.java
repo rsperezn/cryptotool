@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.rspn.cryptotool.encrypt.EncryptActivity;
 import com.rspn.cryptotool.model.CryptCategory;
 import com.rspn.cryptotool.passwordgenerator.PronounceablePasswordActivity;
 import com.rspn.cryptotool.passwordgenerator.StrongPasswordActivity;
+import com.rspn.cryptotool.utils.CTUtils;
 
 import java.util.List;
 
@@ -50,32 +52,42 @@ public class CryptRecyclerViewAdapter extends RecyclerView.Adapter<CryptRecycler
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         CryptCategory cryptCategory = cryptCategories.get(position);
-        holder.label.setText(cryptCategory.getTitle());
+        String category = cryptCategory.getTitle();
+        holder.label.setText(category);
+        addCategoryImageView(holder,category);
         List<String> subcategories = cryptCategory.getSubcategories();
         int totalNumberOfSubcategories = subcategories.size();
         for (int i = 0; i < totalNumberOfSubcategories; i++) {
             String subcategory = subcategories.get(i);
-            TextView subcategory_tv = new TextView(context);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    MATCH_PARENT,
-                    140);
-            layoutParams.setMargins(45, 0, 0, 0);
-            subcategory_tv.setText(subcategory);
-            subcategory_tv.setGravity(CENTER_VERTICAL);
-            //TODO set item ID
-            subcategory_tv.setOnClickListener(this);
-            subcategory_tv.setLayoutParams(layoutParams);
-            holder.linearLayout.addView(subcategory_tv);
+            addSubcategoryTextView(holder, subcategory);
             if (thereExistsMoreSubcategories(totalNumberOfSubcategories, i)) {
-                View itemSeparator;
-                itemSeparator = new View(context);
-                RecyclerView.LayoutParams dividerLayoutParams = new RecyclerView.LayoutParams(
-                        MATCH_PARENT,
-                        3);
-                itemSeparator.setLayoutParams(dividerLayoutParams);
-                itemSeparator.setBackgroundColor(Color.LTGRAY);
-                holder.linearLayout.addView(itemSeparator);
+                addSubcategorySeparator(holder);
             }
+        }
+    }
+
+    private void addSubcategorySeparator(DataObjectHolder holder) {
+        View itemSeparator;
+        itemSeparator = new View(context);
+        RecyclerView.LayoutParams dividerLayoutParams = new RecyclerView.LayoutParams(
+                MATCH_PARENT,
+                3);
+        itemSeparator.setLayoutParams(dividerLayoutParams);
+        itemSeparator.setBackgroundColor(Color.LTGRAY);
+        holder.linearLayout.addView(itemSeparator);
+    }
+
+    private void addCategoryImageView(DataObjectHolder holder, String subcategory) {
+        switch (subcategory) {
+            case CTUtils.CLASSICAL_CIPHER_TOOL:
+                holder.imageview.setImageResource(R.drawable.lock_broken_orange);
+                break;
+            case CTUtils.HASH_GENERATOR:
+                holder.imageview.setImageResource(R.drawable.hash);
+                break;
+            case CTUtils.PASSWORD_GENERATOR:
+                holder.imageview.setImageResource(R.drawable.password_asteriks_orange);
+                break;
         }
     }
 
@@ -126,6 +138,20 @@ public class CryptRecyclerViewAdapter extends RecyclerView.Adapter<CryptRecycler
         }
     }
 
+    private void addSubcategoryTextView(DataObjectHolder holder, String subcategory) {
+        TextView subcategory_tv = new TextView(context);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                MATCH_PARENT,
+                140);
+        layoutParams.setMargins(45, 0, 0, 0);
+        subcategory_tv.setText(subcategory);
+        subcategory_tv.setGravity(CENTER_VERTICAL);
+        //TODO set item ID
+        subcategory_tv.setOnClickListener(this);
+        subcategory_tv.setLayoutParams(layoutParams);
+        holder.linearLayout.addView(subcategory_tv);
+    }
+
     private boolean thereExistsMoreSubcategories(int totalNumberOfSubcategories, int currentIteration) {
         int nextIteration = ++currentIteration;
         return nextIteration < totalNumberOfSubcategories;
@@ -139,11 +165,13 @@ public class CryptRecyclerViewAdapter extends RecyclerView.Adapter<CryptRecycler
     public static class DataObjectHolder extends RecyclerView.ViewHolder {
         TextView label;
         LinearLayout linearLayout;
+        ImageView imageview;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.textViewCryptGroup);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayoutCardView);
+            imageview = (ImageView) itemView.findViewById(R.id.imageCryptGroup);
         }
 
     }

@@ -28,14 +28,14 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
+                android:background="@color/primary_text"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imageCryptGroup"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:padding="5dp"
-                    android:src="@drawable/lock_closed_black" />
+                    android:padding="5dp"/>
 
                 <TextView
                     android:id="@+id/textViewCryptGroup"
@@ -43,14 +43,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="Sample header text"
+                    android:textColor="@color/icons"
                     android:textSize="20sp" />
 
             </LinearLayout>
-            <View
-                android:id="@+id/viewDividerCategory"
-                android:layout_width="fill_parent"
-                android:layout_height="5dp"
-                android:background="@color/primary" />
 
             <LinearLayout
                 android:id="@+id/linearLayoutCardView"

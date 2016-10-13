@@ -4,6 +4,9 @@ import java.util.Hashtable;
 
 public class CTUtils {
     public static final String TAG = "CryptoTool";
+    public static final String CLASSICAL_CIPHER_TOOL = "Classical Cipher Tool";
+    public static final String HASH_GENERATOR = "Hash Generator";
+    public static final String PASSWORD_GENERATOR = "Password Generator";
     public static Hashtable<Character, Integer> charToInt = new Hashtable<>();
     public static double EnglishIC = 0.065;
     public static boolean retainCase = false;
