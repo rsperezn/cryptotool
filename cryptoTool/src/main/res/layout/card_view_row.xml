@@ -15,7 +15,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         card_view:cardCornerRadius="5dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true">
@@ -35,7 +35,8 @@
                     android:id="@+id/imageCryptGroup"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:padding="5dp"/>
+                    android:padding="5dp"
+                    android:layout_gravity="center_vertical"/>
 
                 <TextView
                     android:id="@+id/textViewCryptGroup"
@@ -44,7 +45,9 @@
                     android:layout_gravity="center_vertical"
                     android:text="Sample header text"
                     android:textColor="@color/icons"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"/>
 
             </LinearLayout>
 
