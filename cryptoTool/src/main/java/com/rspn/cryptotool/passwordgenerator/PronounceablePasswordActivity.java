@@ -31,7 +31,7 @@ public class PronounceablePasswordActivity extends AbstractCryptActivity impleme
                 R.id.adView_InPronounceablePassword,
                 R.id.drawer_layoutInPronounceablePasswordActivity,
                 R.id.navigation_listInPronounceablePasswordActivity,
-                R.drawable.password_key_with_background);
+                R.drawable.asterics);
     }
 
     @Override
