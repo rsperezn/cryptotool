@@ -52,7 +52,7 @@ public class DecryptActivity extends AbstractCryptActivity implements OnItemSele
                 R.id.adView_InDecryptActivity,
                 R.id.drawer_layoutInDecryptActivity,
                 R.id.navigation_listInDecryptActivity,
-                R.drawable.open_lock_binary);
+                R.drawable.open_lock);
     }
 
     public static List<String> getTextsToSave(boolean input, boolean output) {

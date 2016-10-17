@@ -76,7 +76,7 @@ public class CalculateHashesActivity extends AbstractCryptActivity implements On
                 R.id.adView_InCalculateHashesActivity,
                 R.id.drawer_layoutInCalculateHashesActivity,
                 R.id.navigation_listInCalculateHashesActivity,
-                R.drawable.xor_binary);
+                R.drawable.xor);
     }
 
     @Override

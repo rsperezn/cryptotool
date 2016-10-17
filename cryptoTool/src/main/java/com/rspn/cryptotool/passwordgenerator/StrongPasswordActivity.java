@@ -32,7 +32,7 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
                 R.id.adView_InStrongPassword,
                 R.id.drawer_layoutInStrongPasswordActivity,
                 R.id.navigation_listInStrongPasswordActivity,
-                R.drawable.asterics);
+                R.drawable.asteriscs);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class EncryptActivity extends AbstractCryptActivity implements OnItemSele
                 R.id.adView_InEncryptActivity,
                 R.id.drawer_layoutInEncryptActivity,
                 R.id.navigation_listInEncryptActivity,
-                R.drawable.closed_lock_binary);
+                R.drawable.closed_lock);
     }
 
     public static List<String> getTextsToSave(boolean input, boolean output) {

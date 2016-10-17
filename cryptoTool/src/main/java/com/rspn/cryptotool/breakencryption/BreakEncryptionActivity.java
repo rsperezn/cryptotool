@@ -63,8 +63,7 @@ public class BreakEncryptionActivity extends AbstractCryptActivity implements Sa
                 R.id.adView_InBreakActivity,
                 R.id.drawer_layoutInBreakActivity,
                 R.id.navigation_listInBreakActivity,
-                R.drawable.broken_lock_binary
-        );
+                R.drawable.broken_lock);
     }
 
     public static List<String> getTextsToSave(boolean input, boolean output) {
