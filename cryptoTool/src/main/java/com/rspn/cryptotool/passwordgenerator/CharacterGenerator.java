@@ -105,10 +105,10 @@ public class CharacterGenerator {
         return similarLookingCharacters.contains(character);
     }
 
-    public static char getNonSimilarLookingCharacter() throws Exception {
-        char randomChar = getRandomCharacter();
+    public static char getNonSimilarLookingCharacter(Types... requiredTypes) throws Exception {
+        char randomChar = getRandomCharacter(requiredTypes);
         while (similarLookingCharacters.contains(randomChar)) {
-            randomChar = getRandomCharacter();
+            randomChar = getRandomCharacter(requiredTypes);
         }
         return randomChar;
     }
@@ -116,7 +116,7 @@ public class CharacterGenerator {
     public static char getNonSimilarLookingCharacter(Types type) throws Exception {
         char randomChar = getRandomCharacter(type);
         while (similarLookingCharacters.contains(randomChar)) {
-            randomChar = getRandomCharacter();
+            randomChar = getRandomCharacter(type);
         }
         return randomChar;
     }
