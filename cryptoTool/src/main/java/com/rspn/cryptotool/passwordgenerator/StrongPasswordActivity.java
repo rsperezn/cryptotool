@@ -84,15 +84,20 @@ public class StrongPasswordActivity extends AbstractCryptActivity implements Vie
 
     public void generateStrongPassword(View view) {
         if (satisfiedMainButtonPreconditions()) {
-            int passwordLength = Integer.valueOf(((EditText) findViewById(R.id.strongPasswordLength_edit)).getText().toString());
+            EditText password_edit = (EditText) findViewById(R.id.strongPasswordLength_edit);
+            int passwordLength = Integer.valueOf(password_edit.getText().toString());
             int numberOfPasswords = (int) numberOfPasswords_spinner.getItemAtPosition(numberOfPasswords_spinner.getSelectedItemPosition());
             boolean excludeSimilarLookingCharacters = ((CheckBox) findViewById(R.id.checkBox_excludeSimilarLookingCharacters)).isChecked();
-
+            Characters.Types[] checkedCharacterTypes = getCheckedCharacterTypes();
+            if (checkedCharacterTypes.length > passwordLength) {
+                passwordLength = checkedCharacterTypes.length;
+                password_edit.setText(String.valueOf(passwordLength));
+            }
             try {
                 List<String> strongPasswords = PasswordGenerator.generatePassword(passwordLength,
                         numberOfPasswords,
                         excludeSimilarLookingCharacters,
-                        getCheckedCharacterTypes());
+                        checkedCharacterTypes);
                 updatePasswordsList(strongPasswords);
 
             } catch (Exception e) {

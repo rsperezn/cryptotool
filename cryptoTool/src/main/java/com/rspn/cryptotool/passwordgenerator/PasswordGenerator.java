@@ -3,59 +3,34 @@ package com.rspn.cryptotool.passwordgenerator;
 import com.rspn.cryptotool.passwordgenerator.Characters.Types;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class PasswordGenerator {
 
     public static List<String> generatePassword(int passwordLength, int numberOfPasswords,
-                                          boolean excludeSimilarLookingCharacters,
-                                          Characters.Types... requiredTypes) throws Exception {
+                                                boolean excludeSimilarLookingCharacters,
+                                                Characters.Types... requiredTypes) throws Exception {
 
         List<String> strongPasswords = new ArrayList<>();
-        boolean requiresAtLeastOneEachType = requiredTypes.length == Characters.getTypesLengthExcludingAmbiguousSymbols();
 
         for (int j = 0; j < numberOfPasswords; j++) {
-            if (!requiresAtLeastOneEachType) {
-                StringBuilder stringBuilder = new StringBuilder();
-                for (int i = 0; i < passwordLength; i++) {
-                    char randomCharacter = CharacterGenerator.getRandomCharacter(requiredTypes);
-                    if (mustExcludeSimilarLookingCharacter(excludeSimilarLookingCharacters, randomCharacter)) {
-                        randomCharacter = CharacterGenerator.getNonSimilarLookingCharacter(requiredTypes);
-                    }
-                    stringBuilder.append(randomCharacter);
-                }
-                strongPasswords.add(stringBuilder.toString());
-            } else {
-                char[] strongPasswordArr = createPasswordWithRequiredTypes(passwordLength, excludeSimilarLookingCharacters);
-
-                // fill the rest of the array with random Characters
-                for (int i = 0; i < passwordLength; i++) {
-                    if (strongPasswordArr[i] == '\0') {
-                        strongPasswordArr[i] = excludeSimilarLookingCharacters ? CharacterGenerator.getNonSimilarLookingCharacter(requiredTypes)
-                                : CharacterGenerator.getRandomCharacter();
-                    }
-                }
-                strongPasswords.add(new String(strongPasswordArr));
-            }
+            char[] strongPasswordArr = createPasswordWithRequiredTypes(passwordLength, requiredTypes, excludeSimilarLookingCharacters);
+            fillBlankCharacters(passwordLength, excludeSimilarLookingCharacters, strongPasswordArr, requiredTypes);
+            strongPasswords.add(new String(strongPasswordArr));
         }
         return strongPasswords;
     }
 
     private static char[] createPasswordWithRequiredTypes(int passwordLength,
-                                                          boolean excludeSimilarLookingCharacters) throws Exception {
+                                                          Types[] requiredTypes, boolean excludeSimilarLookingCharacters) throws Exception {
         Random random = new Random();
-        List<Types> requiredTypes;
         char[] strongPasswordArr = new char[passwordLength];
-        requiredTypes = Arrays.asList(Characters.Types.values());
 
-        int characterTypesLength = Characters.getTypesLength();
         List<Integer> availablePositions = createAvailablePositions(passwordLength);
         // get a random character of each type and put it at a random position
-        for (int i = 0; i < characterTypesLength; i++) {
+        for (Types requiredType : requiredTypes) {
             int positionForRandomCharacter = availablePositions.get(random.nextInt(availablePositions.size()));
-            Types requiredType = requiredTypes.get(i);
             char randomCharacter = CharacterGenerator.getRandomCharacter(requiredType);
             if (mustExcludeSimilarLookingCharacter(excludeSimilarLookingCharacters, randomCharacter)) {
                 randomCharacter = CharacterGenerator.getNonSimilarLookingCharacter(requiredType);
@@ -77,6 +52,15 @@ public class PasswordGenerator {
             availablePositions.add(i);
         }
         return availablePositions;
+    }
+
+    private static void fillBlankCharacters(int passwordLength, boolean excludeSimilarLookingCharacters, char[] strongPasswordArr, Types[] requiredTypes) throws Exception {
+        for (int i = 0; i < passwordLength; i++) {
+            if (strongPasswordArr[i] == '\0') {
+                strongPasswordArr[i] = excludeSimilarLookingCharacters ? CharacterGenerator.getNonSimilarLookingCharacter(requiredTypes)
+                        : CharacterGenerator.getRandomCharacter(requiredTypes);
+            }
+        }
     }
 
 }

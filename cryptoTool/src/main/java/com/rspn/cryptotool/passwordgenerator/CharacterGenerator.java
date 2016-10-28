@@ -45,24 +45,6 @@ public class CharacterGenerator {
         return ambiguousSymbols.get(random.nextInt(maxLength));
     }
 
-    public static char getRandomCharacter() throws Exception {
-
-        switch (Characters.getRandomType()) {
-            case LOWER_CASE:
-                return getRandomLowerCaseLetter();
-            case UPPER_CASE:
-                return getRandomUpperCaseLetter();
-            case DIGITS:
-                return getRandomDigit();
-            case SYMBOLS:
-                return getRandomSymbol();
-            case AMBIGUOUS_SYMBOLS:
-                return getRandomAmbiguousSymbol();
-            default:
-                throw new Exception("Exception  generating random character");
-        }
-    }
-
     public static char getRandomCharacter(Types... requiredTypes) throws Exception {
         Random random = new Random();
         int randomPosition = random.nextInt(requiredTypes.length);
