@@ -8,12 +8,18 @@ import java.util.Random;
 
 
 public class CharacterGenerator {
-    private static List<Character> upperCaseLetters = Arrays.asList('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
-    private static List<Character> lowerCaseLetters = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+    private static List<Character> upperCaseLetters = Arrays.asList('A', 'B', 'C', 'D', 'E', 'F', 'G',
+            'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+    private static List<Character> lowerCaseLetters = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g',
+            'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
     private static List<Character> digits = Arrays.asList('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
-    private static List<Character> symbols = Arrays.asList('!', '?', '$', '%', '^', '&', '*', '_', '-', '+', '=', '@', '#');
-    private static List<Character> ambiguousSymbols = Arrays.asList('{', '}', '[', ']', '(', ')', '/', '\\', '|', '\'', '"', '`', '~', ',', ';', ':', '.', '<', '>');
-    private static List<Character> similarLookingCharacters = Arrays.asList('|', '1', 'I', 'i', 'l', 'L', '0', 'O', 'o');
+    private static List<Character> symbols = Arrays.asList('!', '?', '$', '%', '^', '&', '*', '_',
+            '-', '+', '=', '@', '#');
+    private static List<Character> ambiguousSymbols = Arrays.asList('{', '}', '[', ']', '(', ')', '/',
+            '\\', '|', '\'', '"', '`', '~', ',', ';', ':', '.', '<', '>');
+    private static List<Character> similarLookingCharacters = Arrays.asList('I', 'O', 'B', 'Q', 'S', 'Z',
+            'i', 'j', 'l', 'o','8' ,'1' ,'0', '5' ,'2',',' ,'.',
+            '!' ,'|' ,'/' ,'\\', ';' ,':' ,'’' ,'`' ,'“' ,'-' ,'~' ,'_' ,'{' ,'}' ,'(' ,')' ,'[' ,']');
 
     private static char getRandomLowerCaseLetter() {
         Random random = new Random();
